@@ -1,0 +1,34 @@
+name: Zola
+
+on:
+  push:
+    branches: master
+  pull_request:
+
+jobs:
+  zola:
+    runs-on: ubuntu-latest
+    env:
+      BASE_URL: https://github.com/getzola/zola/releases/download
+      VERS: v0.12.2
+      ARCH: x86_64-unknown-linux-gnu
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+    - uses: actions/checkout@v2
+    # TODO
+    # - name: Lint
+    #   uses: avto-dev/markdown-lint@v1
+    #   with:
+    #     args: '.'
+    #     config: '.markdownlint.json'
+    - name: Install Zola
+      run: curl -L ${BASE_URL}/${VERS}/zola-${VERS}-${ARCH}.tar.gz | tar -xz
+    - run: ./zola --version
+    - run: ./zola build
+    - name: Deploy
+      if: github.ref == 'refs/heads/master'
+      uses: crazy-max/ghaction-github-pages@v1
+      with:
+        build_dir: public
+        target_branch: generated
+        keep_history: true
