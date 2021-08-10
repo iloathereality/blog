@@ -16,7 +16,7 @@ I mostly write smol rust libraries, though I also maintain [`teloxide`] and some
 
 I also like taking photographs, mostly of plants and sunsets.
 
-{{ image(src="pages/2021-08-07_16-47-42.jpg", alt="Hello Friend", style="border-radius: 8px; width: 80%;") }}
+{{ image(src="2021-08-07_16-47-42.jpg", alt="Hello Friend", style="border-radius: 8px; width: 80%;") }}
 
 You can find me on:
 
