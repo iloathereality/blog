@@ -1,0 +1,2 @@
+User-agent: *
+Sitemap: https://iloathereality.github.io/sitemap.xml
