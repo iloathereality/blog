@@ -4,8 +4,16 @@ base_url = "https://iloathereality.github.io"
 # Whether to automatically compile all Sass files in the sass directory
 compile_sass = true
 
-# Whether to build a search index to be used later on by a JavaScript library
-build_search_index = true
+# # Whether to build a search index to be used later on by a JavaScript library
+# build_search_index = true
+
+default_language = "en"
+
+theme = "terminimal"
+
+taxonomies = [
+    {name = "tags"},
+]
 
 [markdown]
 # Whether to do syntax highlighting
@@ -14,3 +22,48 @@ highlight_code = true
 
 [extra]
 # Put all your custom variables here
+
+logo_text = "I hate reality"
+author = "Maybe Waffle"
+
+# One of: blue, green, orange, pink, red.
+# Defaults to blue. 
+accent_color = "pink"
+
+# One of: blue, dark, green, orange, pink, red.
+# Enabling dark background will also modify primary font color
+# to be darker.
+# Defaults to accent color (or, if not accent color specified, to blue). 
+background_color = "pink"
+
+menu_items = [
+    # $BASE_URL is going to be substituted by base_url from configuration
+    #{name = "blog", url = "$BASE_URL"},
+    
+    
+    # # May be desired in future
+    #{name = "archive", url = "$BASE_URL/archive"},
+
+    {name = "about", url = "$BASE_URL/about"},
+    
+    {name = "tags", url = "$BASE_URL/tags"},
+
+    {name = "source", url = "https://github.com/iloathereality/blog", newtab = true},
+]
+
+# Whether to show links to earlier and later posts
+# on each post page (defaults to true).
+enable_post_view_navigation = true
+
+# # The text shown at the bottom of a post,
+# # before earlier/later post links.
+# # Defaults to "Thanks for reading! Read other posts?"
+# post_view_navigation_prompt = "Read more"
+
+# Use full Hack character set, not just a subset.
+# Switch this to true if you need full unicode support.
+# Defaults to false.
+use_full_hack_font = true
+
+favicon = "/you_cant_escape_from_reality_128x128.png"
+favicon_mimetype = "image/png"
