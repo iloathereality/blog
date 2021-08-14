@@ -34,7 +34,8 @@ djceje;cvj;ecj
 
 `Option<T>`
 
-{{ figure(src="http://rustacean.net/assets/rustacean-flat-gesture.png",
+{{ figure(src="https://raw.githubusercontent.com/aldeka/rustacean.net/master/site/assets/rustacean-flat-gesture.png",
+          unlocal=true,
           style="width: 50%;",
           position="left"
           caption_position="right",

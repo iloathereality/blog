@@ -1,8 +1,10 @@
 {% if src %}
-  <figure class="{% if position %}{{ position }}{% else -%} center {%- endif %}" >
-    <img src="{{ page.permalink }}{{ src | safe }}"{% if alt %} alt="{{ alt }}"{% endif %}{% if style %} style="{{ style }}"{% endif %} />
-    {% if caption %}
-      <figcaption class="{% if caption_position %}{{ caption_position }}{% else -%} center {%- endif %}"{% if caption_style %} style="{{ caption_style | safe }}"{% endif %}>{{ caption }}</figcaption>
-    {% endif %}
-  </figure>
+<figure class="{% if position %}{{ position }}{% else -%} center {%- endif %}">
+  <img src="{% if not unlocal %}{{ page.permalink }}{%- endif %}{{ src | safe }}" {% if alt %} alt="{{ alt }}" {% endif %}{% if style %}
+    style="{{ style }}" {% endif %} />
+  {% if caption %}
+  <figcaption class="{% if caption_position %}{{ caption_position }}{% else -%} center {%- endif %}" {% if caption_style
+    %} style="{{ caption_style | safe }}" {% endif %}>{{ caption }}</figcaption>
+  {% endif %}
+</figure>
 {% endif %}
