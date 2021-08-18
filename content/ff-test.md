@@ -46,6 +46,13 @@ dkvnkvenkknj
 cewjkcec
 jnjveenjv;je;j
 
+- List (0)
+  - Sub list (0)
+  - Sub list (1)
+    - Sub sub list (0)
+  - Sub list (2)
+- List (1)
+
 dnkjn
 jn
 djnjn
@@ -67,6 +74,8 @@ nkjjjjjjjjjjjjjjjjjjjvrnrjksdxvmn tcbv; (tys wdt(h sdcx(hsd cb(h;n swdxct dshjc(
 
 d
 
+aaaa[^2] [^1] [^also]
+
 
 c
 c
@@ -124,3 +133,11 @@ jjj
 
 
 jjj
+
+---
+
+[^1]: Some note aa?
+
+[^2]: Some other note hmmmm.
+
+[^also]: allllllllsoosooxkssskksjkskjjskjxjcnfdhjv;tg}}hvdx:t}hsxajszx;h:;ahzsxfr:;ashzr;jkedklmxdkmk f cfrjc fjn cashjzx gjmjza;xedhj jaz rdcr; }hasz jfjaz;xcsj
