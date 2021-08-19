@@ -14,7 +14,13 @@ This is my first (testing) blog post.
 keysmash: hjhllkhlhhjhhj
 
 
+{% callout() %}
+Test callout text blah vlah  vla}hd dhjejcjcdjcjcjejdj djdjc.
 
+Markdown **is** _supported_ [example link](https://example.com). 
+
+Some long text so you can see how it loooooks: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat...
+{% end %}
 
 Katex:
 
