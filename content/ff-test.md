@@ -40,8 +40,8 @@ djceje;cvj;ecj
 
 `Option<T>`
 
-{{ figure(src="https://raw.githubusercontent.com/aldeka/rustacean.net/master/site/assets/rustacean-flat-gesture.png",
-          unlocal=true,
+{{ figure(url="https://raw.githubusercontent.com/aldeka/rustacean.net/master/site/assets/rustacean-flat-gesture.png",
+          alt = "feris",
           style="width: 50%;",
           position="left"
           caption_position="right",

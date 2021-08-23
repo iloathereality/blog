@@ -18,7 +18,7 @@ I also like taking photographs, mostly of plants and sunsets.
 
 {{ 
   image(
-      src="2021-08-07_16-47-42.jpg", 
+      img="2021-08-07_16-47-42.jpg", 
       alt="A dark photo of a money tree (also kmown as Crassula ovata). The background is very blurry.", 
       style="border-radius: 8px; width: 80%;"
   )
