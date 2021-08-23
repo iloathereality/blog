@@ -15,6 +15,9 @@ taxonomies = [
     {name = "tags"},
 ]
 
+generate_feed = true
+feed_filename = "rss.xml"
+
 [markdown]
 # Whether to do syntax highlighting
 # Theme can be customised by setting the `highlight_theme` variable to a theme supported by Zola
@@ -26,6 +29,9 @@ highlight_theme = "base16-ocean-dark"
 
 logo_text = "I hate reality"
 author = "Maybe Waffle"
+
+# TODO: make footer less weird
+copyright_html = "<div class=\"copyright\"><span>© 2021 Maybe Waffle</span><span class=\"copyright-theme\"><span class=\"copyright-theme-sep\">:: </span>Theme is based on <a href=\"https://github.com/pawroman/zola-theme-terminimal/\">Terminimal</a></span><span class=\"copyright-theme-sep\">:: </span><a href=\"/rss.xml\">rss</a></div>"
 
 # One of: blue, green, orange, pink, red.
 # Defaults to blue. 
