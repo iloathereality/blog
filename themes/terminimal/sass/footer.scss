@@ -34,7 +34,7 @@
       text-align: center;
     }
 
-    & > *:first-child:not(:only-child) {
+    & > *:not(:last-child):not(:only-child) {
       margin-right: 10px;
 
        @media (max-width: $tablet-max-width) {
