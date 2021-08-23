@@ -1,10 +1,50 @@
-{% if src %}
+{% if img %}
+  {% for p in page.assets %}  
+    {% if p is ending_with(img) %}
+      {% set_global path = p %}
+    {% endif %}
+  {% endfor %}
+
+  {% if path is not defined %}
+    {% set_global path = "static/" ~ img %}
+  {% endif %}
+  
+  {% if format is not defined %}
+    {% set_global format = "webp" %}
+  {% endif %}
+  
+  {% if quality is not defined %}
+  {% set_global quality = 75 %}
+  {% endif %}
+  
+  {% if full is not defined %}
+    {# TODO: https://github.com/getzola/zola/issues/1596 #}
+    {% set_global full = get_url(path=path) | replace(from="/pages/", to="/") | replace(from="/static/", to="/") %}
+  {% endif %}
+
+  {% set new_image = resize_image(path=path, width=1280, height=1280, op="fit", format=format, quality=quality) %}
+  {% set_global src = new_image.static_path | trim_start_matches(pat="static") %}  
+{% elif url %}
+  {% set_global src = url %}
+  {% if full is not defined %}
+    {% set_global full = url %}
+  {% endif %}
+{% else %}
+  {{ throw(message="Either `img` or `url` must be set") }}
+{% endif %}
+
 <figure class="{% if position %}{{ position }}{% else -%} center {%- endif %}">
-  <img src="{% if not unlocal %}{{ page.permalink }}{%- endif %}{{ src | safe }}" {% if alt %} alt="{{ alt }}" {% endif %}{% if style %}
-    style="{{ style }}" {% endif %} />
+  <a href="{{ full }}" target="_blank">
+    <img 
+      src="{{ src }}" 
+      alt="{{ alt }}"
+      class="{% if position %}{{ position }}{% else -%} center {%- endif %}" 
+      {%- if style %} style="{{ style | safe }}" {%- endif %} 
+    />
+  </a>
+
   {% if caption %}
   <figcaption class="{% if caption_position %}{{ caption_position }}{% else -%} center {%- endif %}" {% if caption_style
     %} style="{{ caption_style | safe }}" {% endif %}>{{ caption }}</figcaption>
   {% endif %}
 </figure>
-{% endif %}
