@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+      <title></title>
+        <link>https://iloathereality.github.io</link>
+        <description></description>
+        <generator>Zola</generator>
+        <language>en</language>
+        <atom:link href="https://iloathereality.github.io/rss.xml" rel="self" type="application/rss+xml"/>
+        <lastBuildDate>Wed, 11 Aug 2021 00:00:00 +0000</lastBuildDate>
+        <item>
+            <title>My first (test) post</title>
+            <pubDate>Tue, 10 Aug 2021 00:00:00 +0000</pubDate>
+            <link>https://iloathereality.github.io/ff-test/</link>
+            <guid>https://iloathereality.github.io/ff-test/</guid>
+            <description>&lt;p&gt;This is my first (testing) blog post. &lt;&#x2F;p&gt;
+</description>
+        </item>
+    </channel>
+</rss>
