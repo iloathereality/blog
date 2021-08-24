@@ -24,6 +24,8 @@ feed_filename = "rss.xml"
 highlight_code = true
 highlight_theme = "base16-ocean-dark"
 
+smart_punctuation = true
+
 [extra]
 # Put all your custom variables here
 
