@@ -89,13 +89,39 @@
   ul {
     list-style: none;
 
-    li:before {
-      content: '►';
+    >li:before {
+      content: '-';
       position: absolute;
       left: -20px;
       color: var(--accent);
     }
+  }  
+  
+  ol {
+    list-style: none;
+    counter-reset: li;
+
+    >li:before {
+      content: counter(li, lower-greek);
+      position: absolute;
+      left: -20px;
+      color: var(--accent);
+    }
+
+    >li {
+      counter-increment: li;
+    }
   }
+
+  ol li ol>li::before {
+     content: counter(li, katakana);
+  }
+  
+  ol li ol li ol>li::before {
+     content: counter(li);
+  }
+
+  // Why using `lower-greek` and `katakana` you ask? Just for fun. 
 }
 
 .post--regulation {
