@@ -6,7 +6,7 @@ updated = 2021-08-11
 #draft = true
 
 [taxonomies] 
-tags = ["test", "testing"]
+tags = ["test", "testing", "rust"]
 +++
 
 This is my first (testing) blog post. 
@@ -38,11 +38,7 @@ fn test<'a, T: ?Sized + 'a>(_: &T, _ugh: &'a Ugh) -> () {}
 
 ### djddcj
 
-`monomono mono `
-
-djceje;cvj;ecj
-
-`Option<T>`
+Unmono `monomono mono` unmono `a litle bit more mono` djceje;cvj;ecj `Option<T>` option.
 
 {{ figure(url="https://raw.githubusercontent.com/aldeka/rustacean.net/master/site/assets/rustacean-flat-gesture.png",
           alt = "feris",

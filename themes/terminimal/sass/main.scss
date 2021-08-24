@@ -127,9 +127,10 @@ code {
   font-family: Hack, DejaVu Sans Mono, Monaco, Consolas, Ubuntu Mono, monospace;
   font-feature-settings: normal;
   background: var(--accent-alpha-20);
-  padding: 1px 6px;
-  margin: 0 2px;
+  padding: 2px 4px;
+  margin: 0;
   font-size: .95rem;
+  border-radius: 6px;
 }
 
 pre {
