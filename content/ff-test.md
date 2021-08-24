@@ -26,6 +26,30 @@ Some long text so you can see how it loooooks: Lorem ipsum dolor sit amet, conse
 HJHJKAKJJKKKAJKKAJHAHHJAHJAHJAAJHJAJAHJAKJAHJKAHAJAJHAAJHJAAJKAHJAJK
 {% end %}
 
+1. One
+2. Two
+   - Sub dash
+   - Sub dash'
+3. Three
+   1. Three sub one
+   2. Three sub two
+      1. Three-two sub one
+      1. Three-two sub two
+4. Four
+
+- List (0)
+  - Sub list (0)
+  - Sub list (1)
+    - Sub sub list (0)
+      1. xxx
+      2. xxx
+  - Sub list (2)
+- List (1)
+  1. 1-Sub
+  2. 1-Sub
+- List (2)
+
+
 Katex:
 
 $$ v_2^2 = v_1^2 + (at)^2 \Rightarrow v_2 > v_1  $$
@@ -51,13 +75,6 @@ Unmono `monomono mono` unmono `a litle bit more mono` djceje;cvj;ecj `Option<T>`
 dkvnkvenkknj
 cewjkcec
 jnjveenjv;je;j
-
-- List (0)
-  - Sub list (0)
-  - Sub list (1)
-    - Sub sub list (0)
-  - Sub list (2)
-- List (1)
 
 dnkjn
 jn
