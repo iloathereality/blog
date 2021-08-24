@@ -1,7 +1,22 @@
+{# How to figure out the code: https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&gist=28abce05736c46257469de2bfe408884 #} 
+
+{% if emoji is not defined %}
+  {% set_global emoji = "1f438" %}
+
+  {% if alt is not defined %}
+    {% set_global alt = "🐸" %}
+  {% endif %}
+{% elif alt is not defined %}
+  {{ throw(message="If `emoji` is set, then `alt` must be set too") }}
+{% endif %}
+
 <div class="callout">
-    <img class="callout-icon" src="https://raw.githubusercontent.com/twitter/twemoji/master/assets/svg/1f438.svg"
-        alt="🐸" />
-    <div class="callout-body">
-        {{ body | markdown | safe }}
-    </div>
+  <img 
+    class="callout-icon"
+    src="/twemoji/assets/svg/{{emoji}}.svg"
+    alt="{{alt}}"
+  />
+  <div class="callout-body">
+    {{ body | markdown | safe }}
+  </div>
 </div>

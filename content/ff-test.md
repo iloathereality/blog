@@ -22,6 +22,10 @@ Markdown **is** _supported_ [example link](https://example.com).
 Some long text so you can see how it loooooks: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat...
 {% end %}
 
+{% callout(emoji="1f97a", alt="🥺") %}
+HJHJKAKJJKKKAJKKAJHAHHJAHJAHJAAJHJAJAHJAKJAHJKAHAJAJHAAJHJAAJKAHJAJK
+{% end %}
+
 Katex:
 
 $$ v_2^2 = v_1^2 + (at)^2 \Rightarrow v_2 > v_1  $$
