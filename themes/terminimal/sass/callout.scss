@@ -9,6 +9,8 @@ div.callout {
     border-color: transparent;
     background: var(--accent-alpha-20);
     padding: 16px 16px 16px 12px;
+    margin-bottom: 20px; // Same as <p> 
+    // (TODO: figure out why <p> also has margin-top 16 even though it isn't mentioned anywhere)
 }
 
 img.callout-icon {
