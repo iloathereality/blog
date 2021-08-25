@@ -3,7 +3,7 @@ title = "My first (test) post"
 date = 2021-08-10
 updated = 2021-08-11
 
-#draft = true
+draft = true
 
 [taxonomies] 
 tags = ["test", "testing", "rust"]
