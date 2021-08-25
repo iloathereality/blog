@@ -100,10 +100,10 @@
     {%- if page.taxonomies and page.taxonomies.tags %}
         <span class="post-tags-inline">
             {%- if short %}
-                ::
+                {{ ":: " }}
                 {%- set sep = ", " -%}
             {% else %}
-                ::&nbsp;
+                <br>
                 {%- set sep = "&nbsp;" -%}
             {% endif -%}
             {%- for tag in page.taxonomies.tags -%}
