@@ -81,8 +81,8 @@
         <div class="post-content">
             <p>We all know that <code>null</code> is a <a href="https://en.wikipedia.org/wiki/Null_pointer#History">“billion-dollar mistake”</a>, that it creates a lot of easy ways to make terrible mistakes. But it’s only so bad when it’s not checked by anyone and the compiler doesn’t force you to check it, right? Well, the title might be a spoiler, but let’s find out…</p>
 <span id="continue-reading"></span><h2 id="context-what-are-you-talking-about">Context / What are you talking about?</h2>
-<p>In this article, I’m specifically talking about the <a href="https://kotlinlang.org/docs/null-safety.html">Kotlin</a> and <a href="https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-8#nullable-reference-types">C# post v8</a> approach to <code>null</code>. I’m more familiar with <code>Kotlin</code> than <code>C#</code>, so I’ll mostly be talking about it, but their approaches are similar, so that doesn’t really matter.</p>
-<p>Basically, you can’t assign null to just any reference type in <code>Kotlin</code> (and <code>C#</code> post v8 with certain settings). For example, this is a compilation error:</p>
+<p>In this article, I’m specifically talking about the <a href="https://kotlinlang.org/docs/null-safety.html">Kotlin</a> and <a href="https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-8#nullable-reference-types">C# post v8</a> approach to <code>null</code>. I’m more familiar with Kotlin than C#, so I’ll mostly be talking about it, but their approaches are similar, so that doesn’t really matter.</p>
+<p>Basically, you can’t assign null to just any reference type in Kotlin (and C# post v8 with certain settings). For example, this is a compilation error:</p>
 <pre data-lang="kotlin" style="background-color:#2b303b;color:#c0c5ce;" class="language-kotlin "><code class="language-kotlin" data-lang="kotlin"><span style="color:#b48ead;">val </span><span>a: </span><span style="color:#b48ead;">String </span><span>= </span><span style="color:#d08770;">null</span><span>; </span><span style="color:#65737e;">// compilation error
 </span><span>
 </span><span style="color:#b48ead;">var </span><span>b: </span><span style="color:#b48ead;">String </span><span>= &quot;</span><span style="color:#a3be8c;">not null</span><span>&quot;; </span><span style="color:#65737e;">// ok
@@ -149,7 +149,7 @@
     alt="🐸"
   />
   <div class="callout-body">
-    <p>I’ve shown examples in <code>Rust</code> and <code>Haskell</code> because I’m familiar with them but note that sum types exist in <a href="https://en.wikipedia.org/wiki/Algebraic_data_type#Programming_languages_with_algebraic_data_types">many languages</a>. </p>
+    <p>I’ve shown examples in Rust and Haskell because I’m familiar with them but note that sum types exist in <a href="https://en.wikipedia.org/wiki/Algebraic_data_type#Programming_languages_with_algebraic_data_types">many languages</a>. </p>
 
   </div>
 </div>
@@ -197,13 +197,13 @@
     alt="🐸"
   />
   <div class="callout-body">
-    <p>I could only find mentions of this optimization in <code>Rust</code>, but I think it’s very neat anyway, so I’ll talk about <code>Rust</code> in this paragraph.</p>
+    <p>I could only find mentions of this optimization in Rust, but I think it’s very neat anyway, so I’ll talk about Rust in this paragraph.</p>
 
   </div>
 </div>
 <p>There are some types that have unused space in their memory representation — a <em>niche</em>. For example, <code>bool</code> is only 1 bit of information, but it uses 1 byte of space, so 7 bits are unused. References (<code>&amp;T</code>, <code>&amp;mut T</code>) and <code>NonNull</code> can never be null, meaning that they have an unused bit pattern — all zeroes. The same goes with <a href="https://doc.rust-lang.org/std/num/index.html"><code>NonZero*</code></a>. Enumerations, just as <code>bool</code>, can have unused bits/bit patterns.</p>
-<p>What if we could use this for something actually useful? Well, <code>Rust</code> can.</p>
-<p>If a sum type has one of its variants being a type with a niche, then it can use it to represent other variants, instead of using a tag. I.e. <code>Option&lt;&amp;T&gt;</code> isn’t identical to <code>struct { value: union { Some(&amp;T), None }, tag: u8 }</code> (pseudo syntax), but instead it’s just <code>union { Some(&amp;T), None }</code> where the <code>None</code> is encoded as <code>0</code> (since reference can never be <code>0</code> you can distinguish variants without a <code>tag</code>). Moreover, this exact optimization of <code>Option&lt;&amp;T&gt;</code> is even <a href="https://doc.rust-lang.org/std/option/index.html#representation">guaranteed</a>, so it is fully layout compatible with <code>*const T</code>. This allows using it in C-ffi, making <code>None</code> on the <code>Rust</code> side a <code>null</code> on the C side.</p>
+<p>What if we could use this for something actually useful? Well, Rust can.</p>
+<p>If a sum type has one of its variants being a type with a niche, then it can use it to represent other variants, instead of using a tag. I.e. <code>Option&lt;&amp;T&gt;</code> isn’t identical to <code>struct { value: union { Some(&amp;T), None }, tag: u8 }</code> (pseudo syntax), but instead it’s just <code>union { Some(&amp;T), None }</code> where the <code>None</code> is encoded as <code>0</code> (since reference can never be <code>0</code> you can distinguish variants without a <code>tag</code>). Moreover, this exact optimization of <code>Option&lt;&amp;T&gt;</code> is even <a href="https://doc.rust-lang.org/std/option/index.html#representation">guaranteed</a>, so it is fully layout compatible with <code>*const T</code>. This allows using it in C-ffi, making <code>None</code> on the Rust side a <code>null</code> on the C side.</p>
 <p>This optimization can be observed using <code>mem::size_of</code> function:</p>
 <pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#65737e;">// `u8`, `bool` and `Option&lt;bool&gt;` all occupy 1 byte.
 </span><span style="color:#65737e;">// `Option::&lt;bool&gt;::None` is encoded as 2. It&#39;s fine, since `bool`
@@ -243,8 +243,8 @@
 </span><span style="color:#b48ead;">unsafe </span><span>{ transmute::&lt;Option&lt;Option&lt;&amp;</span><span style="color:#b48ead;">u8</span><span>&gt;&gt;, [</span><span style="color:#b48ead;">usize</span><span>; </span><span style="color:#d08770;">2</span><span>]&gt;(Some(Some(&amp;</span><span style="color:#d08770;">1</span><span>))) } = [</span><span style="color:#d08770;">1</span><span>, </span><span style="color:#d08770;">93965956011124</span><span>]
 </span></code></pre>
 <p><em>Edited output of the <a href="https://play.rust-lang.org/?version=stable&amp;mode=debug&amp;edition=2018&amp;gist=0166b25cd98164e32879456d65a8e9b8">test program</a>.</em></p>
-<h2 id="a-sad-note-kotlin">A sad note: <code>Kotlin</code></h2>
-<p><code>Kotlin</code> <em>does</em> support sum types via <a href="https://kotlinlang.org/docs/sealed-classes.html">sealed classes</a>. Here is an example how you could define and use <code>Option</code> (<a href="https://pl.kotl.in/XZ1fBjith">play</a>): </p>
+<h2 id="a-sad-note-kotlin">A sad note: Kotlin</h2>
+<p>Kotlin <em>does</em> support sum types via <a href="https://kotlinlang.org/docs/sealed-classes.html">sealed classes</a>. Here is an example how you could define and use <code>Option</code> (<a href="https://pl.kotl.in/XZ1fBjith">play</a>): </p>
 <pre data-lang="kotlin" style="background-color:#2b303b;color:#c0c5ce;" class="language-kotlin "><code class="language-kotlin" data-lang="kotlin"><span style="color:#b48ead;">sealed class </span><span style="color:#ebcb8b;">Option</span><span>&lt;</span><span style="color:#b48ead;">T</span><span>&gt; {
 </span><span>    </span><span style="color:#b48ead;">class </span><span style="color:#ebcb8b;">None</span><span>&lt;</span><span style="color:#b48ead;">T</span><span>&gt;() : </span><span style="color:#a3be8c;">Option</span><span>&lt;</span><span style="color:#a3be8c;">T</span><span>&gt;() {}
 </span><span>    </span><span style="color:#b48ead;">class </span><span style="color:#ebcb8b;">Some</span><span>&lt;</span><span style="color:#b48ead;">T</span><span>&gt;(</span><span style="color:#b48ead;">val </span><span>value: T) : </span><span style="color:#a3be8c;">Option</span><span>&lt;</span><span style="color:#a3be8c;">T</span><span>&gt;() {}
@@ -269,19 +269,19 @@
     alt="🐸"
   />
   <div class="callout-body">
-    <p>In my opinion, <code>Kotlin</code>’s support of sum types is extremely hacky, but who am I to say that, right?</p>
+    <p>In my opinion, Kotlin’s support of sum types is extremely hacky, but who am I to say that, right?</p>
 
   </div>
 </div>
 <p>Nevertheless, Kotlin doesn’t use this for optional values! In fact, it doesn’t even have an <code>Option</code> class in the standard library. For me, it seems like a big omission. It seems like making <code>T?</code> equivalent to <code>Option&lt;T&gt;</code> and <code>Option&lt;N&gt;</code> (where <code>N</code> is not <code>Option</code>) be layout compatible with <code>Java</code>’s <code>N</code> (i.e. <code>Java</code>’s <code>null</code> being the same as <code>None&lt;N&gt;</code>) would be sufficient…</p>
-<h2 id="a-sad-note-c">A sad note: <code>C#</code></h2>
-<p><code>C#</code> doesn’t support sum types. To some extent they can be simulated using inheritance from an interface or abstract class, however, such an approach lacks one of the greatest benefits of sum types, namely the exhaustiveness check.</p>
-<p>It’s especially sad since <code>F#</code> (which is running on the same VM) supports sum types (<code>F#</code> docs call them <a href="https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/discriminated-unions"><em>Discriminated Unions</em></a>), but <code>C#</code> doesn’t.</p>
+<h2 id="a-sad-note-c">A sad note: C#</h2>
+<p>C# doesn’t support sum types. To some extent they can be simulated using inheritance from an interface or abstract class, however, such an approach lacks one of the greatest benefits of sum types, namely the exhaustiveness check.</p>
+<p>It’s especially sad since F# (which is running on the same VM) supports sum types (F# docs call them <a href="https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/discriminated-unions"><em>Discriminated Unions</em></a>), but C# doesn’t.</p>
 <pre data-lang="f#" style="background-color:#2b303b;color:#c0c5ce;" class="language-f# "><code class="language-f#" data-lang="f#"><span style="color:#b48ead;">type </span><span>Option</span><span style="color:#b48ead;">&lt;</span><span>&#39;a</span><span style="color:#b48ead;">&gt; =</span><span> None </span><span style="color:#b48ead;">|</span><span> Some </span><span style="color:#b48ead;">of </span><span>&#39;a
 </span><span style="color:#b48ead;">type </span><span>Either</span><span style="color:#b48ead;">&lt;</span><span>&#39;a</span><span style="color:#b48ead;">, </span><span>&#39;b</span><span style="color:#b48ead;">&gt; =</span><span> Left </span><span style="color:#b48ead;">of </span><span>&#39;a </span><span style="color:#b48ead;">|</span><span> Right </span><span style="color:#b48ead;">of </span><span>&#39;b
 </span></code></pre>
-<h2 id="a-sad-note-go">A sad note: <code>Go</code></h2>
-<p><code>Go</code> doesn’t support sum types. It’s a little sad on its own, but <code>Go</code> also doesn’t have exceptions and all reference types are implicitly nullable. This means that if a function wants to return an error, it needs to return a tuple of success and error values. This not only makes checking which is <code>null</code> (actually <code>nil</code>, but it’s the same thing) pretty annoying, but also leaves the possibility for an invalid state where neither success nor error values are null. </p>
+<h2 id="a-sad-note-go">A sad note: Go</h2>
+<p>Go doesn’t support sum types. It’s a little sad on its own, but Go also doesn’t have exceptions and all reference types are implicitly nullable. This means that if a function wants to return an error, it needs to return a tuple of success and error values. This not only makes checking which is <code>null</code> (actually <code>nil</code>, but it’s the same thing) pretty annoying, but also leaves the possibility for an invalid state where neither success nor error values are null. </p>
 <p>I think it’s inexcusable to have such error-prone design flaws in 2012.</p>
 <h2 id="conclusion">Conclusion</h2>
 <p>There is no nice conclusion. The reality is painful as usual. We are stuck with a 56-year old abstraction that has proven itself to be error-prone for a while now. We are stuck with it, even though a better solution exists for longer than I have.</p>
