@@ -7,13 +7,13 @@
         <generator>Zola</generator>
         <language>en</language>
         <atom:link href="https://iloathereality.github.io/rss.xml" rel="self" type="application/rss+xml"/>
-        <lastBuildDate>Wed, 11 Aug 2021 00:00:00 +0000</lastBuildDate>
+        <lastBuildDate>Fri, 20 Aug 2021 00:00:00 +0000</lastBuildDate>
         <item>
-            <title>My first (test) post</title>
-            <pubDate>Tue, 10 Aug 2021 00:00:00 +0000</pubDate>
-            <link>https://iloathereality.github.io/ff-test/</link>
-            <guid>https://iloathereality.github.io/ff-test/</guid>
-            <description>&lt;p&gt;This is my first (testing) blog post. &lt;&#x2F;p&gt;
+            <title>Why null sucks, even if it&#x27;s checked</title>
+            <pubDate>Fri, 20 Aug 2021 00:00:00 +0000</pubDate>
+            <link>https://iloathereality.github.io/01-why-null-sucks/</link>
+            <guid>https://iloathereality.github.io/01-why-null-sucks/</guid>
+            <description>&lt;p&gt;We all know that &lt;code&gt;null&lt;&#x2F;code&gt; is a &lt;a href=&quot;https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;Null_pointer#History&quot;&gt;“billion-dollar mistake”&lt;&#x2F;a&gt;, that it creates a lot of easy ways to make terrible mistakes. But it’s only so bad when it’s not checked by anyone and the compiler doesn’t force you to check it, right? Well, the title might be a spoiler, but let’s find out…&lt;&#x2F;p&gt;
 </description>
         </item>
     </channel>

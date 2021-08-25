@@ -4,22 +4,28 @@
         <loc>https://iloathereality.github.io/</loc>
     </url>
     <url>
-        <loc>https://iloathereality.github.io/about/</loc>
+        <loc>https://iloathereality.github.io/01-why-null-sucks/</loc>
+        <lastmod>2021-08-20</lastmod>
     </url>
     <url>
-        <loc>https://iloathereality.github.io/ff-test/</loc>
-        <lastmod>2021-08-11</lastmod>
+        <loc>https://iloathereality.github.io/about/</loc>
     </url>
     <url>
         <loc>https://iloathereality.github.io/tags/</loc>
     </url>
     <url>
+        <loc>https://iloathereality.github.io/tags/csharp/</loc>
+    </url>
+    <url>
+        <loc>https://iloathereality.github.io/tags/go/</loc>
+    </url>
+    <url>
+        <loc>https://iloathereality.github.io/tags/haskell/</loc>
+    </url>
+    <url>
+        <loc>https://iloathereality.github.io/tags/kotlin/</loc>
+    </url>
+    <url>
         <loc>https://iloathereality.github.io/tags/rust/</loc>
-    </url>
-    <url>
-        <loc>https://iloathereality.github.io/tags/test/</loc>
-    </url>
-    <url>
-        <loc>https://iloathereality.github.io/tags/testing/</loc>
     </url>
 </urlset>
