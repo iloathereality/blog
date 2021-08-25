@@ -23,6 +23,15 @@
         {%- if page.date %}
             {{ page.date | date(format="%Y-%m-%d") }}
         {% endif -%}
+        {% if page.updated %}
+            [updated {{ page.updated | date(format="%Y-%m-%d") }}]
+        {% endif %}
+    </span>
+{% endmacro post_date %}
+
+{% macro xminread(page) %}
+    <span class="post-read-time">
+        :: {{ page.reading_time }} min read
     </span>
 {% endmacro post_date %}
 
@@ -61,9 +70,12 @@
     <h1 class="post-title"><a href="{{ page.permalink | safe }}">{{ page.title }}</a></h1>
     <div class="post-meta-inline">
         {{ post_macros::date(page=page) }}
+        {{ post_macros::xminread(page=page) }}
+
+        <!-- TODO: rethink how tags look -->
+        {{ post_macros::tags(page=page) }}
     </div>
 
-    {{ post_macros::tags(page=page) }}
 {% endmacro header %}
 
 
@@ -89,12 +101,12 @@
         <span class="post-tags-inline">
             {%- if short %}
                 ::
-                {%- set sep = "," -%}
+                {%- set sep = ", " -%}
             {% else %}
-                :: tags:&nbsp;
+                ::&nbsp;
                 {%- set sep = "&nbsp;" -%}
             {% endif -%}
-            {%- for tag in page.taxonomies.tags %}
+            {%- for tag in page.taxonomies.tags -%}
                 <a class="post-tag" href="{{ get_taxonomy_url(kind='tags', name=tag) | safe }}">#{{ tag }}</a>
                 {%- if not loop.last %}{{ sep | safe }}{% endif -%}
             {% endfor -%}
