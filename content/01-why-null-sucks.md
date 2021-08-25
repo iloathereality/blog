@@ -76,7 +76,8 @@ That's all good and all, but what's the problem? You may ask. Well... Consider t
 
 ```kotlin
 class HashMap<K, V> {
-    // If `key` is present in the hash map, returns the value associated with it. 
+    // If `key` is present in the hash map, 
+    // returns the value associated with it. 
     // Otherwise returns `null`.
     fun get(key: K): V? { /* ... */ }
 }
@@ -133,7 +134,8 @@ Another nice fact about `Option` (`Maybe`) is that it can be defined in a librar
 
 ```rust
 impl<K, V> HashMap<K, V> {
-    // If `key` is present in the hash map, returns the value associated with it. 
+    // If `key` is present in the hash map, 
+    // returns the value associated with it. 
     // Otherwise returns `None`.
     fn get(&self, key: &K) -> Option<V> { /* ... */ }
 }
