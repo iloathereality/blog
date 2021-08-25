@@ -1,6 +1,7 @@
 +++
 title = "Why null sucks, even if it's checked"
 date = 2021-08-20
+updated = 2021-08-25
 
 [taxonomies] 
 tags = ["kotlin", "csharp", "haskell", "rust", "go"]
@@ -22,10 +23,14 @@ In this article, I'm specifically talking about the [Kotlin][kt-null-safety] and
 Basically, you can't assign null to just any reference type in Kotlin (and C# post v8 with certain settings). For example, this is a compilation error:
 
 ```kotlin
-val a: String = null; // compilation error
+// compilation error
+val a: String = null;
 
-var b: String = "not null"; // ok
-b = null; // compilation error (again)
+// ok
+var b: String = "not null";
+
+// compilation error (again)
+b = null;
 ```
 
 And since you can't assign `null` to non-nullable types, `null` can't screw you! You can't get a null pointer (reference) exception, etc. Cool!
@@ -33,10 +38,12 @@ And since you can't assign `null` to non-nullable types, `null` can't screw you!
 If you really want to assign null to something, you need to explicitly mark the type of the variable as nullable with `T?` syntax:
 
 ```kotlin
-val a: String? = null; // ok
+// ok
+val a: String? = null;
 
-var b: String? = "not null"; // also ok
-b = null; // still ok
+// also ok
+var b: String? = "not null";
+b = null;
 ```
 
 But when you have a `T?` (nullable) type, you also need to explicitly check for null. E.g. given a class `Mine` with a `cat` field and a variable `mine` of type `Mine?`, you can't access `mine.cat`, it would be a compilation error:
@@ -45,22 +52,36 @@ But when you have a `T?` (nullable) type, you also need to explicitly check for 
 val mine: Mine? = /* ... */
 val your: Mine  = /* ... */
 
-val a: Cat  = mine.cat; // compilation error
-val b: Cat  = (mine ?: your).cat // elvis operator, if `mine` is null, 
-                                 // then `your` will be used
-val c: Cat? = mine?.cat; // safe call operator, if `mine` is null, then so be `c`
-val d: Cat  = mine!!.cat; // «trust me, I'm an engineer» operator, throws an 
-                          // exception if `mine` is null 
+// compilation error
+val a: Cat = mine.cat
+
+// elvis operator, if `mine` is null,
+// then `your` will be used
+val b: Cat = (mine ?: your).cat  
+
+// safe call operator, if `mine` is null, 
+// then so be `c`        
+val c: Cat? = mine?.cat
+
+// “trust me, I'm an engineer” operator, 
+// throws an exception if `mine` is null 
+val d: Cat = mine!!.cat
+
 if mine != null {
-    // Special Kotlin trick: in this block `mine` actually has type `Mine`
-    // See more: 
-    // - https://kotlinlang.org/docs/typecasts.html#smart-casts
-    // - https://kotlinlang.org/docs/null-safety.html#checking-for-null-in-conditions
-    val x: Cat = mine.cat; // perfectly fine (we've checked)
+    // Special Kotlin trick: 
+    // in this block `mine` actually has type `Mine`.
+
+    // perfectly fine (we've checked)
+    val x: Cat = mine.cat
 }
 ```
 
 (The same applies for calling a function with an argument of non-nullable type, you need to either check that something is not null or explicitly assume so)
+
+The "special kotlin trick" is called "smart cast". Basically, if you check that a variable is not null (or has a particular type), then the compiler changes type of the variable in the block, where the check holds. You can read more about it in Kotlin docs: [typecasts][kt-typecasts], [null-safety][kt-null-safety-cast].
+
+[kt-typecasts]: https://kotlinlang.org/docs/typecasts.html#smart-casts
+[kt-null-safety-cast]: https://kotlinlang.org/docs/null-safety.html#checking-for-null-in-conditions
 
 And it's all great, don't get me wrong! This behaviour is a lot better than the plain old "every reference can be null, just crash if it is and it'll be fine". However...
 
