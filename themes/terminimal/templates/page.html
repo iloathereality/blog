@@ -1,5 +1,9 @@
 {% extends "index.html" %}
 
+{% block title %}
+    {{ page.title }}
+{% endblock title %}
+
 {% block content %}
     <div class="post">
         {{ post_macros::header(page=page) }}
