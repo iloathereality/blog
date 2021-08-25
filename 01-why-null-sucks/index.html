@@ -61,11 +61,13 @@
     <span class="post-date">
             2021-08-20
         
+            [updated 2021-08-25]
+        
     </span>
 
         
     <span class="post-read-time">
-        :: 12 min read
+        :: 13 min read
     </span>
 
 
@@ -83,37 +85,53 @@
 <span id="continue-reading"></span><h2 id="context-what-are-you-talking-about">Context / What are you talking about?</h2>
 <p>In this article, I’m specifically talking about the <a href="https://kotlinlang.org/docs/null-safety.html">Kotlin</a> and <a href="https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-8#nullable-reference-types">C# post v8</a> approach to <code>null</code>. I’m more familiar with Kotlin than C#, so I’ll mostly be talking about it, but their approaches are similar, so that doesn’t really matter.</p>
 <p>Basically, you can’t assign null to just any reference type in Kotlin (and C# post v8 with certain settings). For example, this is a compilation error:</p>
-<pre data-lang="kotlin" style="background-color:#2b303b;color:#c0c5ce;" class="language-kotlin "><code class="language-kotlin" data-lang="kotlin"><span style="color:#b48ead;">val </span><span>a: </span><span style="color:#b48ead;">String </span><span>= </span><span style="color:#d08770;">null</span><span>; </span><span style="color:#65737e;">// compilation error
+<pre data-lang="kotlin" style="background-color:#2b303b;color:#c0c5ce;" class="language-kotlin "><code class="language-kotlin" data-lang="kotlin"><span style="color:#65737e;">// compilation error
+</span><span style="color:#b48ead;">val </span><span>a: </span><span style="color:#b48ead;">String </span><span>= </span><span style="color:#d08770;">null</span><span>;
 </span><span>
-</span><span style="color:#b48ead;">var </span><span>b: </span><span style="color:#b48ead;">String </span><span>= &quot;</span><span style="color:#a3be8c;">not null</span><span>&quot;; </span><span style="color:#65737e;">// ok
-</span><span>b = </span><span style="color:#d08770;">null</span><span>; </span><span style="color:#65737e;">// compilation error (again)
+</span><span style="color:#65737e;">// ok
+</span><span style="color:#b48ead;">var </span><span>b: </span><span style="color:#b48ead;">String </span><span>= &quot;</span><span style="color:#a3be8c;">not null</span><span>&quot;;
+</span><span>
+</span><span style="color:#65737e;">// compilation error (again)
+</span><span>b = </span><span style="color:#d08770;">null</span><span>;
 </span></code></pre>
 <p>And since you can’t assign <code>null</code> to non-nullable types, <code>null</code> can’t screw you! You can’t get a null pointer (reference) exception, etc. Cool!</p>
 <p>If you really want to assign null to something, you need to explicitly mark the type of the variable as nullable with <code>T?</code> syntax:</p>
-<pre data-lang="kotlin" style="background-color:#2b303b;color:#c0c5ce;" class="language-kotlin "><code class="language-kotlin" data-lang="kotlin"><span style="color:#b48ead;">val </span><span>a: </span><span style="color:#b48ead;">String</span><span>? = </span><span style="color:#d08770;">null</span><span>; </span><span style="color:#65737e;">// ok
+<pre data-lang="kotlin" style="background-color:#2b303b;color:#c0c5ce;" class="language-kotlin "><code class="language-kotlin" data-lang="kotlin"><span style="color:#65737e;">// ok
+</span><span style="color:#b48ead;">val </span><span>a: </span><span style="color:#b48ead;">String</span><span>? = </span><span style="color:#d08770;">null</span><span>;
 </span><span>
-</span><span style="color:#b48ead;">var </span><span>b: </span><span style="color:#b48ead;">String</span><span>? = &quot;</span><span style="color:#a3be8c;">not null</span><span>&quot;; </span><span style="color:#65737e;">// also ok
-</span><span>b = </span><span style="color:#d08770;">null</span><span>; </span><span style="color:#65737e;">// still ok
+</span><span style="color:#65737e;">// also ok
+</span><span style="color:#b48ead;">var </span><span>b: </span><span style="color:#b48ead;">String</span><span>? = &quot;</span><span style="color:#a3be8c;">not null</span><span>&quot;;
+</span><span>b = </span><span style="color:#d08770;">null</span><span>;
 </span></code></pre>
 <p>But when you have a <code>T?</code> (nullable) type, you also need to explicitly check for null. E.g. given a class <code>Mine</code> with a <code>cat</code> field and a variable <code>mine</code> of type <code>Mine?</code>, you can’t access <code>mine.cat</code>, it would be a compilation error:</p>
 <pre data-lang="kotlin" style="background-color:#2b303b;color:#c0c5ce;" class="language-kotlin "><code class="language-kotlin" data-lang="kotlin"><span style="color:#b48ead;">val </span><span>mine: Mine? = </span><span style="color:#65737e;">/* ... */
 </span><span style="color:#b48ead;">val </span><span>your: Mine  = </span><span style="color:#65737e;">/* ... */
 </span><span>
-</span><span style="color:#b48ead;">val </span><span>a: Cat  = mine.cat; </span><span style="color:#65737e;">// compilation error
-</span><span style="color:#b48ead;">val </span><span>b: Cat  = (mine ?: your).cat </span><span style="color:#65737e;">// elvis operator, if `mine` is null, 
-</span><span>                                 </span><span style="color:#65737e;">// then `your` will be used
-</span><span style="color:#b48ead;">val </span><span>c: Cat? = mine?.cat; </span><span style="color:#65737e;">// safe call operator, if `mine` is null, then so be `c`
-</span><span style="color:#b48ead;">val </span><span>d: Cat  = mine!!.cat; </span><span style="color:#65737e;">// «trust me, I&#39;m an engineer» operator, throws an 
-</span><span>                          </span><span style="color:#65737e;">// exception if `mine` is null 
+</span><span style="color:#65737e;">// compilation error
+</span><span style="color:#b48ead;">val </span><span>a: Cat = mine.cat
+</span><span>
+</span><span style="color:#65737e;">// elvis operator, if `mine` is null,
+</span><span style="color:#65737e;">// then `your` will be used
+</span><span style="color:#b48ead;">val </span><span>b: Cat = (mine ?: your).cat  
+</span><span>
+</span><span style="color:#65737e;">// safe call operator, if `mine` is null, 
+</span><span style="color:#65737e;">// then so be `c`        
+</span><span style="color:#b48ead;">val </span><span>c: Cat? = mine?.cat
+</span><span>
+</span><span style="color:#65737e;">// “trust me, I&#39;m an engineer” operator, 
+</span><span style="color:#65737e;">// throws an exception if `mine` is null 
+</span><span style="color:#b48ead;">val </span><span>d: Cat = mine!!.cat
+</span><span>
 </span><span style="color:#b48ead;">if</span><span> mine != </span><span style="color:#d08770;">null</span><span> {
-</span><span>    </span><span style="color:#65737e;">// Special Kotlin trick: in this block `mine` actually has type `Mine`
-</span><span>    </span><span style="color:#65737e;">// See more: 
-</span><span>    </span><span style="color:#65737e;">// - https://kotlinlang.org/docs/typecasts.html#smart-casts
-</span><span>    </span><span style="color:#65737e;">// - https://kotlinlang.org/docs/null-safety.html#checking-for-null-in-conditions
-</span><span>    </span><span style="color:#b48ead;">val </span><span>x: Cat = mine.cat; </span><span style="color:#65737e;">// perfectly fine (we&#39;ve checked)
+</span><span>    </span><span style="color:#65737e;">// Special Kotlin trick: 
+</span><span>    </span><span style="color:#65737e;">// in this block `mine` actually has type `Mine`.
+</span><span>
+</span><span>    </span><span style="color:#65737e;">// perfectly fine (we&#39;ve checked)
+</span><span>    </span><span style="color:#b48ead;">val </span><span>x: Cat = mine.cat
 </span><span>}
 </span></code></pre>
 <p>(The same applies for calling a function with an argument of non-nullable type, you need to either check that something is not null or explicitly assume so)</p>
+<p>The “special kotlin trick” is called “smart cast”. Basically, if you check that a variable is not null (or has a particular type), then the compiler changes type of the variable in the block, where the check holds. You can read more about it in Kotlin docs: <a href="https://kotlinlang.org/docs/typecasts.html#smart-casts">typecasts</a>, <a href="https://kotlinlang.org/docs/null-safety.html#checking-for-null-in-conditions">null-safety</a>.</p>
 <p>And it’s all great, don’t get me wrong! This behaviour is a lot better than the plain old “every reference can be null, just crash if it is and it’ll be fine”. However…</p>
 <h2 id="why-it-s-still-meh">Why it’s still meh</h2>
 <p>In my opinion, this comes down to 2 things: generality and extensibility.</p>
