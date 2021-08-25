@@ -72,7 +72,7 @@
         <!-- TODO: rethink how tags look -->
         
         <span class="post-tags-inline">
-                ::&nbsp;<a class="post-tag" href="https://iloathereality.github.io/tags/kotlin/">#kotlin</a>&nbsp;<a class="post-tag" href="https://iloathereality.github.io/tags/csharp/">#csharp</a>&nbsp;<a class="post-tag" href="https://iloathereality.github.io/tags/haskell/">#haskell</a>&nbsp;<a class="post-tag" href="https://iloathereality.github.io/tags/rust/">#rust</a>&nbsp;<a class="post-tag" href="https://iloathereality.github.io/tags/go/">#go</a></span>
+                <br><a class="post-tag" href="https://iloathereality.github.io/tags/kotlin/">#kotlin</a>&nbsp;<a class="post-tag" href="https://iloathereality.github.io/tags/csharp/">#csharp</a>&nbsp;<a class="post-tag" href="https://iloathereality.github.io/tags/haskell/">#haskell</a>&nbsp;<a class="post-tag" href="https://iloathereality.github.io/tags/rust/">#rust</a>&nbsp;<a class="post-tag" href="https://iloathereality.github.io/tags/go/">#go</a></span>
     
     </div>
 
@@ -121,7 +121,8 @@
 <p>In modern languages, we have ways to abstract over types. Usually, the mechanism to do so is called generics. For example, a <code>HashMap</code> doesn’t care what the key and value types are, it only cares that the key is comparable and hashable. Thus you can have <code>HashMap&lt;String, i32&gt;</code>, <code>HashMap&lt;User, Settings&gt;</code>, etc while only writing <code>HashMap</code> once. </p>
 <p>That’s all good and all, but what’s the problem? You may ask. Well… Consider this example: the <code>HashMap</code> has a method <code>get</code> which accepts key and returns the value associated with the key if there is one. But what should it return if there is no value associated with the key? It seems reasonable to return <code>null</code> since there is no value. So something like this:</p>
 <pre data-lang="kotlin" style="background-color:#2b303b;color:#c0c5ce;" class="language-kotlin "><code class="language-kotlin" data-lang="kotlin"><span style="color:#b48ead;">class </span><span style="color:#ebcb8b;">HashMap</span><span>&lt;</span><span style="color:#b48ead;">K</span><span>, </span><span style="color:#b48ead;">V</span><span>&gt; {
-</span><span>    </span><span style="color:#65737e;">// If `key` is present in the hash map, returns the value associated with it. 
+</span><span>    </span><span style="color:#65737e;">// If `key` is present in the hash map, 
+</span><span>    </span><span style="color:#65737e;">// returns the value associated with it. 
 </span><span>    </span><span style="color:#65737e;">// Otherwise returns `null`.
 </span><span>    </span><span style="color:#b48ead;">fun </span><span style="color:#8fa1b3;">get</span><span>(key: K): V? { </span><span style="color:#65737e;">/* ... */</span><span> }
 </span><span>}
@@ -169,7 +170,8 @@
 <h3 id="generality-1">Generality</h3>
 <p><code>Option&lt;Option&lt;T&gt;&gt;</code> is a meaningful type, unlike <code>T??</code>. In the same example with <code>HashMap::get</code> there isn’t any problems if it returns <code>Option&lt;_&gt;</code>.</p>
 <pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">impl</span><span>&lt;K, V&gt; HashMap&lt;K, V&gt; {
-</span><span>    </span><span style="color:#65737e;">// If `key` is present in the hash map, returns the value associated with it. 
+</span><span>    </span><span style="color:#65737e;">// If `key` is present in the hash map, 
+</span><span>    </span><span style="color:#65737e;">// returns the value associated with it. 
 </span><span>    </span><span style="color:#65737e;">// Otherwise returns `None`.
 </span><span>    </span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">get</span><span>(&amp;</span><span style="color:#bf616a;">self</span><span>, </span><span style="color:#bf616a;">key</span><span>: &amp;K) -&gt; Option&lt;V&gt; { </span><span style="color:#65737e;">/* ... */ </span><span>}
 </span><span>}
@@ -177,7 +179,7 @@
 <p>If the key isn’t present in the <code>HashMap&lt;K, Option&lt;V&gt;&gt;</code>, then <code>None</code> is returned. If the key is present but the associated value is <code>None</code>, <code>Some(None)</code> is returned. Otherwise, if the key is present and the value isn’t <code>None</code>, then <code>Some(Some(value))</code> is returned. </p>
 <p>The use of sum types gives us 3 distinct kinds of values that can be distinguished from one another, instead of an ambiguous null.</p>
 <h3 id="extensibility-1">Extensibility</h3>
-<p>Sum types can be used for optional values via <code>Option</code>-like types. But they are not limited to only this. You can define your own sum types. It’s very handy when you need to return errors (See rust <code>[Result](https://doc.rust-lang.org/std/result/index.html)</code> for example), define the errors themselves or just in general when you need to hold different kinds (types) of data in one place. </p>
+<p>Sum types can be used for optional values via <code>Option</code>-like types. But they are not limited to only this. You can define your own sum types. It’s very handy when you need to return errors (See rust <a href="https://doc.rust-lang.org/std/result/index.html"><code>Result</code></a> for example), define the errors themselves or just in general when you need to hold different kinds (types) of data in one place. </p>
 <h3 id="explicitness">Explicitness</h3>
 <p>There is one thing you may prefer about <code>null</code> over sum types: <code>T</code> can be <a href="https://en.wikipedia.org/wiki/Type_conversion">coerced</a> to <code>T?</code>.  That means that you don’t need to explicitly wrap values in <code>Some</code> (<code>Just</code>). </p>
 <p>This may be handy, because you need to type ~6 characters less if you want to pass <code>T</code> to a function that accepts <code>T?</code>. However, I don’t think that wrapping inconvenience outweighs the benefits of sum types.</p>
