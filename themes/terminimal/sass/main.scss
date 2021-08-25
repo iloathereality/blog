@@ -134,38 +134,50 @@ code {
 }
 
 pre {
+  position: relative;
   font-family: Hack, DejaVu Sans Mono, Monaco, Consolas, Ubuntu Mono, monospace;
-  padding: 20px;
   font-size: .95rem;
-  overflow: auto;
   border-top: 1px solid rgba(255, 255, 255, .1);
   border-bottom: 1px solid rgba(255, 255, 255, .1);
 
-  @media (max-width: $phone-max-width) {
-    white-space: pre-wrap;
-    word-wrap: break-word;
-  }
-
-  code {
-    padding: 0;
-    margin: 0;
-    background: none;
-  }
-}
-
-pre[data-lang]::before {
+  &[data-lang]::before {
     content: attr(data-lang);
     display: block;
-    float: right;
+    position: absolute;
+    top: 0;
+    right: 0;
     background: var(--accent-alpha-20);
     color: var(--accent-alpha-70);
     padding: 0.2em 0.5em;
     font-weight: bold;
     font-size: 1rem;
     border-radius: 0 0 0 6px;
-    // -pre padding
-    margin-right: -20px;
-    margin-top: -20px;
+  }
+
+  code {
+    display: block;
+    margin: 0;
+    padding: 20px;
+    background: none;
+    font-size: inherit;
+    overflow: auto;
+  }
+
+  @media (max-width: $phone-max-width) {
+    font-size: .85rem;
+
+    &[data-lang] {
+      padding-top: 18px;
+
+      &::before {
+        font-size: 0.9rem;
+      }
+    }
+
+    code {
+      padding: 12px;
+    }
+  }
 }
 
 blockquote {
