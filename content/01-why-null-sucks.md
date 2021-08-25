@@ -14,12 +14,12 @@ We all know that `null` is a ["billion-dollar mistake"], that it creates a lot o
 
 ## Context / What are you talking about?
 
-In this article, I'm specifically talking about the [Kotlin][kt-null-safety] and [C# post v8][csharp-nullable-reference-types] approach to `null`. I'm more familiar with `Kotlin` than `C#`, so I'll mostly be talking about it, but their approaches are similar, so that doesn't really matter.
+In this article, I'm specifically talking about the [Kotlin][kt-null-safety] and [C# post v8][csharp-nullable-reference-types] approach to `null`. I'm more familiar with Kotlin than C#, so I'll mostly be talking about it, but their approaches are similar, so that doesn't really matter.
 
 [kt-null-safety]: https://kotlinlang.org/docs/null-safety.html
 [csharp-nullable-reference-types]: https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-8#nullable-reference-types
 
-Basically, you can't assign null to just any reference type in `Kotlin` (and `C#` post v8 with certain settings). For example, this is a compilation error:
+Basically, you can't assign null to just any reference type in Kotlin (and C# post v8 with certain settings). For example, this is a compilation error:
 
 ```kotlin
 val a: String = null; // compilation error
@@ -113,7 +113,7 @@ data Either a b = Left a | Right b
 ```
 
 {% callout() %}
-I've shown examples in `Rust` and `Haskell` because I'm familiar with them but note that sum types exist in [many languages][langs-with-adt]. 
+I've shown examples in Rust and Haskell because I'm familiar with them but note that sum types exist in [many languages][langs-with-adt]. 
 
 [langs-with-adt]: https://en.wikipedia.org/wiki/Algebraic_data_type#Programming_languages_with_algebraic_data_types
 {% end %}
@@ -171,16 +171,16 @@ It would be interesting to see a language with sum types and `T` to `Option<T>` 
 ## Niche optimization
 
 {% callout() %}
-I could only find mentions of this optimization in `Rust`, but I think it's very neat anyway, so I'll talk about `Rust` in this paragraph.
+I could only find mentions of this optimization in Rust, but I think it's very neat anyway, so I'll talk about Rust in this paragraph.
 {% end %}
 
 There are some types that have unused space in their memory representation --- a *niche*. For example, `bool` is only 1 bit of information, but it uses 1 byte of space, so 7 bits are unused. References (`&T`, `&mut T`) and `NonNull` can never be null, meaning that they have an unused bit pattern --- all zeroes. The same goes with [`NonZero*`]. Enumerations, just as `bool`, can have unused bits/bit patterns.
 
 [`NonZero*`]: https://doc.rust-lang.org/std/num/index.html
 
-What if we could use this for something actually useful? Well, `Rust` can.
+What if we could use this for something actually useful? Well, Rust can.
 
-If a sum type has one of its variants being a type with a niche, then it can use it to represent other variants, instead of using a tag. I.e. `Option<&T>` isn't identical to `struct { value: union { Some(&T), None }, tag: u8 }` (pseudo syntax), but instead it's just `union { Some(&T), None }` where the `None` is encoded as `0` (since reference can never be `0` you can distinguish variants without a `tag`). Moreover, this exact optimization of `Option<&T>` is even [guaranteed][rust-option-representation], so it is fully layout compatible with `*const T`. This allows using it in C-ffi, making `None` on the `Rust` side a `null` on the C side.
+If a sum type has one of its variants being a type with a niche, then it can use it to represent other variants, instead of using a tag. I.e. `Option<&T>` isn't identical to `struct { value: union { Some(&T), None }, tag: u8 }` (pseudo syntax), but instead it's just `union { Some(&T), None }` where the `None` is encoded as `0` (since reference can never be `0` you can distinguish variants without a `tag`). Moreover, this exact optimization of `Option<&T>` is even [guaranteed][rust-option-representation], so it is fully layout compatible with `*const T`. This allows using it in C-ffi, making `None` on the Rust side a `null` on the C side.
 
 [rust-option-representation]: https://doc.rust-lang.org/std/option/index.html#representation
 
@@ -229,9 +229,9 @@ _Edited output of the [test program][rs-play-0]._
 
 [rs-play-0]: https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&gist=0166b25cd98164e32879456d65a8e9b8
 
-## A sad note: `Kotlin`
+## A sad note: Kotlin
 
-`Kotlin` *does* support sum types via [sealed classes][kt-sealed-classes]. Here is an example how you could define and use `Option` ([play][kt-play-0]): 
+Kotlin *does* support sum types via [sealed classes][kt-sealed-classes]. Here is an example how you could define and use `Option` ([play][kt-play-0]): 
 
 [kt-sealed-classes]: https://kotlinlang.org/docs/sealed-classes.html
 [kt-play-0]: https://pl.kotl.in/XZ1fBjith
@@ -256,16 +256,16 @@ fun main() {
 ```
 
 {% callout() %}
-In my opinion, `Kotlin`'s support of sum types is extremely hacky, but who am I to say that, right?
+In my opinion, Kotlin's support of sum types is extremely hacky, but who am I to say that, right?
 {% end %}
 
 Nevertheless, Kotlin doesn't use this for optional values! In fact, it doesn't even have an `Option` class in the standard library. For me, it seems like a big omission. It seems like making `T?` equivalent to `Option<T>` and `Option<N>` (where `N` is not `Option`) be layout compatible with `Java`'s `N` (i.e. `Java`'s `null` being the same as `None<N>`) would be sufficient...
 
-## A sad note: `C#`
+## A sad note: C#
 
-`C#` doesn't support sum types. To some extent they can be simulated using inheritance from an interface or abstract class, however, such an approach lacks one of the greatest benefits of sum types, namely the exhaustiveness check.
+C# doesn't support sum types. To some extent they can be simulated using inheritance from an interface or abstract class, however, such an approach lacks one of the greatest benefits of sum types, namely the exhaustiveness check.
 
-It's especially sad since `F#` (which is running on the same VM) supports sum types (`F#` docs call them [*Discriminated Unions*][fsharp-discr-unions]), but `C#` doesn't.
+It's especially sad since F# (which is running on the same VM) supports sum types (F# docs call them [*Discriminated Unions*][fsharp-discr-unions]), but C# doesn't.
 
 [fsharp-discr-unions]: https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/discriminated-unions
 
@@ -274,9 +274,9 @@ type Option<'a> = None | Some of 'a
 type Either<'a, 'b> = Left of 'a | Right of 'b
 ```
 
-## A sad note: `Go`
+## A sad note: Go
 
-`Go` doesn't support sum types. It's a little sad on its own, but `Go` also doesn't have exceptions and all reference types are implicitly nullable. This means that if a function wants to return an error, it needs to return a tuple of success and error values. This not only makes checking which is `null` (actually `nil`, but it’s the same thing) pretty annoying, but also leaves the possibility for an invalid state where neither success nor error values are null. 
+Go doesn't support sum types. It's a little sad on its own, but Go also doesn't have exceptions and all reference types are implicitly nullable. This means that if a function wants to return an error, it needs to return a tuple of success and error values. This not only makes checking which is `null` (actually `nil`, but it’s the same thing) pretty annoying, but also leaves the possibility for an invalid state where neither success nor error values are null. 
 
 I think it's inexcusable to have such error-prone design flaws in 2012.
 
