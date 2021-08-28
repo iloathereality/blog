@@ -68,14 +68,16 @@
 
 {% macro header(page) %}
     <h1 class="post-title"><a href="{{ page.permalink | safe }}">{{ page.title }}</a></h1>
-    <div class="post-meta-inline">
-        {{ post_macros::date(page=page) }}
-        {{ post_macros::xminread(page=page) }}
+    {% if not page.extra.hide_page_meta %}
+        <div class="post-meta-inline">
+            {{ post_macros::date(page=page) }}
+            {{ post_macros::xminread(page=page) }}
 
-        <!-- TODO: rethink how tags look -->
-        <br>
-        {{ post_macros::tags(page=page) }}
-    </div>
+            <!-- TODO: rethink how tags look -->
+            <br>
+            {{ post_macros::tags(page=page) }}
+        </div>
+    {% endif %}
 
 {% endmacro header %}
 
