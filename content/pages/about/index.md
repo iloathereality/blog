@@ -1,6 +1,9 @@
 +++
 title = "About me"
 path = "about"
+
+[extra]
+hide_page_meta = true
 +++
 
 Hi \0
