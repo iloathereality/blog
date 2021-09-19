@@ -280,3 +280,14 @@ hr {
 .hidden {
   display: none;
 }
+
+.zola-anchor {
+    color: var(--accent);
+    text-decoration: none;
+    margin-left: 10px;
+    visibility: hidden;
+}
+
+h1:hover, h2:hover, h3:hover, h4:hover, h5:hover, h6:hover {
+  a { visibility: visible; }
+}

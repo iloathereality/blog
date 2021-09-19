@@ -7,4 +7,5 @@ sort_by = "date"
 
 title = "I hate reality"
 description = "personal blog (mostly about programming)"
+insert_anchor_links = "right"
 +++
