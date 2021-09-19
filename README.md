@@ -6,7 +6,7 @@ You can read more about me on the [`/about`] page.
 
 [my]: https://github.com/WaffleLapkin
 [telegram channel]: https://t.me/ihatereality
-[`/about`]: https://iloathereality.github.io/about/
+[`/about`]: https://ihatereality.space/about/
 
 ## Technical details
 
