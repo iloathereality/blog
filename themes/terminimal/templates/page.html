@@ -1,8 +1,40 @@
 {% extends "index.html" %}
 
-{% block title %}
-    {{ page.title }}
-{% endblock title %}
+{% block title %}{{ page.title }}{% endblock title %}
+
+{% block social_metatags %}
+    <meta name="title" content="{{page.title}}">
+    <meta name="description" content="{{page.description}}">
+
+    {% if page.taxonomies.tags %}
+        <meta name="keywords" itemprop="tags" content="{{ page.taxonomies.tags | join(sep=', ') }}">
+    {% endif %}
+
+    <!-- Facebook Meta Tags -->
+    <meta property="og:url" content="{{page.permalink | safe}}">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="{{page.title}}">
+    <meta property="og:description" content="{{page.description}}">
+    <meta property="og:locale" content="{{lang}}">
+
+    {% if page.date %}
+        <meta property="article:published_time" content="{{page.date | date(format="%F")}}">
+    {% endif %}
+
+    {% if page.taxonomies.tags %}
+        {% for tag in page.taxonomies.tags %}
+            <meta property="article:tag" content="{{tag}}">
+        {% endfor %}
+    {% endif %}
+
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="twitter:domain" content="{{config.extra.domain}}">
+    <meta property="twitter:url" content="{{page.permalink | safe}}">
+    <meta name="twitter:title" content="{{page.title}}">
+    <meta name="twitter:description" content="{{page.description}}">
+    <meta name="twitter:creator" content="{{config.extra.twitter_creator_username}}">
+{% endblock social_metatags %}
 
 {% block content %}
     <div class="post">
