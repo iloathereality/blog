@@ -3,8 +3,10 @@
 {% block title %}{{ page.title }}{% endblock title %}
 
 {% block social_metatags %}
+    {% set image = config.base_url ~ config.extra.preview_image %}
     <meta name="title" content="{{page.title}}">
     <meta name="description" content="{{page.description}}">
+    <meta name="image" content="{{image|safe}}">
 
     {% if page.taxonomies.tags %}
         <meta name="keywords" itemprop="tags" content="{{ page.taxonomies.tags | join(sep=', ') }}">
@@ -15,6 +17,7 @@
     <meta property="og:type" content="article">
     <meta property="og:title" content="{{page.title}}">
     <meta property="og:description" content="{{page.description}}">
+    <meta property="og:image" content="{{image|safe}}">
     <meta property="og:locale" content="{{lang}}">
 
     {% if page.date %}
@@ -33,6 +36,7 @@
     <meta property="twitter:url" content="{{page.permalink | safe}}">
     <meta name="twitter:title" content="{{page.title}}">
     <meta name="twitter:description" content="{{page.description}}">
+    <meta name="twitter:image" content="{{image|safe}}">
     <meta name="twitter:creator" content="{{config.extra.twitter_creator_username}}">
 {% endblock social_metatags %}
 
