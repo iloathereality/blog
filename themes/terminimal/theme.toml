@@ -43,3 +43,6 @@ post_view_navigation_prompt = "Thanks for reading! Read other posts?"
 # Switch this to true if you need full unicode support.
 # Defaults to false.
 use_full_hack_font = false
+
+domain = "ihatereality.space"
+twitter_creator_username = "maybewaffle"

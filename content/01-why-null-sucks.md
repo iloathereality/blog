@@ -2,6 +2,7 @@
 title = "Why null sucks, even if it's checked"
 date = 2021-08-20
 updated = 2021-08-25
+description = "We all know that `null` is a \"billion-dollar mistake\", that it creates a lot of easy ways to make terrible mistakes. But it's only so bad when it's not checked by anyone and the compiler doesn't force you to check it, right? Well, the title might be a spoiler, but let's find out..."
 
 [taxonomies] 
 tags = ["kotlin", "csharp", "haskell", "rust", "go"]

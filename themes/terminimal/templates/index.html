@@ -10,6 +10,29 @@
     <title>{%- block title %}{{ config.title }}{% endblock title -%}</title>
     {{ head_macros::head(config=config) }}
 
+    {% block social_metatags %}
+    <meta name="title" content="{{section.title}}">
+    <meta name="description" content="{{section.description}}">
+
+    <!-- Facebook Meta Tags -->
+    <meta property="og:url" content="{{section.permalink | safe}}">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="{{section.title}}">
+    <meta property="og:description" content="{{section.description}}">
+    <meta property="og:locale" content="{{lang}}">
+
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="twitter:domain" content="{{config.extra.domain}}">
+    <meta property="twitter:url" content="{{section.permalink | safe}}">
+    <meta name="twitter:title" content="{{section.title}}">
+    <meta name="twitter:description" content="{{section.description}}">
+    <meta name="twitter:creator" content="{{config.extra.twitter_creator_username}}">
+    {% endblock social_metatags %}
+
+
+    {{ head_macros::style_head(config=config) }}
+
     {% if config.generate_feed %}
         <link rel="alternate" type={% if config.feed_filename=="atom.xml" %}"application/atom+xml"{% else %}"application/rss+xml"{% endif %} title="RSS" href="{{ get_url(path=config.feed_filename) | safe }}">
     {% endif %}

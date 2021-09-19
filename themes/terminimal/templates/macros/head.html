@@ -3,6 +3,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
     <meta name="robots" content="noodp"/>
 
+{%- if config.extra.author %}
+    <meta name="author" content="{{config.extra.author}}">
+{% endif -%}
+
+{# theme color from css #}
+{%- if config.extra.accent_color == "green" %}
+    <meta name="theme-color" content="rgb(120,226,160)">
+{%- elif config.extra.accent_color == "orange" %}
+    <meta name="theme-color" content="rgb(255,168,106)">
+{%- elif config.extra.accent_color == "pink" %}
+    <meta name="theme-color" content="rgb(238,114,241)">
+{%- elif config.extra.accent_color == "red" %}
+    <meta name="theme-color" content="rgb(255,98,102)">
+{% else %}
+    <meta name="theme-color" content="rgb(35,176,255)">
+{% endif -%}
+
+{% endmacro head %}
+
+{% macro style_head(config) %}
     <link rel="stylesheet" href="{{ get_url(path="style.css", trailing_slash=false) | safe }}">
 
 {%- if config.extra.accent_color %}
@@ -22,5 +42,4 @@
 {% else %}
     <link rel="stylesheet" href="{{ get_url(path="font-hack-subset.css", trailing_slash=false) | safe }}">
 {% endif -%}
-
-{% endmacro head %}
+{% endmacro style_head %}

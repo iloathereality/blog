@@ -4,4 +4,7 @@
 
 # sorting order for pagination
 sort_by = "date"
+
+title = "I hate reality"
+description = "personal blog (mostly about programming)"
 +++
