@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://iloathereality.github.io/sitemap.xml
+Sitemap: https://ihatereality.space/sitemap.xml

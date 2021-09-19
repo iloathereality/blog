@@ -2,17 +2,17 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
       <title>I hate reality</title>
-        <link>https://iloathereality.github.io</link>
+        <link>https://ihatereality.space</link>
         <description></description>
         <generator>Zola</generator>
         <language>en</language>
-        <atom:link href="https://iloathereality.github.io/rss.xml" rel="self" type="application/rss+xml"/>
+        <atom:link href="https://ihatereality.space/rss.xml" rel="self" type="application/rss+xml"/>
         <lastBuildDate>Wed, 25 Aug 2021 00:00:00 +0000</lastBuildDate>
         <item>
             <title>Why null sucks, even if it&#x27;s checked</title>
             <pubDate>Fri, 20 Aug 2021 00:00:00 +0000</pubDate>
-            <link>https://iloathereality.github.io/01-why-null-sucks/</link>
-            <guid>https://iloathereality.github.io/01-why-null-sucks/</guid>
+            <link>https://ihatereality.space/01-why-null-sucks/</link>
+            <guid>https://ihatereality.space/01-why-null-sucks/</guid>
             <description>&lt;p&gt;We all know that &lt;code&gt;null&lt;&#x2F;code&gt; is a &lt;a href=&quot;https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;Null_pointer#History&quot;&gt;“billion-dollar mistake”&lt;&#x2F;a&gt;, that it creates a lot of easy ways to make terrible mistakes. But it’s only so bad when it’s not checked by anyone and the compiler doesn’t force you to check it, right? Well, the title might be a spoiler, but let’s find out…&lt;&#x2F;p&gt;
 </description>
         </item>
