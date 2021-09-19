@@ -11,14 +11,17 @@
     {{ head_macros::head(config=config) }}
 
     {% block social_metatags %}
+    {% set image = config.base_url ~ config.extra.preview_image %}
     <meta name="title" content="{{section.title}}">
     <meta name="description" content="{{section.description}}">
+    <meta name="image" content="{{image|safe}}">
 
     <!-- Facebook Meta Tags -->
     <meta property="og:url" content="{{section.permalink | safe}}">
     <meta property="og:type" content="website">
     <meta property="og:title" content="{{section.title}}">
     <meta property="og:description" content="{{section.description}}">
+    <meta property="og:image" content="{{image|safe}}">
     <meta property="og:locale" content="{{lang}}">
 
     <!-- Twitter Meta Tags -->
@@ -27,6 +30,7 @@
     <meta property="twitter:url" content="{{section.permalink | safe}}">
     <meta name="twitter:title" content="{{section.title}}">
     <meta name="twitter:description" content="{{section.description}}">
+    <meta name="twitter:image" content="{{image|safe}}">
     <meta name="twitter:creator" content="{{config.extra.twitter_creator_username}}">
     {% endblock social_metatags %}
 
