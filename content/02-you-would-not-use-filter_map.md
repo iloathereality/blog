@@ -4,7 +4,7 @@ date = 2021-09-20
 description = "There is a function `Iterator::filter_map`. I want to argue that it's useless and Rust provides more powerful tools to replace it."
 
 [taxonomies] 
-tags = []
+tags = ["rust"]
 +++
 
 There is a function `Iterator::filter_map`. I want to argue that it's useless and Rust provides more powerful tools to replace it.
