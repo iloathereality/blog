@@ -7,7 +7,15 @@
         <generator>Zola</generator>
         <language>en</language>
         <atom:link href="https://ihatereality.space/rss.xml" rel="self" type="application/rss+xml"/>
-        <lastBuildDate>Wed, 25 Aug 2021 00:00:00 +0000</lastBuildDate>
+        <lastBuildDate>Mon, 20 Sep 2021 00:00:00 +0000</lastBuildDate>
+        <item>
+            <title>You wouldn&#x27;t use `filter_map`, right?</title>
+            <pubDate>Mon, 20 Sep 2021 00:00:00 +0000</pubDate>
+            <link>https://ihatereality.space/02-you-would-not-use-filter-map/</link>
+            <guid>https://ihatereality.space/02-you-would-not-use-filter-map/</guid>
+            <description>&lt;p&gt;There is a function &lt;code&gt;Iterator::filter_map&lt;&#x2F;code&gt;. I want to argue that it’s useless and Rust provides more powerful tools to replace it.&lt;&#x2F;p&gt;
+</description>
+        </item>
         <item>
             <title>Why null sucks, even if it&#x27;s checked</title>
             <pubDate>Fri, 20 Aug 2021 00:00:00 +0000</pubDate>
