@@ -51,6 +51,11 @@
   %tags {
     margin-bottom: 20px;
     font-size: 1rem;
+    color: var(--color);
+    opacity: .5;
+    a {
+      text-decoration: none;
+    }
   }
 
   &-tags {
@@ -148,12 +153,8 @@
   a {
     text-decoration: none;
   }
+}
 
-  .post-list-title {
-    text-decoration: underline;
-  }
-
-  .post-tag {
-    text-decoration: underline;
-  }
+ul li.tag-list a {
+  text-decoration: none;
 }
