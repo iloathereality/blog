@@ -77,7 +77,7 @@ where
 
 This function is equivalent to `map` combined with [`flatten`] (which, in turn, is equivalent to `flat_map(id)`, they are interchangeable). 
 
-At first glance, it may seem like `filter_map` and `flat_map` are different: the first expects a function that returns `Option` while the other expects a function that returns something that can be turned into `Iterator`. But then, if you think about it, `Option` may be seen as a collection with `{0, 1}` elements, and [`take`] is its [`next`] function (if you know how monads work, this might have been obvious). Moreover, `Option` actually [implements `IntoIterator`]! So... you can replace any call to `filter_map` with a call to `flat_map` and everything will continue to work just fine :flower:
+At first glance, it may seem like `filter_map` and `flat_map` are different: the first expects a function that returns `Option` while the other expects a function that returns something that can be turned into `Iterator`. But then, if you think about it, `Option` may be seen as a collection with 0 or 1 elements, and [`take`] is its [`next`] function (if you know how monads work, this might have been obvious). Moreover, `Option` actually [implements `IntoIterator`]! So... you can replace any call to `filter_map` with a call to `flat_map` and everything will continue to work just fine :flower:
 
 We can't just remove `filter_map` because backwards compatibility sucks. But I don't think I'll use it ever again.
 
@@ -105,7 +105,7 @@ We can't just remove `filter_map` because backwards compatibility sucks. But I d
 
 ### `Result` is also `IntoIterator`
 
-It behaves very like `Option`: If it's `Ok()` it'll yield exactly one item, otherwise, it won't yield anything. `Result::into_iter(res)` is the same, as `Option::into_iter(res.ok())`. I haven't seen this impl used in practice. If you have an `impl Iterator<Item = Result<T, E>>` you can use `.flatten()` to ignore errors, I guess.
+It behaves very like `Option`: If it's `Ok(_)` it'll yield exactly one item, otherwise, it won't yield anything. `Result::into_iter(res)` is the same as `Option::into_iter(res.ok())`. I haven't seen this impl used in practice. If you have an `impl Iterator<Item = Result<T, E>>` you can use `.flatten()` to ignore errors, I guess.
 
 ## Concerns
 
