@@ -1,6 +1,7 @@
 +++
 title = "You wouldn't use `filter_map`, right?"
 date = 2021-09-20
+updated = 2021-09-21
 description = "There is a function `Iterator::filter_map`. I want to argue that it's useless and Rust provides more powerful tools to replace it."
 
 [taxonomies] 
@@ -115,9 +116,13 @@ There are some concerns about whatever `flat_map` can replace `filter_map`. I do
 
 The most important of the concerns: with `filter_map` intent may be clearer to some readers. I think that `flat_map` doesn't noticeably decrease readability, but that may be different to some other programmers, especially beginners.
 
-### OpTiMiZaTiOnS
+### Optimizations
 
-It's possible that `filter_map` can be better optimized than `flat_map` since it's more specialized. It's unclear if it's true and if so, how much does it affect speed / if it's possible to fix with some specialization in `std`.
+Since `filter_map` is more specialized and less complicated than `flat_map` it's possible that it can be better optimized. It's unclear how much does it affect speed or if it's possible to fix this with some specialization in standart library.
+
+`filter_map` is also [32 bytes smaller] than `flat_map`.
+
+[32 bytes smaller]: https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&gist=72f01ae1b8877f501a37db2f33724fff
 
 ### Type inference
 
@@ -135,9 +140,25 @@ However, in practice, it seems like `filter_map` is usually used with explicit `
 
 [playground]: https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&gist=061a524a15d8d9c1d656aceb61949876
 
+## Criticism
+
+{% callout() %}
+This article received some criticism that needed to be addressed. 
+
+In response to it this paragraph was added in [2021-09-21 update].
+
+[2021-09-21 update]: https://github.com/iloathereality/blog/pull/30
+{% end %}
+
+Turns out `filter_map` has one advantage over `flat_map` --- it can know its own size better. Since `filter_map` can't ever add more elements than there were previously, its [`size_hint`] is `(0, upper)` (where `upper` is the upper bound of the inner iterator). `flat_map`'s `size_hint` on the other hand returns `(0, None)` in most cases (it's a bit more complicated than that since `flat_map` stores iterators it can _sometimes_ know _a bit_ more).
+
+It should be possible to specialize `flat_map` for `Option<_>` (and maybe `Result<_>`, etc) so it produces more accurate `size_hint`. However, at the moment of writing this there is no such specialization which may make `flat_map` considerably worse than `filter_map` in some scenarious. I'd like for `filter_map` to be fully equivalent to `flat_map`, however atm it simply isn't.
+
+[`size_hint`]: https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.size_hint
+
 ## Conclusion
 
-I prefer to use `flat_map` over `filter_map`, it seems *right* (also for some reason I really like the name). When making your choice between the two consider readability. 
+I still prefer to use `flat_map` over `filter_map`, it seems *right* (also for some reason I really like the name). When making your choice between the two consider readability and `size_hint` (see above). 
 
 There are a lot of hidden things in Rust, which are hard to notice, but when you do notice them, you can only say "of course!" (for example `Option: IntoIterator`). I would recommend reading iterator docs carefully, there are a lot of hidden gems.
 
