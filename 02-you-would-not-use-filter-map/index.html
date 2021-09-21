@@ -101,11 +101,13 @@
     <span class="post-date">
             2021-09-20
         
+            [updated 2021-09-21]
+        
     </span>
 
             
     <span class="post-read-time">
-        :: 5 min read
+        :: 6 min read
     </span>
 
 
@@ -195,8 +197,9 @@
 <p>There are some concerns about whatever <code>flat_map</code> can replace <code>filter_map</code>. I don’t think that they are significant, but they exist.</p>
 <h3 id="readability">Readability<a class="zola-anchor" href="#readability" aria-label="Anchor link for: readability">⌗</a></h3>
 <p>The most important of the concerns: with <code>filter_map</code> intent may be clearer to some readers. I think that <code>flat_map</code> doesn’t noticeably decrease readability, but that may be different to some other programmers, especially beginners.</p>
-<h3 id="optimizations">OpTiMiZaTiOnS<a class="zola-anchor" href="#optimizations" aria-label="Anchor link for: optimizations">⌗</a></h3>
-<p>It’s possible that <code>filter_map</code> can be better optimized than <code>flat_map</code> since it’s more specialized. It’s unclear if it’s true and if so, how much does it affect speed / if it’s possible to fix with some specialization in <code>std</code>.</p>
+<h3 id="optimizations">Optimizations<a class="zola-anchor" href="#optimizations" aria-label="Anchor link for: optimizations">⌗</a></h3>
+<p>Since <code>filter_map</code> is more specialized and less complicated than <code>flat_map</code> it’s possible that it can be better optimized. It’s unclear how much does it affect speed or if it’s possible to fix this with some specialization in standart library.</p>
+<p><code>filter_map</code> is also <a href="https://play.rust-lang.org/?version=stable&amp;mode=debug&amp;edition=2018&amp;gist=72f01ae1b8877f501a37db2f33724fff">32 bytes smaller</a> than <code>flat_map</code>.</p>
 <h3 id="type-inference">Type inference<a class="zola-anchor" href="#type-inference" aria-label="Anchor link for: type-inference">⌗</a></h3>
 <p>Since <code>filter_map</code> is less general, it can help type inference. For example (<a href="https://play.rust-lang.org/?version=stable&amp;mode=debug&amp;edition=2018&amp;gist=061a524a15d8d9c1d656aceb61949876">playground</a>):</p>
 <pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#65737e;">// Compiles
@@ -206,8 +209,23 @@
 </span><span>iter.</span><span style="color:#96b5b4;">flat_map</span><span>(|_| &lt;_&gt;::default()).</span><span style="color:#96b5b4;">map</span><span>(|</span><span style="color:#bf616a;">x</span><span>: T| {});
 </span></code></pre>
 <p>However, in practice, it seems like <code>filter_map</code> is usually used with explicit <code>Option</code>, so this doesn’t matter.</p>
+<h2 id="criticism">Criticism<a class="zola-anchor" href="#criticism" aria-label="Anchor link for: criticism">⌗</a></h2>
+<div class="callout">
+  <img 
+    class="callout-icon"
+    src="/twemoji/assets/svg/1f438.svg"
+    alt="🐸"
+  />
+  <div class="callout-body">
+    <p>This article received some criticism that needed to be addressed. </p>
+<p>In response to it this paragraph was added in <a href="https://github.com/iloathereality/blog/pull/30">2021-09-21 update</a>.</p>
+
+  </div>
+</div>
+<p>Turns out <code>filter_map</code> has one advantage over <code>flat_map</code> — it can know its own size better. Since <code>filter_map</code> can’t ever add more elements than there were previously, its <a href="https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.size_hint"><code>size_hint</code></a> is <code>(0, upper)</code> (where <code>upper</code> is the upper bound of the inner iterator). <code>flat_map</code>’s <code>size_hint</code> on the other hand returns <code>(0, None)</code> in most cases (it’s a bit more complicated than that since <code>flat_map</code> stores iterators it can <em>sometimes</em> know <em>a bit</em> more).</p>
+<p>It should be possible to specialize <code>flat_map</code> for <code>Option&lt;_&gt;</code> (and maybe <code>Result&lt;_&gt;</code>, etc) so it produces more accurate <code>size_hint</code>. However, at the moment of writing this there is no such specialization which may make <code>flat_map</code> considerably worse than <code>filter_map</code> in some scenarious. I’d like for <code>filter_map</code> to be fully equivalent to <code>flat_map</code>, however atm it simply isn’t.</p>
 <h2 id="conclusion">Conclusion<a class="zola-anchor" href="#conclusion" aria-label="Anchor link for: conclusion">⌗</a></h2>
-<p>I prefer to use <code>flat_map</code> over <code>filter_map</code>, it seems <em>right</em> (also for some reason I really like the name). When making your choice between the two consider readability. </p>
+<p>I still prefer to use <code>flat_map</code> over <code>filter_map</code>, it seems <em>right</em> (also for some reason I really like the name). When making your choice between the two consider readability and <code>size_hint</code> (see above). </p>
 <p>There are a lot of hidden things in Rust, which are hard to notice, but when you do notice them, you can only say “of course!” (for example <code>Option: IntoIterator</code>). I would recommend reading iterator docs carefully, there are a lot of hidden gems.</p>
 <p>bye.</p>
 
