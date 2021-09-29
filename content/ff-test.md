@@ -60,6 +60,12 @@ struct Ugh;
 fn test<'a, T: ?Sized + 'a>(_: &T, _ugh: &'a Ugh) -> () {}
 ```
 
+# Header one
+## Header two
+### Header three
+
+---
+
 ### djddcj
 
 Unmono `monomono mono` unmono `a litle bit more mono` djceje;cvj;ecj `Option<T>` option.
