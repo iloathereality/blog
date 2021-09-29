@@ -18,7 +18,7 @@ This ~~tweet~~ post is inspired by [this] tweet from Boxy. Thanks, Boxy. <3
 [this]: https://twitter.com/EllenNyan0214/status/1425911176853139460?s=20
 {% end %}
 
-## What is `Iterator::filter_map`?
+# What is `Iterator::filter_map`?
 
 So [`filter_map`] is a function provided by the `Iterator` trait:
 
@@ -63,7 +63,7 @@ So far, `filter_map` seems pretty useful, right? Well, turns out it's just a les
 [`filter`]: https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.filter
 [`map`]: https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.map
 
-## `flat_map` to rule them all
+# `flat_map` to rule them all
 
 [`flat_map`] is another function provided by the `Iterator` trait. It looks like this: 
 
@@ -88,7 +88,7 @@ We can't just remove `filter_map` because backwards compatibility sucks. But I d
 [`next`]: +https://doc.rust-lang.org/std/iter/trait.Iterator.html#tymethod.next
 [implements `IntoIterator`]: https://doc.rust-lang.org/std/option/enum.Option.html#impl-IntoIterator
 
-## Some more takeovers from `Option: IntoIterator`
+# Some more takeovers from `Option: IntoIterator`
 
 [`iter::once(x)`] is actually equivalent to `Some(x)` in cases where `IntoIterator` is expected. It is even [implemented using the option's `IntoIter`]. You probably shouldn't use `Some(x)` like this, but you could.
 
@@ -104,19 +104,19 @@ We can't just remove `filter_map` because backwards compatibility sucks. But I d
 [`iter::once(x)`]: https://doc.rust-lang.org/std/iter/fn.once.html
 [implemented using the option's `IntoIter`]: https://github.com/rust-lang/rust/blob/db1fb85cff63ad5fffe435e17128f99f9e1d970c/library/core/src/iter/sources/once.rs#L65
 
-### `Result` is also `IntoIterator`
+## `Result` is also `IntoIterator`
 
 It behaves very like `Option`: If it's `Ok(_)` it'll yield exactly one item, otherwise, it won't yield anything. `Result::into_iter(res)` is the same as `Option::into_iter(res.ok())`. I haven't seen this impl used in practice. If you have an `impl Iterator<Item = Result<T, E>>` you can use `.flatten()` to ignore errors, I guess.
 
-## Concerns
+# Concerns
 
 There are some concerns about whatever `flat_map` can replace `filter_map`. I don't think that they are significant, but they exist.
 
-### Readability
+## Readability
 
 The most important of the concerns: with `filter_map` intent may be clearer to some readers. I think that `flat_map` doesn't noticeably decrease readability, but that may be different to some other programmers, especially beginners.
 
-### Optimizations
+## Optimizations
 
 Since `filter_map` is more specialized and less complicated than `flat_map` it's possible that it can be better optimized. It's unclear how much does it affect speed or if it's possible to fix this with some specialization in standart library.
 
@@ -124,7 +124,7 @@ Since `filter_map` is more specialized and less complicated than `flat_map` it's
 
 [32 bytes smaller]: https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&gist=72f01ae1b8877f501a37db2f33724fff
 
-### Type inference
+## Type inference
 
 Since `filter_map` is less general, it can help type inference. For example ([playground]):
 
@@ -140,7 +140,7 @@ However, in practice, it seems like `filter_map` is usually used with explicit `
 
 [playground]: https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&gist=061a524a15d8d9c1d656aceb61949876
 
-## Criticism
+# Criticism
 
 {% callout() %}
 This article received some criticism that needed to be addressed. 
@@ -156,7 +156,7 @@ It should be possible to specialize `flat_map` for `Option<_>` (and maybe `Resul
 
 [`size_hint`]: https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.size_hint
 
-## Conclusion
+# Conclusion
 
 I still prefer to use `flat_map` over `filter_map`, it seems *right* (also for some reason I really like the name). When making your choice between the two consider readability and `size_hint` (see above). 
 

@@ -14,7 +14,7 @@ We all know that `null` is a ["billion-dollar mistake"], that it creates a lot o
 
 <!-- more -->
 
-## Context / What are you talking about?
+# Context / What are you talking about?
 
 In this article, I'm specifically talking about the [Kotlin][kt-null-safety] and [C# post v8][csharp-nullable-reference-types] approach to `null`. I'm more familiar with Kotlin than C#, so I'll mostly be talking about it, but their approaches are similar, so that doesn't really matter.
 
@@ -86,11 +86,11 @@ The "special kotlin trick" is called "smart cast". Basically, if you check that 
 
 And it's all great, don't get me wrong! This behaviour is a lot better than the plain old "every reference can be null, just crash if it is and it'll be fine". However...
 
-## Why it's still meh
+# Why it's still meh
 
 In my opinion, this comes down to 2 things: generality and extensibility.
 
-### Generality
+## Generality
 
 In modern languages, we have ways to abstract over types. Usually, the mechanism to do so is called generics. For example, a `HashMap` doesn't care what the key and value types are, it only cares that the key is comparable and hashable. Thus you can have `HashMap<String, i32>`, `HashMap<User, Settings>`, etc while only writing `HashMap` once. 
 
@@ -111,7 +111,7 @@ The crux of the problem is this: you can't distinguish between "absence of value
 
 This is just a simple example, but in general, you can't use `null` in generic code because `null` is too special and **unique**.
 
-### Extensibility
+## Extensibility
 
 `null` is not extensible. This mechanism is only useful when you have an optional value: either there is a value, or there isn't. 
 
@@ -119,7 +119,7 @@ It isn't useful when you need to express errors (`null` is used for this anyway,
 
 It may seem like this isn’t a problem --- we were talking about expressing optional values from the very beginning. But bear with me, and for now just understand that `null` is not extensible and there may be other, more extensible, mechanisms.
 
-## The saviour?
+# The saviour?
 
 As I said before, there may be a more general and extensible way to handle optional values. And there is! It has a lot of different names --- sum types, enumerations, tagged unions, discriminated unions, etc. They’re all conceptually similar, but I like the "sum types" name the most, so that’s what I’ll call it.
 
@@ -150,7 +150,7 @@ But it actually solves all the `null` problems I've mentioned!
 Another nice fact about `Option` (`Maybe`) is that it can be defined in a library. Unlike nullable types, there's nothing special about this type. The compiler doesn't need to know about it, it's just a type.
 {% end %}
 
-### Generality
+## Generality
 
 `Option<Option<T>>` is a meaningful type, unlike `T??`. In the same example with `HashMap::get` there isn't any problems if it returns `Option<_>`.
 
@@ -167,11 +167,11 @@ If the key isn't present in the `HashMap<K, Option<V>>`, then `None` is returned
 
 The use of sum types gives us 3 distinct kinds of values that can be distinguished from one another, instead of an ambiguous null.
 
-### Extensibility
+## Extensibility
 
 Sum types can be used for optional values via `Option`-like types. But they are not limited to only this. You can define your own sum types. It's very handy when you need to return errors (See rust [`Result`](https://doc.rust-lang.org/std/result/index.html) for example), define the errors themselves or just in general when you need to hold different kinds (types) of data in one place. 
 
-### Explicitness
+## Explicitness
 
 There is one thing you may prefer about `null` over sum types: `T` can be [coerced][type-coercion] to `T?`.  That means that you don't need to explicitly wrap values in `Some` (`Just`). 
 
@@ -192,7 +192,7 @@ let res = f(Some(1));
 
 It would be interesting to see a language with sum types and `T` to `Option<T>` coercion though 👀
 
-## Niche optimization
+# Niche optimization
 
 {% callout() %}
 I could only find mentions of this optimization in Rust, but I think it's very neat anyway, so I'll talk about Rust in this paragraph.
@@ -253,7 +253,7 @@ _Edited output of the [test program][rs-play-0]._
 
 [rs-play-0]: https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&gist=0166b25cd98164e32879456d65a8e9b8
 
-## A sad note: Kotlin
+# A sad note: Kotlin
 
 Kotlin *does* support sum types via [sealed classes][kt-sealed-classes]. Here is an example how you could define and use `Option` ([play][kt-play-0]): 
 
@@ -285,7 +285,7 @@ In my opinion, Kotlin's support of sum types is extremely hacky, but who am I to
 
 Nevertheless, Kotlin doesn't use this for optional values! In fact, it doesn't even have an `Option` class in the standard library. For me, it seems like a big omission. It seems like making `T?` equivalent to `Option<T>` and `Option<N>` (where `N` is not `Option`) be layout compatible with `Java`'s `N` (i.e. `Java`'s `null` being the same as `None<N>`) would be sufficient...
 
-## A sad note: C#
+# A sad note: C#
 
 C# doesn't support sum types. To some extent they can be simulated using inheritance from an interface or abstract class, however, such an approach lacks one of the greatest benefits of sum types, namely the exhaustiveness check.
 
@@ -298,13 +298,13 @@ type Option<'a> = None | Some of 'a
 type Either<'a, 'b> = Left of 'a | Right of 'b
 ```
 
-## A sad note: Go
+# A sad note: Go
 
 Go doesn't support sum types. It's a little sad on its own, but Go also doesn't have exceptions and all reference types are implicitly nullable. This means that if a function wants to return an error, it needs to return a tuple of success and error values. This not only makes checking which is `null` (actually `nil`, but it’s the same thing) pretty annoying, but also leaves the possibility for an invalid state where neither success nor error values are null. 
 
 I think it's inexcusable to have such error-prone design flaws in 2012.
 
-## Conclusion
+# Conclusion
 
 There is no nice conclusion. The reality is painful as usual. We are stuck with a 56-year old abstraction that has proven itself to be error-prone for a while now. We are stuck with it, even though a better solution exists for longer than I have.
 
