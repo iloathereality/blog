@@ -1,13 +1,13 @@
 +++
 title = "Everybody need a place (and time) to pause"
 date = 2021-10-12
-description = "As you may know, a have a (russian) telegram channel. One day I had a random thought about something I could make there. Now it became a tradition..."
+description = "As you may know, I have a (russian) telegram channel. One day I had a random thought about something I could make there. Now it became a tradition..."
 
 [taxonomies] 
 tags = []
 +++
 
-As you may know, a have a (russian) [telegram channel](https://t.me/ihatereality). One day I had a random thought about something I could make there. Now it became a tradition...
+As you may know, I have a (russian) [telegram channel](https://t.me/ihatereality). One day I had a random thought about something I could make there. Now it became a tradition...
 
 <!-- more -->
 
