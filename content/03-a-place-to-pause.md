@@ -31,7 +31,7 @@ It didn't last for long though. I was making such polls for a week (ie the last 
 
 So, I stopped. Then on September 1, I [did](https://t.me/ihatereality/2328) a "Rate last summer" poll. And then I didn't do anything like that for a long time. Now I want to revive this tradition (as of writing this it's October 8 and I've just posted a [new poll](https://t.me/ihatereality/2425))
 
-But why? Why did people like these polls, this silly little tradition? The short answer: I don't know. But I think these posts let people reflect on their lives a little, they open up space for quite interesting and cosy discussions, they let us pause for a moment and think ''what has really happened (today)?".
+But why? Why did people like these polls, this silly little tradition? The short answer: I don't know. But I think these posts let people reflect on their lives a little, they open up space for quite interesting and cosy discussions, they let us pause for a moment and think "what has really happened (today)?".
 
 And in the insane reality, we all live in these pauses are far more valuable, than it may seem at first glance.
 
