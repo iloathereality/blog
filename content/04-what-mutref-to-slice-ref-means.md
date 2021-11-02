@@ -37,7 +37,7 @@ println!("{r:p}: {r} (value = {v})", r = shared, v = value);
 // Prints <different addr>: 17 (value = 1)
 ```
 
-[(playground)](https://play.rust-lang.org/?version=nightly&mode=debug&edition=2021&gist=ff4796eeff3f3bf0f26e2174454755ef)
+[(playground)](https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&gist=ff4796eeff3f3bf0f26e2174454755ef)
 
 # How is a slice different?
 
