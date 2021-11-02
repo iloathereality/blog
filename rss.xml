@@ -7,7 +7,15 @@
         <generator>Zola</generator>
         <language>en</language>
         <atom:link href="https://ihatereality.space/rss.xml" rel="self" type="application/rss+xml"/>
-        <lastBuildDate>Tue, 12 Oct 2021 00:00:00 +0000</lastBuildDate>
+        <lastBuildDate>Tue, 02 Nov 2021 00:00:00 +0000</lastBuildDate>
+        <item>
+            <title>What does `&amp;mut &amp;[T]` mean?</title>
+            <pubDate>Tue, 02 Nov 2021 00:00:00 +0000</pubDate>
+            <link>https://ihatereality.space/04-what-mutref-to-slice-ref-means/</link>
+            <guid>https://ihatereality.space/04-what-mutref-to-slice-ref-means/</guid>
+            <description>&lt;p&gt;References can be quite confusing, especially with different mutabilities. Indeed, only a third of people in &lt;a href=&quot;https:&#x2F;&#x2F;t.me&#x2F;ihatereality&#x2F;1776&quot;&gt;my poll&lt;&#x2F;a&gt; said that they understand what &lt;code&gt;&amp;amp;mut &amp;amp;[T]&lt;&#x2F;code&gt; means!&lt;&#x2F;p&gt;
+</description>
+        </item>
         <item>
             <title>Everybody need a place (and time) to pause</title>
             <pubDate>Tue, 12 Oct 2021 00:00:00 +0000</pubDate>

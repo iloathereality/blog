@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>What does `&amp;mut &amp;[T]` mean?</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+    <meta name="author" content="Maybe Waffle">
+
+    <meta name="theme-color" content="#EE72F1">
+
+    
+    
+    <meta name="title" content="What does `&amp;mut &amp;[T]` mean?">
+    <meta name="description" content="References can be quite confusing, especially with different mutabilities. Indeed, only a third of people in my poll said that they understand what `&amp;mut &amp;[T]` means!">
+    <meta name="image" content="https://ihatereality.space/you_cant_escape_from_reality_450x450.png">
+
+    
+        <meta name="keywords" itemprop="tags" content="rust">
+    
+
+    <!-- Facebook Meta Tags -->
+    <meta property="og:url" content="https://ihatereality.space/04-what-mutref-to-slice-ref-means/">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="What does `&amp;mut &amp;[T]` mean?">
+    <meta property="og:description" content="References can be quite confusing, especially with different mutabilities. Indeed, only a third of people in my poll said that they understand what `&amp;mut &amp;[T]` means!">
+    <meta property="og:image" content="https://ihatereality.space/you_cant_escape_from_reality_450x450.png">
+    <meta property="og:locale" content="en">
+
+    
+        <meta property="article:published_time" content="2021-11-02">
+    
+
+    
+        
+            <meta property="article:tag" content="rust">
+        
+    
+
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary">
+    <meta property="twitter:domain" content="ihatereality.space">
+    <meta property="twitter:url" content="https://ihatereality.space/04-what-mutref-to-slice-ref-means/">
+    <meta name="twitter:title" content="What does `&amp;mut &amp;[T]` mean?">
+    <meta name="twitter:description" content="References can be quite confusing, especially with different mutabilities. Indeed, only a third of people in my poll said that they understand what `&amp;mut &amp;[T]` means!">
+    <meta name="twitter:image" content="https://ihatereality.space/you_cant_escape_from_reality_450x450.png">
+    <meta name="twitter:creator" content="maybewaffle">
+
+
+
+    
+    <link rel="stylesheet" href="https://ihatereality.space/style.css">
+    <link rel="stylesheet" href="https://ihatereality.space/color/pink.css">
+
+    <link rel="stylesheet" href="https://ihatereality.space/font-hack.css">
+
+
+    
+        <link rel="alternate" type="application/rss+xml" title="RSS" href="https://ihatereality.space/rss.xml">
+    
+        <link rel="shortcut icon" type="image&#x2F;png" href="/you_cant_escape_from_reality_128x128.png">
+    
+    </head>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://ihatereality.space" style="text-decoration: none;">
+                    <div class="logo">
+                            I hate reality
+                        </div>
+                </a>
+            </div>
+        </div>
+
+        <nav class="menu">
+            <ul class="menu__inner">
+                <li><a href="https://ihatereality.space/about">about</a></li>
+            
+                <li><a href="https://github.com/iloathereality/blog" target="_blank" rel="noopener noreferrer">source</a></li>
+            </ul>
+        </nav>
+    
+    </header>
+    
+
+    <div class="content">
+        
+    <div class="post">
+        
+    <h1 class="post-title"><a href="https://ihatereality.space/04-what-mutref-to-slice-ref-means/">What does `&amp;mut &amp;[T]` mean?</a></h1>
+    
+        <div class="post-meta-inline">
+            
+    <span class="post-date">
+            2021-11-02
+        
+    </span>
+
+            
+    <span class="post-read-time">
+        :: 3 min read
+    </span>
+
+
+            <!-- TODO: rethink how tags look -->
+            <br>
+            
+        <span class="post-tags-inline"><a class="post-tag" href="https://ihatereality.space/tags/rust/">#rust</a></span>
+    
+        </div>
+    
+
+
+        
+        <div class="post-content">
+            <p>References can be quite confusing, especially with different mutabilities. Indeed, only a third of people in <a href="https://t.me/ihatereality/1776">my poll</a> said that they understand what <code>&amp;mut &amp;[T]</code> means!</p>
+<span id="continue-reading"></span><h1 id="ground-rules">Ground rules<a class="zola-anchor" href="#ground-rules" aria-label="Anchor link for: ground-rules">⌗</a></h1>
+<p>In Rust, to change a value you need to have some sort of unique access to it, for example, a <code>&amp;mut T</code> (a unique reference to <code>T</code>). Shared references (<code>&amp;T</code>) on the other hand do not provide unique access on their own.</p>
+<p>Since shared references don’t grant unique access, a shared reference to a unique reference <code>&amp;&amp;mut T</code> is equivalent to <code>&amp;&amp;T</code> in terms of mutating the value of type <code>T</code>. So, if you have a shared reference in a type, you can’t mutate anything “after” it. </p>
+<h1 id="slightly-easier-question-what-does-mut-t-mean">Slightly easier question: what does <code>&amp;mut &amp;T</code> mean?<a class="zola-anchor" href="#slightly-easier-question-what-does-mut-t-mean" aria-label="Anchor link for: slightly-easier-question-what-does-mut-t-mean">⌗</a></h1>
+<p>So, if a shared reference doesn’t allow you to mutate anything “after” it, <code>&amp;mut &amp;T</code> doesn’t allow you to mutate the value of type <code>T</code> and thus is the same as <code>&amp;&amp;T</code> or <code>&amp;T</code>? The former is true — you can’t mutate <code>T</code> — but the latter is not true. While you can’t mutate the <code>T</code>, you can mutate the reference <code>&amp;T</code>:</p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">let</span><span> value = </span><span style="color:#d08770;">1</span><span>;
+</span><span style="color:#b48ead;">let mut</span><span> shared = &amp;value;
+</span><span>
+</span><span>println!(&quot;</span><span style="color:#d08770;">{r:p}</span><span style="color:#a3be8c;">: </span><span style="color:#d08770;">{r}</span><span style="color:#a3be8c;"> (value = </span><span style="color:#d08770;">{v}</span><span style="color:#a3be8c;">)</span><span>&quot;, r = shared, v = value);
+</span><span style="color:#65737e;">// Prints &lt;addr&gt;: 1 (value = 1)
+</span><span>
+</span><span style="color:#b48ead;">let</span><span> unique = &amp;</span><span style="color:#b48ead;">mut</span><span> shared;
+</span><span>*unique = &amp;</span><span style="color:#d08770;">17</span><span>;
+</span><span>
+</span><span>println!(&quot;</span><span style="color:#d08770;">{r:p}</span><span style="color:#a3be8c;">: </span><span style="color:#d08770;">{r}</span><span style="color:#a3be8c;"> (value = </span><span style="color:#d08770;">{v}</span><span style="color:#a3be8c;">)</span><span>&quot;, r = shared, v = value);
+</span><span style="color:#65737e;">// Prints &lt;different addr&gt;: 17 (value = 1)
+</span></code></pre>
+<p><a href="https://play.rust-lang.org/?version=stable&amp;mode=debug&amp;edition=2021&amp;gist=b0b90e25344592d38f1009efa461a186">(playground)</a></p>
+<h1 id="how-is-a-slice-different">How is a slice different?<a class="zola-anchor" href="#how-is-a-slice-different" aria-label="Anchor link for: how-is-a-slice-different">⌗</a></h1>
+<p>With <code>&amp;mut &amp;[T]</code> you can still change the reference, making it point to another slice. But <code>&amp;[T]</code> is essentially a fat pointer, which means that it’s not only a pointer but also a length of the slice.</p>
+<p>Since you can mutate the reference, and the reference stores length as it’s part, you can change it too:</p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">let mut</span><span> slice: &amp;[</span><span style="color:#b48ead;">u8</span><span>] = &amp;[</span><span style="color:#d08770;">0</span><span>, </span><span style="color:#d08770;">1</span><span>, </span><span style="color:#d08770;">2</span><span>, </span><span style="color:#d08770;">3</span><span>, </span><span style="color:#d08770;">4</span><span>];
+</span><span style="color:#b48ead;">let</span><span> unique = &amp;</span><span style="color:#b48ead;">mut</span><span> slice;
+</span><span>
+</span><span style="color:#65737e;">// Since we want to hold unique reference, 
+</span><span style="color:#65737e;">// we can only access the slice through it
+</span><span>println!(&quot;</span><span style="color:#a3be8c;">(</span><span style="color:#d08770;">{r:p}</span><span style="color:#a3be8c;">, </span><span style="color:#d08770;">{len}</span><span style="color:#a3be8c;">): </span><span style="color:#d08770;">{r:?}</span><span>&quot;, r = *unique, len = unique.</span><span style="color:#96b5b4;">len</span><span>());
+</span><span style="color:#65737e;">// Prints (&lt;addr&gt;, 5): [0, 1, 2, 3, 4]
+</span><span>
+</span><span style="color:#65737e;">// Change only the length
+</span><span>*unique = &amp;unique[..</span><span style="color:#d08770;">4</span><span>];
+</span><span>println!(&quot;</span><span style="color:#a3be8c;">(</span><span style="color:#d08770;">{r:p}</span><span style="color:#a3be8c;">, </span><span style="color:#d08770;">{len}</span><span style="color:#a3be8c;">): </span><span style="color:#d08770;">{r:?}</span><span>&quot;, r = *unique, len = unique.</span><span style="color:#96b5b4;">len</span><span>());
+</span><span style="color:#65737e;">// Prints (&lt;addr&gt;, 4): [0, 1, 2, 3]
+</span><span>
+</span><span style="color:#65737e;">// Change both the pointer and the length
+</span><span>*unique = &amp;unique[</span><span style="color:#d08770;">1</span><span>..];
+</span><span>println!(&quot;</span><span style="color:#a3be8c;">(</span><span style="color:#d08770;">{r:p}</span><span style="color:#a3be8c;">, </span><span style="color:#d08770;">{len}</span><span style="color:#a3be8c;">): </span><span style="color:#d08770;">{r:?}</span><span>&quot;, r = *unique, len = unique.</span><span style="color:#96b5b4;">len</span><span>());
+</span><span style="color:#65737e;">// Prints (&lt;addr+1&gt;, 3): [1, 2, 3]
+</span><span>
+</span><span style="color:#65737e;">// Change only the pointer
+</span><span>*unique = &amp;[</span><span style="color:#d08770;">17</span><span>, </span><span style="color:#d08770;">17</span><span>, </span><span style="color:#d08770;">42</span><span>];
+</span><span>println!(&quot;</span><span style="color:#a3be8c;">(</span><span style="color:#d08770;">{r:p}</span><span style="color:#a3be8c;">, </span><span style="color:#d08770;">{len}</span><span style="color:#a3be8c;">): </span><span style="color:#d08770;">{r:?}</span><span>&quot;, r = *unique, len = unique.</span><span style="color:#96b5b4;">len</span><span>());
+</span><span style="color:#65737e;">// Prints (&lt;different addr&gt;, 3): [17, 17, 42]
+</span></code></pre>
+<p><a href="https://play.rust-lang.org/?version=stable&amp;mode=debug&amp;edition=2018&amp;gist=d94fde72d3f8ef51290de2d0c7b11c55">(playground)</a></p>
+<p>One real-world example of <code>&amp;mut &amp;[T]</code> may be the <code>io::Read</code> <a href="https://doc.rust-lang.org/std/io/trait.Read.html#impl-Read-2">implementation</a> for <code>&amp;[u8]</code>:</p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">use </span><span>std::io::Read;
+</span><span>
+</span><span style="color:#65737e;">// We&#39;ll be reading *from* this slice
+</span><span style="color:#b48ead;">let mut</span><span> data: &amp;[_] = &amp;[</span><span style="color:#d08770;">0</span><span>, </span><span style="color:#d08770;">1</span><span>, </span><span style="color:#d08770;">2</span><span>, </span><span style="color:#d08770;">3</span><span>, </span><span style="color:#d08770;">4</span><span>, </span><span style="color:#d08770;">5</span><span>, </span><span style="color:#d08770;">6</span><span>, </span><span style="color:#d08770;">7</span><span>, </span><span style="color:#d08770;">8</span><span>];
+</span><span style="color:#65737e;">// And *into* this
+</span><span style="color:#b48ead;">let mut</span><span> buf = [</span><span style="color:#d08770;">0</span><span>; </span><span style="color:#d08770;">4</span><span>];
+</span><span>
+</span><span style="color:#65737e;">// This implicitly creates a &amp;mut &amp;[u8] via auto-ref
+</span><span style="color:#b48ead;">while let </span><span>Ok(</span><span style="color:#d08770;">1</span><span>..) = data.</span><span style="color:#96b5b4;">read</span><span>(&amp;</span><span style="color:#b48ead;">mut</span><span> buf) {
+</span><span>    println!(&quot;</span><span style="color:#a3be8c;">(</span><span style="color:#d08770;">{r:p}</span><span style="color:#a3be8c;">, </span><span style="color:#d08770;">{len}</span><span style="color:#a3be8c;">): </span><span style="color:#d08770;">{r:?}</span><span>&quot;, r = data, len = data.</span><span style="color:#96b5b4;">len</span><span>());
+</span><span>    </span><span style="color:#65737e;">// This will print:
+</span><span>    </span><span style="color:#65737e;">// (&lt;addr&gt;, 9): [0, 1, 2, 3, 4, 5, 6, 7, 8]
+</span><span>    </span><span style="color:#65737e;">// (&lt;addr+4&gt;, 5): [4, 5, 6, 7, 8]
+</span><span>    </span><span style="color:#65737e;">// (&lt;addr+8&gt;, 1): [8]
+</span><span>    </span><span style="color:#65737e;">// (&lt;addr+9&gt;, 0): []
+</span><span>    
+</span><span>    </span><span style="color:#65737e;">// In reality you&#39;d also examine the `buf` contents here
+</span><span>}
+</span></code></pre>
+<p><a href="https://play.rust-lang.org/?version=stable&amp;mode=debug&amp;edition=2018&amp;gist=c9514a733eba51b8591715f87fce79c7">(playground)</a></p>
+<hr />
+<p>Now you know what <code>&amp;mut &amp;[T]</code> means! I hope that was helpful. Bye.</p>
+
+        </div>
+
+        
+        <div class="pagination">
+            <div class="pagination__title">
+                <span class="pagination__title-h">Thanks for reading! Read other posts?</span>
+                <hr />
+            </div>
+            <div class="pagination__buttons">
+                
+                    <span class="button next">
+                        <a href="https://ihatereality.space/03-a-place-to-pause/">
+                            <span class="button__text">Everybody need a place (and time) to pause</span>&nbsp;
+                            <span class="button__icon">→</span>
+                        </a>
+                    </span>
+                </div>
+        </div>
+    
+    </div>
+
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright copyright--user"><div class="copyright"><span>© 2021 Maybe Waffle</span><span class="copyright-theme"><span class="copyright-theme-sep">:: </span>Theme is based on <a href="https://github.com/pawroman/zola-theme-terminimal/">Terminimal</a></span><span class="copyright-theme-sep">:: </span><a href="/rss.xml">rss</a></div></div>
+            </div>
+    </footer>
+    
+
+</div>
+</body>
+
+</html>
