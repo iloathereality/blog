@@ -7,7 +7,9 @@ description = "References can be quite confusing, especially with different muta
 tags = ["rust"]
 +++
 
-References can be quite confusing, especially with different mutabilities. Indeed, only a third of people in [my poll](https://t.me/ihatereality/1776) said that they understand what `&mut &[T]` means!
+References can be quite confusing, especially with different mutabilities. Indeed, only a third of people in [my poll] said that they understand what `&mut &[T]` means!
+
+[my poll]: https://t.me/ihatereality/1776
 
 <!-- more -->
 
@@ -25,14 +27,17 @@ So, if a shared reference doesn't allow you to mutate anything "after" it, `&mut
 let value = 1;
 let mut shared = &value;
 
-println!("{r:p}: {r}", r = shared);
-// Prints <addr>: 1
+println!("{r:p}: {r} (value = {v})", r = shared, v = value);
+// Prints <addr>: 1 (value = 1)
 
 let unique = &mut shared;
 *unique = &17;
-println!("{r:p}: {r}", r = shared);
-// Prints <different addr>: 17
+
+println!("{r:p}: {r} (value = {v})", r = shared, v = value);
+// Prints <different addr>: 17 (value = 1)
 ```
+
+[(playground)](https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&gist=b0b90e25344592d38f1009efa461a186)
 
 # How is a slice different?
 
@@ -66,7 +71,7 @@ println!("({r:p}, {len}): {r:?}", r = *unique, len = unique.len());
 ```
 [(playground)](https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&gist=d94fde72d3f8ef51290de2d0c7b11c55)
 
-One real-world example of `&mut &[T]` may be the `io::Read` [implementation](https://doc.rust-lang.org/std/io/trait.Read.html#impl-Read-2) for `&[u8]`:
+One real-world example of `&mut &[T]` may be the `io::Read` [implementation] for `&[u8]`:
 
 ```rust
 use std::io::Read;
@@ -89,6 +94,8 @@ while let Ok(1..) = data.read(&mut buf) {
 }
 ```
 [(playground)](https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&gist=c9514a733eba51b8591715f87fce79c7)
+
+[implementation]: https://doc.rust-lang.org/std/io/trait.Read.html#impl-Read-2
 
 ---
 
