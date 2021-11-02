@@ -127,23 +127,23 @@
 <h1 id="slightly-easier-question-what-does-mut-t-mean">Slightly easier question: what does <code>&amp;mut &amp;T</code> mean?<a class="zola-anchor" href="#slightly-easier-question-what-does-mut-t-mean" aria-label="Anchor link for: slightly-easier-question-what-does-mut-t-mean">⌗</a></h1>
 <p>So, if a shared reference doesn’t allow you to mutate anything “after” it, <code>&amp;mut &amp;T</code> doesn’t allow you to mutate the value of type <code>T</code> and thus is the same as <code>&amp;&amp;T</code> or <code>&amp;T</code>? The former is true — you can’t mutate <code>T</code> — but the latter is not true. While you can’t mutate the <code>T</code>, you can mutate the reference <code>&amp;T</code>:</p>
 <pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">let</span><span> value = </span><span style="color:#d08770;">1</span><span>;
-</span><span style="color:#b48ead;">let mut</span><span> shared = &amp;value;
+</span><span style="color:#b48ead;">let mut</span><span> shared: &amp;</span><span style="color:#b48ead;">u32 </span><span>= &amp;value;
 </span><span>
 </span><span>println!(&quot;</span><span style="color:#d08770;">{r:p}</span><span style="color:#a3be8c;">: </span><span style="color:#d08770;">{r}</span><span style="color:#a3be8c;"> (value = </span><span style="color:#d08770;">{v}</span><span style="color:#a3be8c;">)</span><span>&quot;, r = shared, v = value);
 </span><span style="color:#65737e;">// Prints &lt;addr&gt;: 1 (value = 1)
 </span><span>
-</span><span style="color:#b48ead;">let</span><span> unique = &amp;</span><span style="color:#b48ead;">mut</span><span> shared;
+</span><span style="color:#b48ead;">let</span><span> unique: &amp;</span><span style="color:#b48ead;">mut </span><span>&amp;</span><span style="color:#b48ead;">u32 </span><span>= &amp;</span><span style="color:#b48ead;">mut</span><span> shared;
 </span><span>*unique = &amp;</span><span style="color:#d08770;">17</span><span>;
 </span><span>
 </span><span>println!(&quot;</span><span style="color:#d08770;">{r:p}</span><span style="color:#a3be8c;">: </span><span style="color:#d08770;">{r}</span><span style="color:#a3be8c;"> (value = </span><span style="color:#d08770;">{v}</span><span style="color:#a3be8c;">)</span><span>&quot;, r = shared, v = value);
 </span><span style="color:#65737e;">// Prints &lt;different addr&gt;: 17 (value = 1)
 </span></code></pre>
-<p><a href="https://play.rust-lang.org/?version=stable&amp;mode=debug&amp;edition=2021&amp;gist=b0b90e25344592d38f1009efa461a186">(playground)</a></p>
+<p><a href="https://play.rust-lang.org/?version=stable&amp;mode=debug&amp;edition=2021&amp;gist=ff4796eeff3f3bf0f26e2174454755ef">(playground)</a></p>
 <h1 id="how-is-a-slice-different">How is a slice different?<a class="zola-anchor" href="#how-is-a-slice-different" aria-label="Anchor link for: how-is-a-slice-different">⌗</a></h1>
 <p>With <code>&amp;mut &amp;[T]</code> you can still change the reference, making it point to another slice. But <code>&amp;[T]</code> is essentially a fat pointer, which means that it’s not only a pointer but also a length of the slice.</p>
 <p>Since you can mutate the reference, and the reference stores length as it’s part, you can change it too:</p>
 <pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">let mut</span><span> slice: &amp;[</span><span style="color:#b48ead;">u8</span><span>] = &amp;[</span><span style="color:#d08770;">0</span><span>, </span><span style="color:#d08770;">1</span><span>, </span><span style="color:#d08770;">2</span><span>, </span><span style="color:#d08770;">3</span><span>, </span><span style="color:#d08770;">4</span><span>];
-</span><span style="color:#b48ead;">let</span><span> unique = &amp;</span><span style="color:#b48ead;">mut</span><span> slice;
+</span><span style="color:#b48ead;">let</span><span> unique: &amp;</span><span style="color:#b48ead;">mut </span><span>&amp;[</span><span style="color:#b48ead;">u8</span><span>] = &amp;</span><span style="color:#b48ead;">mut</span><span> slice;
 </span><span>
 </span><span style="color:#65737e;">// Since we want to hold unique reference, 
 </span><span style="color:#65737e;">// we can only access the slice through it
@@ -165,28 +165,27 @@
 </span><span>println!(&quot;</span><span style="color:#a3be8c;">(</span><span style="color:#d08770;">{r:p}</span><span style="color:#a3be8c;">, </span><span style="color:#d08770;">{len}</span><span style="color:#a3be8c;">): </span><span style="color:#d08770;">{r:?}</span><span>&quot;, r = *unique, len = unique.</span><span style="color:#96b5b4;">len</span><span>());
 </span><span style="color:#65737e;">// Prints (&lt;different addr&gt;, 3): [17, 17, 42]
 </span></code></pre>
-<p><a href="https://play.rust-lang.org/?version=stable&amp;mode=debug&amp;edition=2018&amp;gist=d94fde72d3f8ef51290de2d0c7b11c55">(playground)</a></p>
+<p><a href="https://play.rust-lang.org/?version=stable&amp;mode=debug&amp;edition=2018&amp;gist=87d5eed5915faab0a22c26ae87ced091">(playground)</a></p>
 <p>One real-world example of <code>&amp;mut &amp;[T]</code> may be the <code>io::Read</code> <a href="https://doc.rust-lang.org/std/io/trait.Read.html#impl-Read-2">implementation</a> for <code>&amp;[u8]</code>:</p>
 <pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">use </span><span>std::io::Read;
 </span><span>
 </span><span style="color:#65737e;">// We&#39;ll be reading *from* this slice
-</span><span style="color:#b48ead;">let mut</span><span> data: &amp;[_] = &amp;[</span><span style="color:#d08770;">0</span><span>, </span><span style="color:#d08770;">1</span><span>, </span><span style="color:#d08770;">2</span><span>, </span><span style="color:#d08770;">3</span><span>, </span><span style="color:#d08770;">4</span><span>, </span><span style="color:#d08770;">5</span><span>, </span><span style="color:#d08770;">6</span><span>, </span><span style="color:#d08770;">7</span><span>, </span><span style="color:#d08770;">8</span><span>];
+</span><span style="color:#b48ead;">let mut</span><span> data: &amp;[</span><span style="color:#b48ead;">u8</span><span>] = &amp;[</span><span style="color:#d08770;">0</span><span>, </span><span style="color:#d08770;">1</span><span>, </span><span style="color:#d08770;">2</span><span>, </span><span style="color:#d08770;">3</span><span>, </span><span style="color:#d08770;">4</span><span>, </span><span style="color:#d08770;">5</span><span>, </span><span style="color:#d08770;">6</span><span>, </span><span style="color:#d08770;">7</span><span>, </span><span style="color:#d08770;">8</span><span>, </span><span style="color:#d08770;">9</span><span>];
 </span><span style="color:#65737e;">// And *into* this
-</span><span style="color:#b48ead;">let mut</span><span> buf = [</span><span style="color:#d08770;">0</span><span>; </span><span style="color:#d08770;">4</span><span>];
+</span><span style="color:#b48ead;">let mut</span><span> buf = [</span><span style="color:#d08770;">0</span><span>; </span><span style="color:#d08770;">3</span><span>];
 </span><span>
-</span><span style="color:#65737e;">// This implicitly creates a &amp;mut &amp;[u8] via auto-ref
-</span><span style="color:#b48ead;">while let </span><span>Ok(</span><span style="color:#d08770;">1</span><span>..) = data.</span><span style="color:#96b5b4;">read</span><span>(&amp;</span><span style="color:#b48ead;">mut</span><span> buf) {
+</span><span style="color:#b48ead;">while let </span><span>Ok(</span><span style="color:#d08770;">1</span><span>..) = Read::read(&amp;</span><span style="color:#b48ead;">mut</span><span> data, &amp;</span><span style="color:#b48ead;">mut</span><span> buf) {
 </span><span>    println!(&quot;</span><span style="color:#a3be8c;">(</span><span style="color:#d08770;">{r:p}</span><span style="color:#a3be8c;">, </span><span style="color:#d08770;">{len}</span><span style="color:#a3be8c;">): </span><span style="color:#d08770;">{r:?}</span><span>&quot;, r = data, len = data.</span><span style="color:#96b5b4;">len</span><span>());
 </span><span>    </span><span style="color:#65737e;">// This will print:
-</span><span>    </span><span style="color:#65737e;">// (&lt;addr&gt;, 9): [0, 1, 2, 3, 4, 5, 6, 7, 8]
-</span><span>    </span><span style="color:#65737e;">// (&lt;addr+4&gt;, 5): [4, 5, 6, 7, 8]
-</span><span>    </span><span style="color:#65737e;">// (&lt;addr+8&gt;, 1): [8]
-</span><span>    </span><span style="color:#65737e;">// (&lt;addr+9&gt;, 0): []
+</span><span>    </span><span style="color:#65737e;">// (&lt;addr&gt;, 7): [3, 4, 5, 6, 7, 8, 9]
+</span><span>    </span><span style="color:#65737e;">// (&lt;addr+3&gt;, 4): [6, 7, 8, 9]
+</span><span>    </span><span style="color:#65737e;">// (&lt;addr+6&gt;, 1): [9]
+</span><span>    </span><span style="color:#65737e;">// (&lt;addr+7&gt;, 0): []   
 </span><span>    
 </span><span>    </span><span style="color:#65737e;">// In reality you&#39;d also examine the `buf` contents here
 </span><span>}
 </span></code></pre>
-<p><a href="https://play.rust-lang.org/?version=stable&amp;mode=debug&amp;edition=2018&amp;gist=c9514a733eba51b8591715f87fce79c7">(playground)</a></p>
+<p><a href="https://play.rust-lang.org/?version=stable&amp;mode=debug&amp;edition=2018&amp;gist=07c6f60ad445f95b69f143427a0df7a7">(playground)</a></p>
 <hr />
 <p>Now you know what <code>&amp;mut &amp;[T]</code> means! I hope that was helpful. Bye.</p>
 
