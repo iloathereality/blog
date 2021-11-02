@@ -25,19 +25,19 @@ So, if a shared reference doesn't allow you to mutate anything "after" it, `&mut
 
 ```rust
 let value = 1;
-let mut shared = &value;
+let mut shared: &u32 = &value;
 
 println!("{r:p}: {r} (value = {v})", r = shared, v = value);
 // Prints <addr>: 1 (value = 1)
 
-let unique = &mut shared;
+let unique: &mut &u32 = &mut shared;
 *unique = &17;
 
 println!("{r:p}: {r} (value = {v})", r = shared, v = value);
 // Prints <different addr>: 17 (value = 1)
 ```
 
-[(playground)](https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&gist=b0b90e25344592d38f1009efa461a186)
+[(playground)](https://play.rust-lang.org/?version=nightly&mode=debug&edition=2021&gist=ff4796eeff3f3bf0f26e2174454755ef)
 
 # How is a slice different?
 
@@ -47,7 +47,7 @@ Since you can mutate the reference, and the reference stores length as it's part
 
 ```rust
 let mut slice: &[u8] = &[0, 1, 2, 3, 4];
-let unique = &mut slice;
+let unique: &mut &[u8] = &mut slice;
 
 // Since we want to hold unique reference, 
 // we can only access the slice through it
@@ -69,7 +69,7 @@ println!("({r:p}, {len}): {r:?}", r = *unique, len = unique.len());
 println!("({r:p}, {len}): {r:?}", r = *unique, len = unique.len());
 // Prints (<different addr>, 3): [17, 17, 42]
 ```
-[(playground)](https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&gist=d94fde72d3f8ef51290de2d0c7b11c55)
+[(playground)](https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&gist=87d5eed5915faab0a22c26ae87ced091)
 
 One real-world example of `&mut &[T]` may be the `io::Read` [implementation] for `&[u8]`:
 
@@ -77,23 +77,22 @@ One real-world example of `&mut &[T]` may be the `io::Read` [implementation] for
 use std::io::Read;
 
 // We'll be reading *from* this slice
-let mut data: &[_] = &[0, 1, 2, 3, 4, 5, 6, 7, 8];
+let mut data: &[u8] = &[0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 // And *into* this
-let mut buf = [0; 4];
+let mut buf = [0; 3];
 
-// This implicitly creates a &mut &[u8] via auto-ref
-while let Ok(1..) = data.read(&mut buf) {
+while let Ok(1..) = Read::read(&mut data, &mut buf) {
     println!("({r:p}, {len}): {r:?}", r = data, len = data.len());
     // This will print:
-    // (<addr>, 9): [0, 1, 2, 3, 4, 5, 6, 7, 8]
-    // (<addr+4>, 5): [4, 5, 6, 7, 8]
-    // (<addr+8>, 1): [8]
-    // (<addr+9>, 0): []
+    // (<addr>, 7): [3, 4, 5, 6, 7, 8, 9]
+    // (<addr+3>, 4): [6, 7, 8, 9]
+    // (<addr+6>, 1): [9]
+    // (<addr+7>, 0): []   
     
     // In reality you'd also examine the `buf` contents here
 }
 ```
-[(playground)](https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&gist=c9514a733eba51b8591715f87fce79c7)
+[(playground)](https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&gist=07c6f60ad445f95b69f143427a0df7a7)
 
 [implementation]: https://doc.rust-lang.org/std/io/trait.Read.html#impl-Read-2
 
