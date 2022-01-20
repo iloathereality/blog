@@ -58,6 +58,7 @@ a {
 img {
   display: block;
   max-width: 100%;
+  margin: 20px 0;
 
   &.left {
     margin-right: auto;
@@ -80,7 +81,7 @@ p {
 figure {
   display: table;
   max-width: 100%;
-  margin: 25px 0;
+  margin: 20px 0;
 
   &.left {
     img {
