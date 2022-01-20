@@ -1,5 +1,5 @@
 +++
-title = "Everybody need a place (and time) to pause"
+title = "Everybody needs a place (and time) to pause"
 date = 2021-10-12
 description = "As you may know, I have a (russian) telegram channel. One day I had a random thought about something I could make there. Now it became a tradition..."
 
