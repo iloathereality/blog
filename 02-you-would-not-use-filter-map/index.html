@@ -123,7 +123,17 @@
         
         <div class="post-content">
             <p>There is a function <code>Iterator::filter_map</code>. I want to argue that it’s useless and Rust provides more powerful tools to replace it.</p>
-<span id="continue-reading"></span><div class="callout">
+<span id="continue-reading"></span> 
+
+
+  
+
+  
+    
+  
+
+
+<div class="callout">
   <img 
     class="callout-icon"
     src="/twemoji/assets/svg/1f438.svg"
@@ -133,8 +143,7 @@
     <p>This <del>tweet</del> post is inspired by <a href="https://twitter.com/EllenNyan0214/status/1425911176853139460?s=20">this</a> tweet from Boxy. Thanks, Boxy. &lt;3</p>
 
   </div>
-</div>
-<h1 id="what-is-iterator-filter-map">What is <code>Iterator::filter_map</code>?<a class="zola-anchor" href="#what-is-iterator-filter-map" aria-label="Anchor link for: what-is-iterator-filter-map">⌗</a></h1>
+</div><h1 id="what-is-iterator-filter-map">What is <code>Iterator::filter_map</code>?<a class="zola-anchor" href="#what-is-iterator-filter-map" aria-label="Anchor link for: what-is-iterator-filter-map">⌗</a></h1>
 <p>So <a href="https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.filter_map"><code>filter_map</code></a> is a function provided by the <code>Iterator</code> trait:</p>
 <pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">filter_map</span><span>&lt;B, F&gt;(</span><span style="color:#bf616a;">self</span><span>, </span><span style="color:#bf616a;">f</span><span>: F) 
 </span><span>    -&gt; FilterMap&lt;</span><span style="color:#b48ead;">Self</span><span>, F&gt;
@@ -158,6 +167,16 @@
 </span><span>    })
 </span><span>    .collect::&lt;Vec&lt;_&gt;&gt;();
 </span></code></pre>
+ 
+
+
+  
+
+  
+    
+  
+
+
 <div class="callout">
   <img 
     class="callout-icon"
@@ -210,6 +229,16 @@
 </span></code></pre>
 <p>However, in practice, it seems like <code>filter_map</code> is usually used with explicit <code>Option</code>, so this doesn’t matter.</p>
 <h1 id="criticism">Criticism<a class="zola-anchor" href="#criticism" aria-label="Anchor link for: criticism">⌗</a></h1>
+ 
+
+
+  
+
+  
+    
+  
+
+
 <div class="callout">
   <img 
     class="callout-icon"

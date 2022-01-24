@@ -210,6 +210,16 @@
 <pre data-lang="haskell" style="background-color:#2b303b;color:#c0c5ce;" class="language-haskell "><code class="language-haskell" data-lang="haskell"><span style="color:#b48ead;">data </span><span style="color:#d08770;">Maybe</span><span> a = </span><span style="color:#d08770;">Nothing </span><span>| </span><span style="color:#d08770;">Just</span><span> a
 </span><span style="color:#b48ead;">data </span><span style="color:#d08770;">Either</span><span> a b = </span><span style="color:#d08770;">Left</span><span> a | </span><span style="color:#d08770;">Right</span><span> b
 </span></code></pre>
+ 
+
+
+  
+
+  
+    
+  
+
+
 <div class="callout">
   <img 
     class="callout-icon"
@@ -223,6 +233,16 @@
 </div>
 <p><code>Option</code> (<code>Maybe</code>) is exactly what we’re looking for! It can be either <code>None</code> (<code>Nothing</code>) or <code>Some(value)</code> (<code>Just value</code>). So either there is nothing or there is some value, exactly the same as with <code>null</code> so far. </p>
 <p>But it actually solves all the <code>null</code> problems I’ve mentioned!</p>
+ 
+
+
+  
+
+  
+    
+  
+
+
 <div class="callout">
   <img 
     class="callout-icon"
@@ -233,8 +253,7 @@
     <p>Another nice fact about <code>Option</code> (<code>Maybe</code>) is that it can be defined in a library. Unlike nullable types, there’s nothing special about this type. The compiler doesn’t need to know about it, it’s just a type.</p>
 
   </div>
-</div>
-<h2 id="generality-1">Generality<a class="zola-anchor" href="#generality-1" aria-label="Anchor link for: generality-1">⌗</a></h2>
+</div><h2 id="generality-1">Generality<a class="zola-anchor" href="#generality-1" aria-label="Anchor link for: generality-1">⌗</a></h2>
 <p><code>Option&lt;Option&lt;T&gt;&gt;</code> is a meaningful type, unlike <code>T??</code>. In the same example with <code>HashMap::get</code> there isn’t any problems if it returns <code>Option&lt;_&gt;</code>.</p>
 <pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">impl</span><span>&lt;K, V&gt; HashMap&lt;K, V&gt; {
 </span><span>    </span><span style="color:#65737e;">// If `key` is present in the hash map, 
@@ -259,6 +278,16 @@
 </span></code></pre>
 <p>It would be interesting to see a language with sum types and <code>T</code> to <code>Option&lt;T&gt;</code> coercion though 👀</p>
 <h1 id="niche-optimization">Niche optimization<a class="zola-anchor" href="#niche-optimization" aria-label="Anchor link for: niche-optimization">⌗</a></h1>
+ 
+
+
+  
+
+  
+    
+  
+
+
 <div class="callout">
   <img 
     class="callout-icon"
@@ -331,6 +360,16 @@
 </span><span>    println(b)
 </span><span>}
 </span></code></pre>
+ 
+
+
+  
+
+  
+    
+  
+
+
 <div class="callout">
   <img 
     class="callout-icon"

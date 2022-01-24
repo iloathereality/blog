@@ -7,10 +7,10 @@
         <generator>Zola</generator>
         <language>en</language>
         <atom:link href="https://ihatereality.space/rss.xml" rel="self" type="application/rss+xml"/>
-        <lastBuildDate>Sat, 22 Jan 2022 00:00:00 +0000</lastBuildDate>
+        <lastBuildDate>Mon, 24 Jan 2022 00:00:00 +0000</lastBuildDate>
         <item>
             <title>if-else chains considered harmful</title>
-            <pubDate>Sat, 22 Jan 2022 00:00:00 +0000</pubDate>
+            <pubDate>Mon, 24 Jan 2022 00:00:00 +0000</pubDate>
             <link>https://ihatereality.space/05-if-else-chains-considered-harmful/</link>
             <guid>https://ihatereality.space/05-if-else-chains-considered-harmful/</guid>
             <description>&lt;p&gt;As always, I have some strong opinions on things I probably shouldn’t have opinions on. This time I want to tell you why I think &lt;code&gt;if&lt;&#x2F;code&gt;-&lt;code&gt;else&lt;&#x2F;code&gt; chains are syntactically harmful.&lt;&#x2F;p&gt;
