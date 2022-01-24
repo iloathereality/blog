@@ -1,6 +1,6 @@
 +++
 title = "if-else chains considered harmful"
-date = 2022-01-22
+date = 2022-01-24
 description = "As always, I have some strong opinions on things I probably shouldn't have opinions on. This time I want to tell you why I think if-else chains are syntactically harmful."
 
 [taxonomies] 
