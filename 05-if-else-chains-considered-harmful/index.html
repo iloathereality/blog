@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>if-else chains considered harmful</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+    <meta name="author" content="Maybe Waffle">
+
+    <meta name="theme-color" content="#EE72F1">
+
+    
+    
+    <meta name="title" content="if-else chains considered harmful">
+    <meta name="description" content="As always, I have some strong opinions on things I probably shouldn&#x27;t have opinions on. This time I want to tell you why I think if-else chains are syntactically harmful.">
+    <meta name="image" content="https://ihatereality.space/you_cant_escape_from_reality_450x450.png">
+
+    
+        <meta name="keywords" itemprop="tags" content="rust">
+    
+
+    <!-- Facebook Meta Tags -->
+    <meta property="og:url" content="https://ihatereality.space/05-if-else-chains-considered-harmful/">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="if-else chains considered harmful">
+    <meta property="og:description" content="As always, I have some strong opinions on things I probably shouldn&#x27;t have opinions on. This time I want to tell you why I think if-else chains are syntactically harmful.">
+    <meta property="og:image" content="https://ihatereality.space/you_cant_escape_from_reality_450x450.png">
+    <meta property="og:locale" content="en">
+
+    
+        <meta property="article:published_time" content="2022-01-22">
+    
+
+    
+        
+            <meta property="article:tag" content="rust">
+        
+    
+
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary">
+    <meta property="twitter:domain" content="ihatereality.space">
+    <meta property="twitter:url" content="https://ihatereality.space/05-if-else-chains-considered-harmful/">
+    <meta name="twitter:title" content="if-else chains considered harmful">
+    <meta name="twitter:description" content="As always, I have some strong opinions on things I probably shouldn&#x27;t have opinions on. This time I want to tell you why I think if-else chains are syntactically harmful.">
+    <meta name="twitter:image" content="https://ihatereality.space/you_cant_escape_from_reality_450x450.png">
+    <meta name="twitter:creator" content="maybewaffle">
+
+
+
+    
+    <link rel="stylesheet" href="https://ihatereality.space/style.css">
+    <link rel="stylesheet" href="https://ihatereality.space/color/pink.css">
+
+    <link rel="stylesheet" href="https://ihatereality.space/font-hack.css">
+
+
+    
+        <link rel="alternate" type="application/rss+xml" title="RSS" href="https://ihatereality.space/rss.xml">
+    
+        <link rel="shortcut icon" type="image&#x2F;png" href="/you_cant_escape_from_reality_128x128.png">
+    
+    </head>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://ihatereality.space" style="text-decoration: none;">
+                    <div class="logo">
+                            I hate reality
+                        </div>
+                </a>
+            </div>
+        </div>
+
+        <nav class="menu">
+            <ul class="menu__inner">
+                <li><a href="https://ihatereality.space/about">about</a></li>
+            
+                <li><a href="https://github.com/iloathereality/blog" target="_blank" rel="noopener noreferrer">source</a></li>
+            </ul>
+        </nav>
+    
+    </header>
+    
+
+    <div class="content">
+        
+    <div class="post">
+        
+    <h1 class="post-title"><a href="https://ihatereality.space/05-if-else-chains-considered-harmful/">if-else chains considered harmful</a></h1>
+    
+        <div class="post-meta-inline">
+            
+    <span class="post-date">
+            2022-01-22
+        
+    </span>
+
+            
+    <span class="post-read-time">
+        :: 3 min read
+    </span>
+
+
+            <!-- TODO: rethink how tags look -->
+            <br>
+            
+        <span class="post-tags-inline"><a class="post-tag" href="https://ihatereality.space/tags/rust/">#rust</a></span>
+    
+        </div>
+    
+
+
+        
+        <div class="post-content">
+            <p>As always, I have some strong opinions on things I probably shouldn’t have opinions on. This time I want to tell you why I think <code>if</code>-<code>else</code> chains are syntactically harmful.</p>
+<span id="continue-reading"></span>
+<p>I think that the syntax for if-else chains that are used in most imperative languages, including Rust, is bad.</p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">if</span><span> something.</span><span style="color:#96b5b4;">something</span><span>() {
+</span><span>    </span><span style="color:#96b5b4;">do_something</span><span>()
+</span><span>} </span><span style="color:#b48ead;">else if let </span><span>Some(x) = </span><span style="color:#96b5b4;">get_x</span><span>() {
+</span><span>    </span><span style="color:#96b5b4;">use_x</span><span>(x);
+</span><span>} </span><span style="color:#b48ead;">else if</span><span> mutliline {
+</span><span>    </span><span style="color:#96b5b4;">a</span><span>();
+</span><span>    </span><span style="color:#96b5b4;">b</span><span>();
+</span><span>    </span><span style="color:#96b5b4;">c</span><span>();
+</span><span>} </span><span style="color:#b48ead;">else </span><span>{
+</span><span>    </span><span style="color:#96b5b4;">scream</span><span>(&quot;</span><span style="color:#a3be8c;">aaaaaaaaaaaaaaaaaaaaaaa</span><span>&quot;)?;
+</span><span>}
+</span></code></pre>
+<p>It’s hard to read:</p>
+<ul>
+<li>
+<p>conditions are mixed with <code>if</code>/<code>else</code>/<code>let</code> keyword-noise</p>
+<div class="callout">
+<img 
+  class="callout-icon"
+  src="/twemoji/assets/svg/1f438.svg"
+  alt="🐸"
+/>
+<div class="callout-body">
+  <p><code>[else] if let</code> in Rust allows pattern-matching behaviour in <code>if</code> statements</p>
+
+</div>
+</li>
+</ul>
+</div>
+<ul>
+<li>conditions are indented more than expressions</li>
+<li>conditions are indented inconsistently between the first branch (<code>if</code>) and the following ones (<code>else if</code>)</li>
+<li>one-liners take a lot of lines</li>
+<li>etc.</li>
+</ul>
+<div class="callout">
+  <img 
+    class="callout-icon"
+    src="/twemoji/assets/svg/1f438.svg"
+    alt="🐸"
+  />
+  <div class="callout-body">
+    <p>Singular <code>if</code>s are fine I guess, it’s the <code>else if</code> chains that make all of this particularly bad</p>
+
+  </div>
+</div>
+<p>I think that a much better way to model the same thing is <a href="https://kotlinlang.org/docs/control-flow.html#when-expression"><code>when</code> from Kotlin</a> or pattern guards/<a href="https://wiki.haskell.org/Case#MultiWayIf">multi-way-if</a> from Haskell.</p>
+<details><summary>Kotlin and Haskell examples</summary>
+<p>
+<pre data-lang="kotlin" style="background-color:#2b303b;color:#c0c5ce;" class="language-kotlin "><code class="language-kotlin" data-lang="kotlin"><span style="color:#b48ead;">when</span><span> {
+</span><span>    x.isOdd() -&gt; print(&quot;</span><span style="color:#a3be8c;">x is odd</span><span>&quot;)
+</span><span>    y.isEven() -&gt; print(&quot;</span><span style="color:#a3be8c;">y is even</span><span>&quot;)
+</span><span>    </span><span style="color:#b48ead;">else </span><span>-&gt; print(&quot;</span><span style="color:#a3be8c;">x+y is odd</span><span>&quot;)
+</span><span>}
+</span></code></pre>
+<pre data-lang="haskell" style="background-color:#2b303b;color:#c0c5ce;" class="language-haskell "><code class="language-haskell" data-lang="haskell"><span style="color:#b48ead;">case </span><span style="color:#d08770;">() </span><span style="color:#b48ead;">of</span><span> _
+</span><span>    | condition1 -&gt; expr1
+</span><span>    | condition2 -&gt; expr2
+</span><span>    | condition3 -&gt; expr3
+</span><span>    | otherwise  -&gt; </span><span style="color:#b48ead;">default
+</span><span>
+</span><span style="color:#b48ead;">if </span><span>| condition1 -&gt; expr1
+</span><span>    | condition2 -&gt; expr2
+</span><span>    | condition3 -&gt; expr3
+</span><span>    | otherwise  -&gt; </span><span style="color:#b48ead;">default
+</span></code></pre>
+</p>
+</details>
+<p>In Rust this can be simulated via <code>match</code> on unit with pattern guards (<a href="https://twitter.com/EllenNyan0214/status/1356792709391015937">Boxy style</a>):</p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">match </span><span>() {
+</span><span>    _ </span><span style="color:#b48ead;">if</span><span> something.</span><span style="color:#96b5b4;">something</span><span>() =&gt; </span><span style="color:#96b5b4;">do_something</span><span>(),
+</span><span>    _ </span><span style="color:#b48ead;">if let </span><span>Some(x) = </span><span style="color:#96b5b4;">get_x</span><span>() =&gt; </span><span style="color:#96b5b4;">use_x</span><span>(x),
+</span><span>    _ </span><span style="color:#b48ead;">if</span><span> multiline =&gt; {
+</span><span>        </span><span style="color:#96b5b4;">a</span><span>();
+</span><span>        </span><span style="color:#96b5b4;">b</span><span>();
+</span><span>        </span><span style="color:#96b5b4;">c</span><span>();
+</span><span>    }
+</span><span>    _ =&gt; </span><span style="color:#96b5b4;">scream</span><span>(&quot;</span><span style="color:#a3be8c;">aaaaaaaaaaaaaaaaaaaaaaa</span><span>&quot;)?,
+</span><span>}
+</span></code></pre>
+<p>But this is still messy, <code>if let</code> guards are <a href="https://github.com/rust-lang/rust/issues/51114">unstable</a> and the repeated <code>if</code>s are still there.</p>
+<p>This is why I created <a href="https://docs.rs/kiam/0.1.0/kiam/index.html"><code>kiam</code></a> (#shamelessplug?) — a crate that provides a simple macro that makes these chains a lot nicer:</p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span>when! {
+</span><span>    something.</span><span style="color:#96b5b4;">something</span><span>() =&gt; </span><span style="color:#96b5b4;">do_something</span><span>(),
+</span><span>    </span><span style="color:#b48ead;">let </span><span>Some(x) = </span><span style="color:#96b5b4;">get_x</span><span>() =&gt; </span><span style="color:#96b5b4;">use_x</span><span>(x),
+</span><span>    multiline =&gt; {
+</span><span>        </span><span style="color:#96b5b4;">a</span><span>();
+</span><span>        </span><span style="color:#96b5b4;">b</span><span>();
+</span><span>        </span><span style="color:#96b5b4;">c</span><span>();
+</span><span>    }
+</span><span>    _ =&gt; </span><span style="color:#96b5b4;">scream</span><span>(&quot;</span><span style="color:#a3be8c;">aaaaaaaaaaaaaaaaaaaaaaa</span><span>&quot;)?,
+</span><span>}
+</span></code></pre>
+<div class="callout">
+  <img 
+    class="callout-icon"
+    src="/twemoji/assets/svg/1f438.svg"
+    alt="🐸"
+  />
+  <div class="callout-body">
+    <p>I’ve explained <code>kiam</code> with memes on <a href="https://twitter.com/maybewaffle/status/1359100586948505603?s=20">twitter dot com</a></p>
+
+  </div>
+</div>
+<div class="callout">
+  <img 
+    class="callout-icon"
+    src="/twemoji/assets/svg/1f438.svg"
+    alt="🐸"
+  />
+  <div class="callout-body">
+    <p>One of the only downsides of <code>when!</code> is IDE and tooling (<code>rustfmt</code>) support (or rather the absence of it). I wish this was part of the language or std…</p>
+
+  </div>
+</div>
+<p>Soooo yeah, there isn’t much to add here. If-else chains are bad for humans, macros are bad for IDEs, I have a cool crate.</p>
+<p>Bye.</p>
+
+        </div>
+
+        
+        <div class="pagination">
+            <div class="pagination__title">
+                <span class="pagination__title-h">Thanks for reading! Read other posts?</span>
+                <hr />
+            </div>
+            <div class="pagination__buttons">
+                
+                    <span class="button next">
+                        <a href="https://ihatereality.space/04-what-mutref-to-slice-ref-means/">
+                            <span class="button__text">What does `&amp;mut &amp;[T]` mean?</span>&nbsp;
+                            <span class="button__icon">→</span>
+                        </a>
+                    </span>
+                </div>
+        </div>
+    
+    </div>
+
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright copyright--user"><div class="copyright"><span>© 2021 Maybe Waffle</span><span class="copyright-theme"><span class="copyright-theme-sep">:: </span>Theme is based on <a href="https://github.com/pawroman/zola-theme-terminimal/">Terminimal</a></span><span class="copyright-theme-sep">:: </span><a href="/rss.xml">rss</a></div></div>
+            </div>
+    </footer>
+    
+
+</div>
+
+<!-- Tracking via https://www.goatcounter.com/ -->
+<script data-goatcounter="https://ihr.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+
+</html>
