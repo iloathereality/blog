@@ -7,7 +7,15 @@
         <generator>Zola</generator>
         <language>en</language>
         <atom:link href="https://ihatereality.space/rss.xml" rel="self" type="application/rss+xml"/>
-        <lastBuildDate>Mon, 24 Jan 2022 00:00:00 +0000</lastBuildDate>
+        <lastBuildDate>Sun, 30 Jan 2022 00:00:00 +0000</lastBuildDate>
+        <item>
+            <title>Comments are weak</title>
+            <pubDate>Sun, 30 Jan 2022 00:00:00 +0000</pubDate>
+            <link>https://ihatereality.space/06-comments-are-weak/</link>
+            <guid>https://ihatereality.space/06-comments-are-weak/</guid>
+            <description>&lt;p&gt;I like writing comments. But at the same time comments kind of suck. In this post, I want to outline some ways we could improve this. &lt;&#x2F;p&gt;
+</description>
+        </item>
         <item>
             <title>if-else chains considered harmful</title>
             <pubDate>Mon, 24 Jan 2022 00:00:00 +0000</pubDate>
