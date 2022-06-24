@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Why we can’t have nice things: min&#x2F;max</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+    <meta name="author" content="Maybe Waffle">
+
+    <meta name="theme-color" content="#EE72F1">
+
+    
+    
+    <meta name="title" content="Why we can’t have nice things: min&#x2F;max">
+    <meta name="description" content="In this post I’ll talk about Rust’s BTreeSet and tell a sad story about its methods">
+    <meta name="image" content="https://ihatereality.space/you_cant_escape_from_reality_450x450.png">
+
+    
+        <meta name="keywords" itemprop="tags" content="rust">
+    
+
+    <!-- Facebook Meta Tags -->
+    <meta property="og:url" content="https://ihatereality.space/07-why-we-can-not-have-nice-things-min-max/">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Why we can’t have nice things: min&#x2F;max">
+    <meta property="og:description" content="In this post I’ll talk about Rust’s BTreeSet and tell a sad story about its methods">
+    <meta property="og:image" content="https://ihatereality.space/you_cant_escape_from_reality_450x450.png">
+    <meta property="og:locale" content="en">
+
+    
+        <meta property="article:published_time" content="2022-06-24">
+    
+
+    
+        
+            <meta property="article:tag" content="rust">
+        
+    
+
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary">
+    <meta property="twitter:domain" content="ihatereality.space">
+    <meta property="twitter:url" content="https://ihatereality.space/07-why-we-can-not-have-nice-things-min-max/">
+    <meta name="twitter:title" content="Why we can’t have nice things: min&#x2F;max">
+    <meta name="twitter:description" content="In this post I’ll talk about Rust’s BTreeSet and tell a sad story about its methods">
+    <meta name="twitter:image" content="https://ihatereality.space/you_cant_escape_from_reality_450x450.png">
+    <meta name="twitter:creator" content="maybewaffle">
+
+
+
+    
+    <link rel="stylesheet" href="https://ihatereality.space/style.css">
+    <link rel="stylesheet" href="https://ihatereality.space/color/pink.css">
+
+    <link rel="stylesheet" href="https://ihatereality.space/font-hack.css">
+
+
+    
+        <link rel="alternate" type="application/rss+xml" title="RSS" href="https://ihatereality.space/rss.xml">
+    
+        <link rel="shortcut icon" type="image&#x2F;png" href="/you_cant_escape_from_reality_128x128.png">
+    
+    </head>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://ihatereality.space" style="text-decoration: none;">
+                    <div class="logo">
+                            I hate reality
+                        </div>
+                </a>
+            </div>
+        </div>
+
+        <nav class="menu">
+            <ul class="menu__inner">
+                <li><a href="https://ihatereality.space/about">about</a></li>
+            
+                <li><a href="https://github.com/iloathereality/blog" target="_blank" rel="noopener noreferrer">source</a></li>
+            </ul>
+        </nav>
+    
+    </header>
+    
+
+    <div class="content">
+        
+    <div class="post">
+        
+    <h1 class="post-title"><a href="https://ihatereality.space/07-why-we-can-not-have-nice-things-min-max/">Why we can’t have nice things: min&#x2F;max</a></h1>
+    
+        <div class="post-meta-inline">
+            
+    <span class="post-date">
+            2022-06-24
+        
+    </span>
+
+            
+    <span class="post-read-time">
+        :: 7 min read
+    </span>
+
+
+            <!-- TODO: rethink how tags look -->
+            <br>
+            
+        <span class="post-tags-inline"><a class="post-tag" href="https://ihatereality.space/tags/rust/">#rust</a></span>
+    
+        </div>
+    
+
+
+        
+        <div class="post-content">
+            <p>In this post I’ll talk about Rust’s <a href="https://doc.rust-lang.org/std/collections/btree_set/struct.BTreeSet.html"><code>BTreeSet</code></a> and tell a sad story about its methods.</p>
+<span id="continue-reading"></span><h1 id="the-nice-things-that-we-can-t-have">The nice things (that we can’t have)<a class="zola-anchor" href="#the-nice-things-that-we-can-t-have" aria-label="Anchor link for: the-nice-things-that-we-can-t-have">⌗</a></h1>
+<p>So, <a href="https://doc.rust-lang.org/std/collections/btree_set/struct.BTreeSet.html"><code>BTreeSet</code></a> is an ordered collection that has an element with the maximal value (if it isn’t empty) and an element with the minimal value (again, if not empty).
+And there are methods that return references to these elements.
+In a similar fashion to other Rust collections (that have their own “extremes“).
+These methods have signature <code>&amp;Self -&gt; Option&lt;&amp;T&gt;</code>, that is, they take a reference to the set and return a reference to the element with the minimal/maximal value (if the set is not empty).</p>
+ 
+
+
+  
+
+  
+    
+  
+
+
+<div class="callout">
+  <img 
+    class="callout-icon"
+    src="/twemoji/assets/svg/1f438.svg"
+    alt="🐸"
+  />
+  <div class="callout-body">
+    <p>So far so good, right? And how are these methods named?</p>
+
+  </div>
+</div>
+<p>The methods are named <code>first</code> and <code>last</code>. </p>
+ 
+
+
+  
+
+  
+    
+  
+
+
+<div class="callout">
+  <img 
+    class="callout-icon"
+    src="/twemoji/assets/svg/1f438.svg"
+    alt="🐸"
+  />
+  <div class="callout-body">
+    <p>And which of them is the minimal and which of them is the maximal?</p>
+
+  </div>
+</div>
+<p>Well… that’s “the problem” of this blog post, I don’t remember!
+<em>checks docs</em>.
+Ok, so <a href="https://doc.rust-lang.org/std/collections/btree_set/struct.BTreeSet.html#method.first"><code>first</code></a> is the minimum and <a href="https://doc.rust-lang.org/std/collections/btree_set/struct.BTreeSet.html#method.last"><code>last</code></a> is the maximum, thus the order is ascending.
+I would probably accept this, if it was consistent through the whole <code>std</code>… but no, of course there is <a href="https://doc.rust-lang.org/std/collections/struct.BinaryHeap.html"><code>BinaryHeap</code></a> that works the other way around and now everything is even more confusing…</p>
+ 
+
+
+  
+
+  
+    
+  
+
+
+<div class="callout">
+  <img 
+    class="callout-icon"
+    src="/twemoji/assets/svg/1f438.svg"
+    alt="🐸"
+  />
+  <div class="callout-body">
+    <p>But wait, the methods are unstable, so can’t we just… rename them to <code>min</code> &amp; <code>max</code>?</p>
+
+  </div>
+</div>
+<p>Turns out we can’t!
+And for a completely stupid reason.
+I’ll explain everything in a moment, but first (pun unintended),</p>
+<h1 id="a-short-detour-to-all-the-extremes-methods">A short detour to all the “extremes” methods<a class="zola-anchor" href="#a-short-detour-to-all-the-extremes-methods" aria-label="Anchor link for: a-short-detour-to-all-the-extremes-methods">⌗</a></h1>
+<p>In Rust standard library there are quite a few collections that have some notion of order and they all have these getter methods for the “extremes”.
+The names, for the most part, make sense, but they are quite inconsistent. Here is the table</p>
+<table><thead><tr><th>Type(s)</th><th>The min-ish</th><th>The max-ish</th><th>Has &amp;mut versions?</th><th>Has inherent order</th></tr></thead><tbody>
+<tr><td>[T] slices and Vec</td><td>first</td><td>last</td><td>Yes ✅</td><td>No ❌</td></tr>
+<tr><td>BTreeSet and BTreeMap</td><td>first</td><td>last</td><td>No ❌</td><td>Yes ✅</td></tr>
+<tr><td>VecDeque and LinkedList</td><td>front</td><td>back</td><td>Yes ✅</td><td>No ❌</td></tr>
+<tr><td>BinaryHeap</td><td>-</td><td>peek*</td><td>Yes ✅</td><td>Yes ✅</td></tr>
+</tbody></table>
+<p>Notes:</p>
+<ol>
+<li>For collections that do not have inherent order, min-ish and max-ish methods were chosen on the basis of the sorted state — in the sorted slice <code>&lt;[T]&gt;::first</code> returns the minimum element, so it’s categorized as “min-ish”. Note that when the collection is not sorted min-ish methods may return not the smallest element and max-ish methods mey return not the largest element.</li>
+<li><code>BTreeSet</code> and <code>BTreeMap</code> don’t have <code>&amp;mut</code> versions because changing an element would change its order
+<ul>
+<li><code>BinaryHeap</code> sidesteps this issue by having <code>peek_mut</code> return <code>Option&lt;PeekMut&lt;’_, T&gt;&gt;</code> instead of <code>Option&lt;&amp;mut T&gt;</code> and fixing the order in drop</li>
+<li>Really, the <code>BinaryHeap</code> is the weirdo here…</li>
+</ul>
+</li>
+<li><code>BTreeSet</code> and <code>BTreeMap</code> have some additional methods like <code>pop_</code>, <code>_key_value</code>, <code>_entry</code>, see the <a href="https://github.com/rust-lang/rust/issues/62924">tracking issue</a></li>
+<li>It’s nice that all min-ish methods use 5 letters and all the max-ish methods use 4 letters, I hadn’t noticed it until I wrote this</li>
+<li><code>Vec</code> actually has its <code>first</code>/<code>last</code> methods via <code>Deref&lt;Target = [T]&gt;</code></li>
+<li>This list is too long</li>
+</ol>
+<p>So, <code>BTreeSet</code>/<code>BTreeMap</code> method names were chosen to be consistent with slice.
+But still, why can’t we have <code>BTreeSet::{min, max}</code>?</p>
+<h1 id="the-reason-why-we-can-t-have-nice-things">The reason why we can’t have nice things<a class="zola-anchor" href="#the-reason-why-we-can-t-have-nice-things" aria-label="Anchor link for: the-reason-why-we-can-t-have-nice-things">⌗</a></h1>
+<p>So, me being me, I’ve tried to rename the <code>BTreeSet</code> methods to <code>min</code>/<code>max</code> and… failed.
+Here is the error (not the actual error I’ve gotten while renaming, that was more than <del>2</del> 5 months ago, but it’s a good enough reenactment for today):</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>error[E0061]: this function takes 1 argument but 0 arguments were supplied
+</span><span>   --&gt; src/lib.rs:11:20
+</span><span>    |
+</span><span>11  |     assert_eq!(set.min(), Some(&amp;-1));
+</span><span>    |                    ^^^- supplied 0 arguments
+</span><span>    |                    |
+</span><span>    |                    expected 1 argument
+</span><span>
+</span><span>error[E0308]: mismatched types
+</span><span>  --&gt; src/lib.rs:11:5
+</span><span>   |
+</span><span>11 |     assert_eq!(set.min(), Some(&amp;-1));
+</span><span>   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected struct `BTreeSet`, found enum `Option`
+</span><span>   |
+</span><span>   = note: expected struct `BTreeSet&lt;i32&gt;`
+</span><span>                found enum `Option&lt;&amp;{integer}&gt;`
+</span><span>   = note: this error originates in the macro `assert_eq` (in Nightly builds, run with -Z macro-backtrace for more info)
+</span></code></pre>
+<p>Why does the compiler expect <code>min</code> to have an argument, why does it think it returns <code>BTreeSet&lt;i32&gt;</code> when it’s clearly declared as <code>pub fn min(&amp;self) -&gt; Option&lt;&amp;T&gt;</code>, what is going on?</p>
+<p>After some digging I’ve figured out that <code>set.min()</code> is resolved by the compiler to <a href="https://doc.rust-lang.org/std/cmp/trait.Ord.html#method.min"><code>Ord::min</code></a>, not <code>BTreeSet::min</code>.
+But don’t inherent methods take precedence over trait methods?</p>
+<p>I couldn’t find the place from where I’ve taken the fact that “inherent methods” take precedence, but it is indeed <a href="https://play.rust-lang.org/?version=stable&amp;mode=debug&amp;edition=2021&amp;gist=8d7c8bb69bd64b613329468261985f8b">the case</a>:</p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">struct </span><span>A;
+</span><span style="color:#b48ead;">impl </span><span>A  { </span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">f</span><span>(&amp;</span><span style="color:#bf616a;">self</span><span>) -&gt; &amp;</span><span style="color:#b48ead;">&#39;static str </span><span>{ &quot;</span><span style="color:#a3be8c;">inherent</span><span>&quot; } }
+</span><span style="color:#b48ead;">trait </span><span>T { </span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">f</span><span>(&amp;</span><span style="color:#bf616a;">self</span><span>) {} }
+</span><span style="color:#b48ead;">impl </span><span>T </span><span style="color:#b48ead;">for </span><span>A {}
+</span><span>
+</span><span style="color:#65737e;">// This works
+</span><span>assert_eq!(A.</span><span style="color:#96b5b4;">f</span><span>(), &quot;</span><span style="color:#a3be8c;">inherent</span><span>&quot;);
+</span></code></pre>
+<p>So in this case inherent method takes precedence, so what’s the difference with the <code>BTreeSet::min</code> &amp; <code>Ord::min</code>?
+The secret is in their signatures:</p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#65737e;">// trait Ord
+</span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">min</span><span>(</span><span style="color:#bf616a;">self</span><span>, </span><span style="color:#bf616a;">other</span><span>: </span><span style="color:#b48ead;">Self</span><span>) -&gt; </span><span style="color:#b48ead;">Self where Self</span><span>: Sized { ... }
+</span><span>
+</span><span style="color:#65737e;">// impl BTreeSet
+</span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">min</span><span>(&amp;</span><span style="color:#bf616a;">self</span><span>) -&gt; Option&lt;&amp;T&gt; { ... }
+</span></code></pre>
+<p>Do you see the problem?
+<code>BTreeSet::min</code> takes self by reference (<code>&amp;self</code>) while <code>Ord::min</code> takes self by value (<code>self</code>).
+And methods with receivers that are “less distant from the original type” always “win” by the autoref rules.
+It’s been the behavior since forever and it’s <a href="https://doc.rust-lang.org/reference/expressions/method-call-expr.html">documented</a>:</p>
+<blockquote>
+<p>When looking up a method call, the receiver may be automatically dereferenced or borrowed in order to call a method.
+This requires a more complex lookup process than for other functions, since there may be a number of possible methods to call.
+The following procedure is used:</p>
+<p>The first step is to build a list of candidate receiver types.
+Obtain these by repeatedly <a href="https://doc.rust-lang.org/reference/expressions/operator-expr.html#the-dereference-operator">dereferencing</a> the receiver expression’s type, adding each type encountered to the list, then finally attempting an <a href="https://doc.rust-lang.org/reference/type-coercions.html#unsized-coercions">unsized coercion</a> at the end, and adding the result type if that is successful.
+Then, for each candidate <code>T</code>, add <code>&amp;T</code> and <code>&amp;mut T</code> to the list immediately after <code>T</code>.</p>
+<p>For instance, if the receiver has type <code>Box&lt;[i32;2]&gt;</code>, then the candidate types will be <code>Box&lt;[i32;2]&gt;</code>, <code>&amp;Box&lt;[i32;2]&gt;</code>, <code>&amp;mut Box&lt;[i32;2]&gt;</code>, <code>[i32; 2]</code> (by dereferencing), <code>&amp;[i32; 2]</code>, <code>&amp;mut [i32; 2]</code>, <code>[i32]</code> (by unsized coercion), <code>&amp;[i32]</code>, and finally <code>&amp;mut [i32]</code>.</p>
+<p>Then, for each candidate type <code>T</code>, search for a <a href="https://doc.rust-lang.org/reference/visibility-and-privacy.html">visible</a> method with a receiver of that type in the following places:</p>
+<ol>
+<li><code>T</code>’s inherent methods (methods implemented directly on <code>T</code>).</li>
+<li>Any of the methods provided by a <a href="https://doc.rust-lang.org/reference/visibility-and-privacy.html">visible</a> trait implemented by <code>T</code>.
+If <code>T</code> is a type parameter, methods provided by trait bounds on <code>T</code> are looked up first.
+Then all remaining methods in scope are looked up.</li>
+</ol>
+</blockquote>
+<p>For the case of <code>BTreeSet</code>, <code>.min()</code> would result in the following list: <code>BTreeSet&lt;T&gt;</code> (hit! it’s <code>Ord::min</code>), <code>&amp;BTreeSet&lt;T&gt;</code> (<code>BTreeSet::min</code>, but it’s too late), <code>&amp;mut BTreeSet&lt;T&gt;</code> (<code>BTreeSet</code> doesn’t implement <code>Deref</code> or <code>Unsize</code>).</p>
+<p>So here we are, <code>min</code> doesn’t work as a name of a method that takes self by ref on a type that implements <code>Ord</code>, <code>get_min</code> and <code>minumum</code> were <a href="https://github.com/rust-lang/rust/pull/93709#issuecomment-1098126012">rejected</a> by the libs-api team, we are stuck with the confusing <code>first</code>/<code>last</code>.</p>
+<p>And the saddest part?
+I don’t even think <code>Ord::{min, max}</code> are good methods.
+They don’t make much sense as methods (I think <code>min(a, b)</code> is nicer and more symmetric than <code>a.min(b)</code>) and they have too-generic names (as seen by this whole issue with <code>BTreeSet</code>) for methods of the trait that is in the prelude and is implemented for a large amount of types.</p>
+<p>But, it’s too late to change anything.</p>
+<p>That was the reason why we can’t have nice things, bye.</p>
+
+        </div>
+
+        
+        <div class="pagination">
+            <div class="pagination__title">
+                <span class="pagination__title-h">Thanks for reading! Read other posts?</span>
+                <hr />
+            </div>
+            <div class="pagination__buttons">
+                
+                    <span class="button next">
+                        <a href="https://ihatereality.space/06-comments-are-weak/">
+                            <span class="button__text">Comments are weak</span>&nbsp;
+                            <span class="button__icon">→</span>
+                        </a>
+                    </span>
+                </div>
+        </div>
+    
+    </div>
+
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright copyright--user"><div class="copyright"><span>© 2021 Maybe Waffle</span><span class="copyright-theme"><span class="copyright-theme-sep">:: </span>Theme is based on <a href="https://github.com/pawroman/zola-theme-terminimal/">Terminimal</a></span><span class="copyright-theme-sep">:: </span><a href="/rss.xml">rss</a></div></div>
+            </div>
+    </footer>
+    
+
+</div>
+
+<!-- Tracking via https://www.goatcounter.com/ -->
+<script data-goatcounter="https://ihr.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+
+</html>

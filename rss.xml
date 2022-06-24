@@ -7,7 +7,15 @@
         <generator>Zola</generator>
         <language>en</language>
         <atom:link href="https://ihatereality.space/rss.xml" rel="self" type="application/rss+xml"/>
-        <lastBuildDate>Sun, 30 Jan 2022 00:00:00 +0000</lastBuildDate>
+        <lastBuildDate>Fri, 24 Jun 2022 00:00:00 +0000</lastBuildDate>
+        <item>
+            <title>Why we can’t have nice things: min&#x2F;max</title>
+            <pubDate>Fri, 24 Jun 2022 00:00:00 +0000</pubDate>
+            <link>https://ihatereality.space/07-why-we-can-not-have-nice-things-min-max/</link>
+            <guid>https://ihatereality.space/07-why-we-can-not-have-nice-things-min-max/</guid>
+            <description>&lt;p&gt;In this post I’ll talk about Rust’s &lt;a href=&quot;https:&#x2F;&#x2F;doc.rust-lang.org&#x2F;std&#x2F;collections&#x2F;btree_set&#x2F;struct.BTreeSet.html&quot;&gt;&lt;code&gt;BTreeSet&lt;&#x2F;code&gt;&lt;&#x2F;a&gt; and tell a sad story about its methods.&lt;&#x2F;p&gt;
+</description>
+        </item>
         <item>
             <title>Comments are weak</title>
             <pubDate>Sun, 30 Jan 2022 00:00:00 +0000</pubDate>
