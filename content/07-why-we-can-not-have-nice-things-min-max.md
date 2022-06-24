@@ -15,9 +15,9 @@ In this post I’ll talk about Rust’s [`BTreeSet`] and tell a sad story about 
 
 # The nice things (that we can’t have)
 
-So, [`BTreeSet`] is an ordered collection that has an element with the maximal value (if it isn’t empty) and an element with the minimal value (again, if not empty).
+So, [`BTreeSet`] is an ordered collection that has an element with the maximum value (if it isn’t empty) and an element with the minimum value (again, if not empty).
 And there are methods that return references to these elements.
-In a similar fashion to other Rust collections (that have their own “extremes"), these methods have signature `&Self -> Option<&T>`, that is, they take a reference to the set and return a reference to the element with the minimal/maximal value (if the set is not empty).
+In a similar fashion to other Rust collections (that have their own “extremes"), these methods have signature `&Self -> Option<&T>`, that is, they take a reference to the set and return a reference to the element with the minimum/maximum value (if the set is not empty).
 
 {% callout() %}
 So far so good, right? And how are these methods named?
@@ -26,7 +26,7 @@ So far so good, right? And how are these methods named?
 The methods are named `first` and `last`. 
 
 {% callout() %}
-And which of them is the minimal and which of them is the maximal?
+And which of them is the minimum and which of them is the maximum?
 {% end %}
 
 Well... that’s “the problem” of this blog post, I don’t remember!
