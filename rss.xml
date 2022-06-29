@@ -7,7 +7,17 @@
         <generator>Zola</generator>
         <language>en</language>
         <atom:link href="https://ihatereality.space/rss.xml" rel="self" type="application/rss+xml"/>
-        <lastBuildDate>Fri, 24 Jun 2022 00:00:00 +0000</lastBuildDate>
+        <lastBuildDate>Wed, 29 Jun 2022 00:00:00 +0000</lastBuildDate>
+        <item>
+            <title>(Ab)using Rust traits to write silly things</title>
+            <pubDate>Wed, 29 Jun 2022 00:00:00 +0000</pubDate>
+            <link>https://ihatereality.space/08-abusing-rust-traits-to-write-silly-things/</link>
+            <guid>https://ihatereality.space/08-abusing-rust-traits-to-write-silly-things/</guid>
+            <description>&lt;p&gt;Recently I’ve found some cursed Rust code and decided to make a little joke&#x2F;question &lt;a href=&quot;https:&#x2F;&#x2F;twitter.com&#x2F;maybewaffle&#x2F;status&#x2F;1541910667812274183&quot;&gt;on twitter&lt;&#x2F;a&gt;.
+In the tweet I’ve presented some unusual code and asked “how could it compile?”.
+The solution was found quite fast by &lt;a href=&quot;https:&#x2F;&#x2F;twitter.com&#x2F;Veykril&quot;&gt;@Veykril&lt;&#x2F;a&gt; (kudos to them!) and in this post I want to explain it in detail.&lt;&#x2F;p&gt;
+</description>
+        </item>
         <item>
             <title>Why we can’t have nice things: min&#x2F;max</title>
             <pubDate>Fri, 24 Jun 2022 00:00:00 +0000</pubDate>
