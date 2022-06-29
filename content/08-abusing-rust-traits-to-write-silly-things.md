@@ -1,7 +1,7 @@
 +++
 title = "(Ab)using Rust traits to write silly things"
 date = 2022-06-29
-description = "Explaining how to make a function that is callable with and without parenthesis"
+description = "Explaining how to make a function that is callable with and without parentheses"
 
 [taxonomies] 
 tags = ["rust"]
@@ -41,7 +41,7 @@ fn main() {
 ```
 
 That compiles with **stable compiler**, if you have a right `lib`!
-The interesting bit here is of course that function `lib::iter` can be called with or without parenthesis. 
+The interesting bit here is of course that function `lib::iter` can be called with or without parentheses. 
 This is normally not possible, so what is going on?
 
 First of all, some low hanging fruit: `for` loops in Rust desugar to something like this:
