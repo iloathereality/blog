@@ -80,7 +80,7 @@ async fn _f() {
 }
 ```
 
-BTW I think it [should be stabilized] soon, so keep an eye on the tracking issue (or don't (I'm just very exited for this feature)).
+BTW I think it [should be stabilized] soon, so keep an eye on the tracking issue (or don't (I'm just very excited for this feature)).
 
 [`IntoFuture`]: https://doc.rust-lang.org/std/future/trait.IntoFuture.html
 [should be stabilized]: https://github.com/rust-lang/rust/issues/67644#issuecomment-1163424241
