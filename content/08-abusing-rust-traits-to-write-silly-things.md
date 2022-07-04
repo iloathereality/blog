@@ -73,10 +73,10 @@ You can do all the same stuff with it, so async functions with optional `()` are
 ```rust
 #![feature(into_future)]
 async fn _f() {
-	let _: String = lib2::fut::<String>.await;
-	let _: [u8; 2] = lib2::fut::<[u8; 2]>().await;
-	let _: &str = lib2::fut.await;
-	let _: u128 = lib2::fut().await;
+    let _: String = lib2::fut::<String>.await;
+    let _: [u8; 2] = lib2::fut::<[u8; 2]>().await;
+    let _: &str = lib2::fut.await;
+    let _: u128 = lib2::fut().await;
 }
 ```
 
