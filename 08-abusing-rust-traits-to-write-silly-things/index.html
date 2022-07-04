@@ -165,10 +165,10 @@ That’s just to say that we need <code>iter</code> and <code>iter()</code> some
 You can do all the same stuff with it, so async functions with optional <code>()</code> are possible too:</p>
 <pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span>#![</span><span style="color:#bf616a;">feature</span><span>(into_future)]
 </span><span>async </span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">_f</span><span>() {
-</span><span>	</span><span style="color:#b48ead;">let </span><span>_: String = lib2::fut::&lt;String&gt;.await;
-</span><span>	</span><span style="color:#b48ead;">let </span><span>_: [</span><span style="color:#b48ead;">u8</span><span>; </span><span style="color:#d08770;">2</span><span>] = lib2::fut::&lt;[</span><span style="color:#b48ead;">u8</span><span>; </span><span style="color:#d08770;">2</span><span>]&gt;().await;
-</span><span>	</span><span style="color:#b48ead;">let </span><span>_: &amp;</span><span style="color:#b48ead;">str </span><span>= lib2::fut.await;
-</span><span>	</span><span style="color:#b48ead;">let </span><span>_: </span><span style="color:#b48ead;">u128 </span><span>= lib2::fut().await;
+</span><span>    </span><span style="color:#b48ead;">let </span><span>_: String = lib2::fut::&lt;String&gt;.await;
+</span><span>    </span><span style="color:#b48ead;">let </span><span>_: [</span><span style="color:#b48ead;">u8</span><span>; </span><span style="color:#d08770;">2</span><span>] = lib2::fut::&lt;[</span><span style="color:#b48ead;">u8</span><span>; </span><span style="color:#d08770;">2</span><span>]&gt;().await;
+</span><span>    </span><span style="color:#b48ead;">let </span><span>_: &amp;</span><span style="color:#b48ead;">str </span><span>= lib2::fut.await;
+</span><span>    </span><span style="color:#b48ead;">let </span><span>_: </span><span style="color:#b48ead;">u128 </span><span>= lib2::fut().await;
 </span><span>}
 </span></code></pre>
 <p>BTW I think it <a href="https://github.com/rust-lang/rust/issues/67644#issuecomment-1163424241">should be stabilized</a> soon, so keep an eye on the tracking issue (or don’t (I’m just very excited for this feature)).</p>
