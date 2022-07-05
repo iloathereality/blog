@@ -302,7 +302,7 @@ type Either<'a, 'b> = Left of 'a | Right of 'b
 
 Go doesn't support sum types. It's a little sad on its own, but Go also doesn't have exceptions and all reference types are implicitly nullable. This means that if a function wants to return an error, it needs to return a tuple of success and error values. This not only makes checking which is `null` (actually `nil`, but it’s the same thing) pretty annoying, but also leaves the possibility for an invalid state where neither success nor error values are null. 
 
-I think it's inexcusable to have such error-prone design flaws in 2012.
+I think it's inexcusable to have such error-prone design flaws for a language created in 2012.
 
 # Conclusion
 
