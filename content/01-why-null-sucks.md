@@ -285,6 +285,38 @@ In my opinion, Kotlin's support of sum types is extremely hacky, but who am I to
 
 Nevertheless, Kotlin doesn't use this for optional values! In fact, it doesn't even have an `Option` class in the standard library. For me, it seems like a big omission. It seems like making `T?` equivalent to `Option<T>` and `Option<N>` (where `N` is not `Option`) be layout compatible with `Java`'s `N` (i.e. `Java`'s `null` being the same as `None<N>`) would be sufficient...
 
+# A sad note: Java & Scala
+
+Originally I didn't plan to say anything about Java (or Scala) -- after all it is a classic example of why **unchecked** `null` is problematic.
+Everyone (?) already knows that it's hard to always remember to check for `null` by hand and that it causes `NullPointerException`s all of the time.
+So it felt like brining up Java here wouldn't be valuable.
+
+But! Recently I was reminded that Java has an interesting unsoundness in its type system that is related to `null`.
+
+In a nutshell Java (and similarly Scala) assumes that if a value of a type exists, then this type is well-formed.
+Well-formedness means that the type is sensible, that all its type parameters satisfy their bounds.
+When coupled with other features like wildcards in Java or path-dependant types in Scala, this allows you to create a type that proves a relationship between two types.
+I.e. that one type is a subtype of another type.
+You can then create a function that accepts such a proof of type relationship and coerce one type to another.
+
+This is all sensible, because normally to create a value of a type you need to prove that it is well-formed.
+However there is a flaw in this assumption: `null` (unsurprisingly, given the theme of this post).
+
+You see, `null` makes all reference types inhabited, even the ones that are not well-formed.
+As shown in the [Java and Scala’s Type Systems are Unsound] `null` allows you to falsify the proof of type relationship, allowing to coerce any two types to each other.
+
+[Java and Scala’s Type Systems are Unsound]: https://raw.githubusercontent.com/namin/unsound/master/doc/unsound-oopsla16.pdf
+
+{% callout() %}
+The paper itself is a great read, I recommend reading it, if you haven't already!
+{% end %}
+
+This is another place where implicitness of null caused issues, quoting the paper:
+
+> It [implicit-null feature] adds a case that is easy to forget and difficult to keep track of and reason about.
+> Interestingly, here it causes the same problem for the same reasons, but at the type level.
+> The reasoning for wildcards and path-dependent types would be perfectly valid if not for implicit `null` values
+
 # A sad note: C#
 
 C# doesn't support sum types. To some extent they can be simulated using inheritance from an interface or abstract class, however, such an approach lacks one of the greatest benefits of sum types, namely the exhaustiveness check.
