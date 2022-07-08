@@ -169,7 +169,7 @@ The use of sum types gives us 3 distinct kinds of values that can be distinguish
 
 ## Extensibility
 
-Sum types can be used for optional values via `Option`-like types. But they are not limited to only this. You can define your own sum types. It's very handy when you need to return errors (See rust [`Result`](https://doc.rust-lang.org/std/result/index.html) for example), define the errors themselves or just in general when you need to hold different kinds (types) of data in one place. 
+Sum types can be used for optional values via `Option`-like types. But they are not limited to only this. You can define your own sum types. It's very handy when you need to return errors (See Rust [`Result`](https://doc.rust-lang.org/std/result/index.html) for example), define the errors themselves or just in general when you need to hold different kinds (types) of data in one place. 
 
 ## Explicitness
 
