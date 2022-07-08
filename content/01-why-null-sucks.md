@@ -190,7 +190,7 @@ let res = f(Some(1));
 //          ^^^^^ ^
 ```
 
-It would be interesting to see a language with sum types and `T` to `Option<T>` coercion though 👀
+~~It would be interesting to see a language with sum types and `T` to `Option<T>` coercion though 👀~~ (see note about Swift down below)
 
 # Niche optimization
 
@@ -335,6 +335,55 @@ type Either<'a, 'b> = Left of 'a | Right of 'b
 Go doesn't support sum types. It's a little sad on its own, but Go also doesn't have exceptions and all reference types are implicitly nullable. This means that if a function wants to return an error, it needs to return a tuple of success and error values. This not only makes checking which is `null` (actually `nil`, but it’s the same thing) pretty annoying, but also leaves the possibility for an invalid state where neither success nor error values are `null`. 
 
 I think it's inexcusable to have such error-prone design flaws for a language created in 2012.
+
+# A happy note: Swift
+
+I'm not very familiar with Swift, however I often hear that it has some interesting/ergonomic/nice features.
+This time is not an exception --- I was told that swift has both sum types and `T` -> `Option<T>` coercion.
+
+From what I've gathered from [here][swift-doc] and [here][swift-guide] in Swift the type is called `Optional<Wrapped>`.
+It has two variants (or cases as they are called in Swift) --- `some(Wrapped)` and `none`.
+`switch` can be used to pattern match.
+
+[swift-doc]: https://developer.apple.com/documentation/swift/optional
+[swift-guide]: https://www.programiz.com/swift-programming/optionals
+
+```swift
+let a: Optional<Int> = Optional.none
+let b: Optional<Int> = Optional.some(1)
+
+switch b {
+case let Optional.some(x):
+//   ^^^ --- let is needed to introduce new variables (`x`).
+//           honestly, this is quite a good choice.
+//           it allows to use `Optional.some(pat)`
+//           to compare the wrapped value to `pat` variable.
+    print(x)
+case Optional.none:
+    print(":(")
+}
+```
+
+And then on top of that Swift adds a whole bunch of syntax sugar
+
+1. `T?` can be used instead of `Optional<T>`
+2. `T` can be coerced to `T?` (and coercions are transitive it seems, so `T` -> `T???` is also supported)
+3. `nil` can be used instead of `Optional.none` (there is a coercion from `nil` literal to `T?`)
+4. `.variant` can be used if the type can be inferred (e.g. `.none` and `.some(16)`)
+5. `a?.b` can be used to do chaining / map access (`a.map(|x| x.b)` in Rust terms)
+6. `a ?? b` can be used to provide a default
+7. `if let x = a` assigns `x` to the inner value if `a` is `some` (syntax sugar for `if case let Optional.some(x) = a {`)
+8. `guard let x = a else { return }` can be used to early-return if a value is not `some`
+9. `a!` can be used to unwrap a variable crashing if it's `none`
+10. and more (probably (I'm a little tired of writing this list))
+
+_Personally_, I'd say that's a bit too much sugar and I'm a little concerned how coercions interact with generic code.
+But overall I think that's a pretty nice feature set and I guess it's nice to use all of this.
+I wish more languages went in direction "make `Optional` nicer" instead of "make `null`" nicer (yes, I'm still looking at you, Kotlin).
+
+{% callout() %}
+Also Swift gets it right and calls the `T? -> (T -> U?) -> U?` function `flatMap`. Yes, I'm looking at you, Rust.
+{% end %}
 
 # Conclusion
 
