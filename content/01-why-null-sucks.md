@@ -311,7 +311,7 @@ As shown in the [Java and Scala’s Type Systems are Unsound] `null` allows you 
 The paper itself is a great read, I recommend reading it, if you haven't already!
 {% end %}
 
-This is another place where implicitness of null caused issues, quoting the paper:
+This is another place where implicitness of `null` caused issues, quoting the paper:
 
 > It [implicit-null feature] adds a case that is easy to forget and difficult to keep track of and reason about.
 > Interestingly, here it causes the same problem for the same reasons, but at the type level.
@@ -332,7 +332,7 @@ type Either<'a, 'b> = Left of 'a | Right of 'b
 
 # A sad note: Go
 
-Go doesn't support sum types. It's a little sad on its own, but Go also doesn't have exceptions and all reference types are implicitly nullable. This means that if a function wants to return an error, it needs to return a tuple of success and error values. This not only makes checking which is `null` (actually `nil`, but it’s the same thing) pretty annoying, but also leaves the possibility for an invalid state where neither success nor error values are null. 
+Go doesn't support sum types. It's a little sad on its own, but Go also doesn't have exceptions and all reference types are implicitly nullable. This means that if a function wants to return an error, it needs to return a tuple of success and error values. This not only makes checking which is `null` (actually `nil`, but it’s the same thing) pretty annoying, but also leaves the possibility for an invalid state where neither success nor error values are `null`. 
 
 I think it's inexcusable to have such error-prone design flaws for a language created in 2012.
 
