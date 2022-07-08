@@ -7,7 +7,7 @@
         <generator>Zola</generator>
         <language>en</language>
         <atom:link href="https://ihatereality.space/rss.xml" rel="self" type="application/rss+xml"/>
-        <lastBuildDate>Wed, 29 Jun 2022 00:00:00 +0000</lastBuildDate>
+        <lastBuildDate>Fri, 08 Jul 2022 00:00:00 +0000</lastBuildDate>
         <item>
             <title>(Ab)using Rust traits to write silly things</title>
             <pubDate>Wed, 29 Jun 2022 00:00:00 +0000</pubDate>

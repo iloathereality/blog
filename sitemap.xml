@@ -5,7 +5,7 @@
     </url>
     <url>
         <loc>https://ihatereality.space/01-why-null-sucks/</loc>
-        <lastmod>2021-08-25</lastmod>
+        <lastmod>2022-07-08</lastmod>
     </url>
     <url>
         <loc>https://ihatereality.space/02-you-would-not-use-filter-map/</loc>
@@ -51,9 +51,18 @@
         <loc>https://ihatereality.space/tags/haskell/</loc>
     </url>
     <url>
+        <loc>https://ihatereality.space/tags/java/</loc>
+    </url>
+    <url>
         <loc>https://ihatereality.space/tags/kotlin/</loc>
     </url>
     <url>
         <loc>https://ihatereality.space/tags/rust/</loc>
+    </url>
+    <url>
+        <loc>https://ihatereality.space/tags/scala/</loc>
+    </url>
+    <url>
+        <loc>https://ihatereality.space/tags/swift/</loc>
     </url>
 </urlset>

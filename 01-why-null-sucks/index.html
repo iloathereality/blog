@@ -18,7 +18,7 @@
     <meta name="image" content="https://ihatereality.space/you_cant_escape_from_reality_450x450.png">
 
     
-        <meta name="keywords" itemprop="tags" content="kotlin, csharp, haskell, rust, go">
+        <meta name="keywords" itemprop="tags" content="kotlin, csharp, java, scala, haskell, rust, go, swift">
     
 
     <!-- Facebook Meta Tags -->
@@ -39,11 +39,17 @@
         
             <meta property="article:tag" content="csharp">
         
+            <meta property="article:tag" content="java">
+        
+            <meta property="article:tag" content="scala">
+        
             <meta property="article:tag" content="haskell">
         
             <meta property="article:tag" content="rust">
         
             <meta property="article:tag" content="go">
+        
+            <meta property="article:tag" content="swift">
         
     
 
@@ -109,20 +115,20 @@
     <span class="post-date">
             2021-08-20
         
-            [updated 2021-08-25]
+            [updated 2022-07-08]
         
     </span>
 
             
     <span class="post-read-time">
-        :: 13 min read
+        :: 16 min read
     </span>
 
 
             <!-- TODO: rethink how tags look -->
             <br>
             
-        <span class="post-tags-inline"><a class="post-tag" href="https://ihatereality.space/tags/kotlin/">#kotlin</a> <a class="post-tag" href="https://ihatereality.space/tags/csharp/">#csharp</a> <a class="post-tag" href="https://ihatereality.space/tags/haskell/">#haskell</a> <a class="post-tag" href="https://ihatereality.space/tags/rust/">#rust</a> <a class="post-tag" href="https://ihatereality.space/tags/go/">#go</a></span>
+        <span class="post-tags-inline"><a class="post-tag" href="https://ihatereality.space/tags/kotlin/">#kotlin</a> <a class="post-tag" href="https://ihatereality.space/tags/csharp/">#csharp</a> <a class="post-tag" href="https://ihatereality.space/tags/java/">#java</a> <a class="post-tag" href="https://ihatereality.space/tags/scala/">#scala</a> <a class="post-tag" href="https://ihatereality.space/tags/haskell/">#haskell</a> <a class="post-tag" href="https://ihatereality.space/tags/rust/">#rust</a> <a class="post-tag" href="https://ihatereality.space/tags/go/">#go</a> <a class="post-tag" href="https://ihatereality.space/tags/swift/">#swift</a></span>
     
         </div>
     
@@ -254,7 +260,7 @@
 
   </div>
 </div><h2 id="generality-1">Generality<a class="zola-anchor" href="#generality-1" aria-label="Anchor link for: generality-1">⌗</a></h2>
-<p><code>Option&lt;Option&lt;T&gt;&gt;</code> is a meaningful type, unlike <code>T??</code>. In the same example with <code>HashMap::get</code> there isn’t any problems if it returns <code>Option&lt;_&gt;</code>.</p>
+<p><code>Option&lt;Option&lt;T&gt;&gt;</code> is a meaningful type, unlike <code>T??</code>. In the same example with <code>HashMap::get</code> there isn’t any problems if it returns <code>Option&lt;V&gt;</code>.</p>
 <pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">impl</span><span>&lt;K, V&gt; HashMap&lt;K, V&gt; {
 </span><span>    </span><span style="color:#65737e;">// If `key` is present in the hash map, 
 </span><span>    </span><span style="color:#65737e;">// returns the value associated with it. 
@@ -265,7 +271,7 @@
 <p>If the key isn’t present in the <code>HashMap&lt;K, Option&lt;V&gt;&gt;</code>, then <code>None</code> is returned. If the key is present but the associated value is <code>None</code>, <code>Some(None)</code> is returned. Otherwise, if the key is present and the value isn’t <code>None</code>, then <code>Some(Some(value))</code> is returned. </p>
 <p>The use of sum types gives us 3 distinct kinds of values that can be distinguished from one another, instead of an ambiguous null.</p>
 <h2 id="extensibility-1">Extensibility<a class="zola-anchor" href="#extensibility-1" aria-label="Anchor link for: extensibility-1">⌗</a></h2>
-<p>Sum types can be used for optional values via <code>Option</code>-like types. But they are not limited to only this. You can define your own sum types. It’s very handy when you need to return errors (See rust <a href="https://doc.rust-lang.org/std/result/index.html"><code>Result</code></a> for example), define the errors themselves or just in general when you need to hold different kinds (types) of data in one place. </p>
+<p>Sum types can be used for optional values via <code>Option</code>-like types. But they are not limited to only this. You can define your own sum types. It’s very handy when you need to return errors (See Rust <a href="https://doc.rust-lang.org/std/result/index.html"><code>Result</code></a> for example), define the errors themselves or just in general when you need to hold different kinds (types) of data in one place. </p>
 <h2 id="explicitness">Explicitness<a class="zola-anchor" href="#explicitness" aria-label="Anchor link for: explicitness">⌗</a></h2>
 <p>There is one thing you may prefer about <code>null</code> over sum types: <code>T</code> can be <a href="https://en.wikipedia.org/wiki/Type_conversion">coerced</a> to <code>T?</code>.  That means that you don’t need to explicitly wrap values in <code>Some</code> (<code>Just</code>). </p>
 <p>This may be handy, because you need to type ~6 characters less if you want to pass <code>T</code> to a function that accepts <code>T?</code>. However, I don’t think that wrapping inconvenience outweighs the benefits of sum types.</p>
@@ -276,7 +282,7 @@
 </span><span style="color:#b48ead;">let</span><span> res = </span><span style="color:#96b5b4;">f</span><span>(Some(</span><span style="color:#d08770;">1</span><span>));
 </span><span style="color:#65737e;">//          ^^^^^ ^
 </span></code></pre>
-<p>It would be interesting to see a language with sum types and <code>T</code> to <code>Option&lt;T&gt;</code> coercion though 👀</p>
+<p><del>It would be interesting to see a language with sum types and <code>T</code> to <code>Option&lt;T&gt;</code> coercion though 👀</del> (see note about Swift down below)</p>
 <h1 id="niche-optimization">Niche optimization<a class="zola-anchor" href="#niche-optimization" aria-label="Anchor link for: niche-optimization">⌗</a></h1>
  
 
@@ -382,6 +388,47 @@
   </div>
 </div>
 <p>Nevertheless, Kotlin doesn’t use this for optional values! In fact, it doesn’t even have an <code>Option</code> class in the standard library. For me, it seems like a big omission. It seems like making <code>T?</code> equivalent to <code>Option&lt;T&gt;</code> and <code>Option&lt;N&gt;</code> (where <code>N</code> is not <code>Option</code>) be layout compatible with <code>Java</code>’s <code>N</code> (i.e. <code>Java</code>’s <code>null</code> being the same as <code>None&lt;N&gt;</code>) would be sufficient…</p>
+<h1 id="a-sad-note-java-scala">A sad note: Java &amp; Scala<a class="zola-anchor" href="#a-sad-note-java-scala" aria-label="Anchor link for: a-sad-note-java-scala">⌗</a></h1>
+<p>Originally I didn’t plan to say anything about Java (or Scala) — after all it is a classic example of why <strong>unchecked</strong> <code>null</code> is problematic.
+Everyone (?) already knows that it’s hard to always remember to check for <code>null</code> by hand and that it causes <code>NullPointerException</code>s all of the time.
+So it felt like brining up Java here wouldn’t be valuable.</p>
+<p>But! Recently I was reminded that Java has an interesting unsoundness in its type system that is related to <code>null</code>.</p>
+<p>In a nutshell Java (and similarly Scala) assumes that if a value of a type exists, then this type is well-formed.
+Well-formedness means that the type is sensible, that all its type parameters satisfy their bounds.
+When coupled with other features like wildcards in Java or path-dependant types in Scala, this allows you to create a type that proves a relationship between two types.
+I.e. that one type is a subtype of another type.
+You can then create a function that accepts such a proof of type relationship and coerce one type to another.</p>
+<p>This is all sensible, because normally to create a value of a type you need to prove that it is well-formed.
+However there is a flaw in this assumption: <code>null</code> (unsurprisingly, given the theme of this post).</p>
+<p>You see, <code>null</code> makes all reference types inhabited, even the ones that are not well-formed.
+As shown in the <a href="https://raw.githubusercontent.com/namin/unsound/master/doc/unsound-oopsla16.pdf">Java and Scala’s Type Systems are Unsound</a> paper <code>null</code> allows you to falsify the proof of type relationship, allowing to coerce any two types to each other.</p>
+ 
+
+
+  
+
+  
+    
+  
+
+
+<div class="callout">
+  <img 
+    class="callout-icon"
+    src="/twemoji/assets/svg/1f438.svg"
+    alt="🐸"
+  />
+  <div class="callout-body">
+    <p>The paper itself is a great read, I recommend reading it, if you haven’t already!</p>
+
+  </div>
+</div>
+<p>This is another place where implicitness of <code>null</code> caused issues, quoting the paper:</p>
+<blockquote>
+<p>It [implicit-null feature] adds a case that is easy to forget and difficult to keep track of and reason about.
+Interestingly, here it causes the same problem for the same reasons, but at the type level.
+The reasoning for wildcards and path-dependent types would be perfectly valid if not for implicit <code>null</code> values</p>
+</blockquote>
 <h1 id="a-sad-note-c">A sad note: C#<a class="zola-anchor" href="#a-sad-note-c" aria-label="Anchor link for: a-sad-note-c">⌗</a></h1>
 <p>C# doesn’t support sum types. To some extent they can be simulated using inheritance from an interface or abstract class, however, such an approach lacks one of the greatest benefits of sum types, namely the exhaustiveness check.</p>
 <p>It’s especially sad since F# (which is running on the same VM) supports sum types (F# docs call them <a href="https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/discriminated-unions"><em>Discriminated Unions</em></a>), but C# doesn’t.</p>
@@ -389,9 +436,65 @@
 </span><span style="color:#b48ead;">type </span><span>Either</span><span style="color:#b48ead;">&lt;</span><span>&#39;a</span><span style="color:#b48ead;">, </span><span>&#39;b</span><span style="color:#b48ead;">&gt; =</span><span> Left </span><span style="color:#b48ead;">of </span><span>&#39;a </span><span style="color:#b48ead;">|</span><span> Right </span><span style="color:#b48ead;">of </span><span>&#39;b
 </span></code></pre>
 <h1 id="a-sad-note-go">A sad note: Go<a class="zola-anchor" href="#a-sad-note-go" aria-label="Anchor link for: a-sad-note-go">⌗</a></h1>
-<p>Go doesn’t support sum types. It’s a little sad on its own, but Go also doesn’t have exceptions and all reference types are implicitly nullable. This means that if a function wants to return an error, it needs to return a tuple of success and error values. This not only makes checking which is <code>null</code> (actually <code>nil</code>, but it’s the same thing) pretty annoying, but also leaves the possibility for an invalid state where neither success nor error values are null. </p>
-<p>I think it’s inexcusable to have such error-prone design flaws in 2012.</p>
-<h1 id="conclusion">Conclusion<a class="zola-anchor" href="#conclusion" aria-label="Anchor link for: conclusion">⌗</a></h1>
+<p>Go doesn’t support sum types. It’s a little sad on its own, but Go also doesn’t have exceptions and all reference types are implicitly nullable. This means that if a function wants to return an error, it needs to return a tuple of success and error values. This not only makes checking which is <code>null</code> (actually <code>nil</code>, but it’s the same thing) pretty annoying, but also leaves the possibility for an invalid state where neither success nor error values are <code>null</code>. </p>
+<p>I think it’s inexcusable to have such error-prone design flaws for a language created in 2012.</p>
+<h1 id="a-happy-note-swift">A happy note: Swift<a class="zola-anchor" href="#a-happy-note-swift" aria-label="Anchor link for: a-happy-note-swift">⌗</a></h1>
+<p>I’m not very familiar with Swift, however I often hear that it has some interesting/ergonomic/nice features.
+This time is not an exception — I was told that swift has both sum types and <code>T</code> -&gt; <code>Option&lt;T&gt;</code> coercion.</p>
+<p>From what I’ve gathered from <a href="https://developer.apple.com/documentation/swift/optional">here</a> and <a href="https://www.programiz.com/swift-programming/optionals">here</a> in Swift the type is called <code>Optional&lt;Wrapped&gt;</code>.
+It has two variants (or cases as they are called in Swift) — <code>some(Wrapped)</code> and <code>none</code>.
+<code>switch</code> can be used to pattern match.</p>
+<pre data-lang="swift" style="background-color:#2b303b;color:#c0c5ce;" class="language-swift "><code class="language-swift" data-lang="swift"><span style="color:#b48ead;">let</span><span> a: Optional&lt;Int&gt; = Optional.</span><span style="color:#b48ead;">none
+</span><span style="color:#b48ead;">let</span><span> b: Optional&lt;Int&gt; = Optional.some(</span><span style="color:#d08770;">1</span><span>)
+</span><span>
+</span><span style="color:#b48ead;">switch</span><span> b {
+</span><span style="color:#b48ead;">case let</span><span> Optional.some(x):
+</span><span style="color:#65737e;">//   ^^^ --- let is needed to introduce new variables (`x`).
+</span><span style="color:#65737e;">//           honestly, this is quite a good choice.
+</span><span style="color:#65737e;">//           it allows to use `Optional.some(pat)`
+</span><span style="color:#65737e;">//           to compare the wrapped value to `pat` variable.
+</span><span>    print(x)
+</span><span style="color:#b48ead;">case</span><span> Optional.</span><span style="color:#b48ead;">none</span><span>:
+</span><span>    print(</span><span style="color:#a3be8c;">&quot;:(&quot;</span><span>)
+</span><span>}
+</span></code></pre>
+<p>And then on top of that Swift adds a whole bunch of syntax sugar</p>
+<ol>
+<li><code>T?</code> can be used instead of <code>Optional&lt;T&gt;</code></li>
+<li><code>T</code> can be coerced to <code>T?</code> (and coercions are transitive it seems, so <code>T</code> -&gt; <code>T???</code> is also supported)</li>
+<li><code>nil</code> can be used instead of <code>Optional.none</code> (there is a coercion from <code>nil</code> literal to <code>T?</code>)</li>
+<li><code>.variant</code> can be used if the type can be inferred (e.g. <code>.none</code> and <code>.some(16)</code>)</li>
+<li><code>a?.b</code> can be used to do chaining / map access (<code>a.map(|x| x.b)</code> in Rust terms)</li>
+<li><code>a ?? b</code> can be used to provide a default</li>
+<li><code>if let x = a</code> assigns <code>x</code> to the inner value if <code>a</code> is <code>some</code> (syntax sugar for <code>if case let Optional.some(x) = a {</code>)</li>
+<li><code>guard let x = a else { return }</code> can be used to early-return if a value is not <code>some</code></li>
+<li><code>a!</code> can be used to unwrap a variable crashing if it’s <code>none</code></li>
+<li>and more (probably (I’m a little tired of writing this list))</li>
+</ol>
+<p><em>Personally</em>, I’d say that’s a bit too much sugar and I’m a little concerned how coercions interact with generic code.
+But overall I think that’s a pretty nice feature set and I guess it’s nice to use all of this.
+I wish more languages went in direction “make <code>Optional</code> nicer” instead of “make <code>null</code>” nicer (yes, I’m still looking at you, Kotlin).</p>
+ 
+
+
+  
+
+  
+    
+  
+
+
+<div class="callout">
+  <img 
+    class="callout-icon"
+    src="/twemoji/assets/svg/1f438.svg"
+    alt="🐸"
+  />
+  <div class="callout-body">
+    <p>Also Swift gets it right and calls the <code>T? -&gt; (T -&gt; U?) -&gt; U?</code> function <code>flatMap</code>. Yes, I’m looking at you, Rust.</p>
+
+  </div>
+</div><h1 id="conclusion">Conclusion<a class="zola-anchor" href="#conclusion" aria-label="Anchor link for: conclusion">⌗</a></h1>
 <p>There is no nice conclusion. The reality is painful as usual. We are stuck with a 56-year old abstraction that has proven itself to be error-prone for a while now. We are stuck with it, even though a better solution exists for longer than I have.</p>
 <p>bye.</p>
 
