@@ -152,7 +152,7 @@ Another nice fact about `Option` (`Maybe`) is that it can be defined in a librar
 
 ## Generality
 
-`Option<Option<T>>` is a meaningful type, unlike `T??`. In the same example with `HashMap::get` there isn't any problems if it returns `Option<_>`.
+`Option<Option<T>>` is a meaningful type, unlike `T??`. In the same example with `HashMap::get` there isn't any problems if it returns `Option<V>`.
 
 ```rust
 impl<K, V> HashMap<K, V> {
