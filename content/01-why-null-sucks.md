@@ -287,7 +287,7 @@ Nevertheless, Kotlin doesn't use this for optional values! In fact, it doesn't e
 
 # A sad note: Java & Scala
 
-Originally I didn't plan to say anything about Java (or Scala) -- after all it is a classic example of why **unchecked** `null` is problematic.
+Originally I didn't plan to say anything about Java (or Scala) --- after all it is a classic example of why **unchecked** `null` is problematic.
 Everyone (?) already knows that it's hard to always remember to check for `null` by hand and that it causes `NullPointerException`s all of the time.
 So it felt like brining up Java here wouldn't be valuable.
 
@@ -303,7 +303,7 @@ This is all sensible, because normally to create a value of a type you need to p
 However there is a flaw in this assumption: `null` (unsurprisingly, given the theme of this post).
 
 You see, `null` makes all reference types inhabited, even the ones that are not well-formed.
-As shown in the [Java and Scala’s Type Systems are Unsound] `null` allows you to falsify the proof of type relationship, allowing to coerce any two types to each other.
+As shown in the [Java and Scala’s Type Systems are Unsound] paper `null` allows you to falsify the proof of type relationship, allowing to coerce any two types to each other.
 
 [Java and Scala’s Type Systems are Unsound]: https://raw.githubusercontent.com/namin/unsound/master/doc/unsound-oopsla16.pdf
 
