@@ -1,11 +1,11 @@
 +++
 title = "Why null sucks, even if it's checked"
 date = 2021-08-20
-updated = 2021-08-25
+updated = 2022-07-08
 description = "We all know that `null` is a \"billion-dollar mistake\", that it creates a lot of easy ways to make terrible mistakes. But it's only so bad when it's not checked by anyone and the compiler doesn't force you to check it, right? Well, the title might be a spoiler, but let's find out..."
 
 [taxonomies] 
-tags = ["kotlin", "csharp", "haskell", "rust", "go"]
+tags = ["kotlin", "csharp", "java", "scala", "haskell", "rust", "go", "swift"]
 +++
 
 We all know that `null` is a ["billion-dollar mistake"], that it creates a lot of easy ways to make terrible mistakes. But it's only so bad when it's not checked by anyone and the compiler doesn't force you to check it, right? Well, the title might be a spoiler, but let's find out...
@@ -152,7 +152,7 @@ Another nice fact about `Option` (`Maybe`) is that it can be defined in a librar
 
 ## Generality
 
-`Option<Option<T>>` is a meaningful type, unlike `T??`. In the same example with `HashMap::get` there isn't any problems if it returns `Option<_>`.
+`Option<Option<T>>` is a meaningful type, unlike `T??`. In the same example with `HashMap::get` there isn't any problems if it returns `Option<V>`.
 
 ```rust
 impl<K, V> HashMap<K, V> {
@@ -169,7 +169,7 @@ The use of sum types gives us 3 distinct kinds of values that can be distinguish
 
 ## Extensibility
 
-Sum types can be used for optional values via `Option`-like types. But they are not limited to only this. You can define your own sum types. It's very handy when you need to return errors (See rust [`Result`](https://doc.rust-lang.org/std/result/index.html) for example), define the errors themselves or just in general when you need to hold different kinds (types) of data in one place. 
+Sum types can be used for optional values via `Option`-like types. But they are not limited to only this. You can define your own sum types. It's very handy when you need to return errors (See Rust [`Result`](https://doc.rust-lang.org/std/result/index.html) for example), define the errors themselves or just in general when you need to hold different kinds (types) of data in one place. 
 
 ## Explicitness
 
@@ -190,7 +190,7 @@ let res = f(Some(1));
 //          ^^^^^ ^
 ```
 
-It would be interesting to see a language with sum types and `T` to `Option<T>` coercion though 👀
+~~It would be interesting to see a language with sum types and `T` to `Option<T>` coercion though 👀~~ (see note about Swift down below)
 
 # Niche optimization
 
@@ -285,6 +285,38 @@ In my opinion, Kotlin's support of sum types is extremely hacky, but who am I to
 
 Nevertheless, Kotlin doesn't use this for optional values! In fact, it doesn't even have an `Option` class in the standard library. For me, it seems like a big omission. It seems like making `T?` equivalent to `Option<T>` and `Option<N>` (where `N` is not `Option`) be layout compatible with `Java`'s `N` (i.e. `Java`'s `null` being the same as `None<N>`) would be sufficient...
 
+# A sad note: Java & Scala
+
+Originally I didn't plan to say anything about Java (or Scala) --- after all it is a classic example of why **unchecked** `null` is problematic.
+Everyone (?) already knows that it's hard to always remember to check for `null` by hand and that it causes `NullPointerException`s all of the time.
+So it felt like brining up Java here wouldn't be valuable.
+
+But! Recently I was reminded that Java has an interesting unsoundness in its type system that is related to `null`.
+
+In a nutshell Java (and similarly Scala) assumes that if a value of a type exists, then this type is well-formed.
+Well-formedness means that the type is sensible, that all its type parameters satisfy their bounds.
+When coupled with other features like wildcards in Java or path-dependant types in Scala, this allows you to create a type that proves a relationship between two types.
+I.e. that one type is a subtype of another type.
+You can then create a function that accepts such a proof of type relationship and coerce one type to another.
+
+This is all sensible, because normally to create a value of a type you need to prove that it is well-formed.
+However there is a flaw in this assumption: `null` (unsurprisingly, given the theme of this post).
+
+You see, `null` makes all reference types inhabited, even the ones that are not well-formed.
+As shown in the [Java and Scala’s Type Systems are Unsound] paper `null` allows you to falsify the proof of type relationship, allowing to coerce any two types to each other.
+
+[Java and Scala’s Type Systems are Unsound]: https://raw.githubusercontent.com/namin/unsound/master/doc/unsound-oopsla16.pdf
+
+{% callout() %}
+The paper itself is a great read, I recommend reading it, if you haven't already!
+{% end %}
+
+This is another place where implicitness of `null` caused issues, quoting the paper:
+
+> It [implicit-null feature] adds a case that is easy to forget and difficult to keep track of and reason about.
+> Interestingly, here it causes the same problem for the same reasons, but at the type level.
+> The reasoning for wildcards and path-dependent types would be perfectly valid if not for implicit `null` values
+
 # A sad note: C#
 
 C# doesn't support sum types. To some extent they can be simulated using inheritance from an interface or abstract class, however, such an approach lacks one of the greatest benefits of sum types, namely the exhaustiveness check.
@@ -300,9 +332,58 @@ type Either<'a, 'b> = Left of 'a | Right of 'b
 
 # A sad note: Go
 
-Go doesn't support sum types. It's a little sad on its own, but Go also doesn't have exceptions and all reference types are implicitly nullable. This means that if a function wants to return an error, it needs to return a tuple of success and error values. This not only makes checking which is `null` (actually `nil`, but it’s the same thing) pretty annoying, but also leaves the possibility for an invalid state where neither success nor error values are null. 
+Go doesn't support sum types. It's a little sad on its own, but Go also doesn't have exceptions and all reference types are implicitly nullable. This means that if a function wants to return an error, it needs to return a tuple of success and error values. This not only makes checking which is `null` (actually `nil`, but it’s the same thing) pretty annoying, but also leaves the possibility for an invalid state where neither success nor error values are `null`. 
 
-I think it's inexcusable to have such error-prone design flaws in 2012.
+I think it's inexcusable to have such error-prone design flaws for a language created in 2012.
+
+# A happy note: Swift
+
+I'm not very familiar with Swift, however I often hear that it has some interesting/ergonomic/nice features.
+This time is not an exception --- I was told that swift has both sum types and `T` -> `Option<T>` coercion.
+
+From what I've gathered from [here][swift-doc] and [here][swift-guide] in Swift the type is called `Optional<Wrapped>`.
+It has two variants (or cases as they are called in Swift) --- `some(Wrapped)` and `none`.
+`switch` can be used to pattern match.
+
+[swift-doc]: https://developer.apple.com/documentation/swift/optional
+[swift-guide]: https://www.programiz.com/swift-programming/optionals
+
+```swift
+let a: Optional<Int> = Optional.none
+let b: Optional<Int> = Optional.some(1)
+
+switch b {
+case let Optional.some(x):
+//   ^^^ --- let is needed to introduce new variables (`x`).
+//           honestly, this is quite a good choice.
+//           it allows to use `Optional.some(pat)`
+//           to compare the wrapped value to `pat` variable.
+    print(x)
+case Optional.none:
+    print(":(")
+}
+```
+
+And then on top of that Swift adds a whole bunch of syntax sugar
+
+1. `T?` can be used instead of `Optional<T>`
+2. `T` can be coerced to `T?` (and coercions are transitive it seems, so `T` -> `T???` is also supported)
+3. `nil` can be used instead of `Optional.none` (there is a coercion from `nil` literal to `T?`)
+4. `.variant` can be used if the type can be inferred (e.g. `.none` and `.some(16)`)
+5. `a?.b` can be used to do chaining / map access (`a.map(|x| x.b)` in Rust terms)
+6. `a ?? b` can be used to provide a default
+7. `if let x = a` assigns `x` to the inner value if `a` is `some` (syntax sugar for `if case let Optional.some(x) = a {`)
+8. `guard let x = a else { return }` can be used to early-return if a value is not `some`
+9. `a!` can be used to unwrap a variable crashing if it's `none`
+10. and more (probably (I'm a little tired of writing this list))
+
+_Personally_, I'd say that's a bit too much sugar and I'm a little concerned how coercions interact with generic code.
+But overall I think that's a pretty nice feature set and I guess it's nice to use all of this.
+I wish more languages went in direction "make `Optional` nicer" instead of "make `null`" nicer (yes, I'm still looking at you, Kotlin).
+
+{% callout() %}
+Also Swift gets it right and calls the `T? -> (T -> U?) -> U?` function `flatMap`. Yes, I'm looking at you, Rust.
+{% end %}
 
 # Conclusion
 

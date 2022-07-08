@@ -222,7 +222,7 @@ So, let's unpack this item-by-item:
 [`!`]: https://doc.rust-lang.org/stable/std/primitive.never.html
 
 And now the magic: `Type` now refers both to the type **and** to the variant.
-This works because rust has different namespaces for types and values.
+This works because Rust has different namespaces for types and values.
 Glob reexport somehow suppresses an error about clashing names that arises when importing directly.
 Idk why it's this way :shrug:
 
