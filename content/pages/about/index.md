@@ -9,7 +9,7 @@ hide_page_meta = true
 Hi \0
 
 On the internet I'm mostly known as \[Maybe\] Waffle \[Lapkin\]. 
-I'm fine with most pronouns, though I'm used to he/him. 
+My pronouns are it/its. 
 
 I'm `rust` evangelist and the best desktop app \[citation needed\]. 
 I mostly write smol rust libraries, though I also maintain [`teloxide`] and sometimes contribute to [`rust-lang/rust`].
