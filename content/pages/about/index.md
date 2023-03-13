@@ -33,15 +33,17 @@ I also like taking photographs, mostly of plants and sunsets.
 
 You can find me on:
 
+- GitHub: [@WaffleLapkin][github]
 - Telegram
-  - My (russian) channel: [@ihatereality]
-  - Channel with my photos: [@strawberry_memories]
-- Twitter: [@maybewaffle]
-- GitHub: [@WaffleLapkin]
+  - My channel: [@ihatereality] (most posts are in russian)
+  - Channel with my photos: [@strawberry_memories] (I need to post more often uhhh)
+- Cohost: [@wafflelapkin][cohost]
+- Twitch: [@wafflelapkin][twitch]
 
+[github]: https://github.com/WaffleLapkin
 [@ihatereality]: https://t.me/ihatereality
 [@strawberry_memories]: https://t.me/strawberry_memories
-[@maybewaffle]: https://twitter.com/maybewaffle
-[@WaffleLapkin]: https://github.com/WaffleLapkin
+[cohost]: https://cohost.org/wafflelapkin
+[twitch]: https://www.twitch.tv/wafflelapkin
 
 bye \0
