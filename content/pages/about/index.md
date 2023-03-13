@@ -12,8 +12,12 @@ On the internet I'm mostly known as \[Maybe\] Waffle \[Lapkin\].
 My pronouns are it/its. 
 
 I'm `rust` evangelist and the best desktop app \[citation needed\]. 
-I mostly write smol rust libraries, though I also maintain [`teloxide`] and sometimes contribute to [`rust-lang/rust`].
 
+As of time of writing, I'm mostly working on the rust compiler.
+I'm a member of the [`T-compiler-contributors`] and have [more than 150 merged PRs] to [`rust-lang/rust`]. Although I also co-maintain [`teloxide`] and sometimes work on smaller personal projects.
+
+[`T-compiler-contributors`]: https://www.rust-lang.org/governance/teams/compiler#Compiler%20team%20contributors
+[more than 150 merged PRs]: https://github.com/rust-lang/rust/pulls?q=is%3Apr+author%3AWaffleLapkin
 [`rust-lang/rust`]: https://github.com/rust-lang/rust
 [`teloxide`]: https://github.com/teloxide
 
