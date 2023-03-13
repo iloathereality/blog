@@ -19,7 +19,7 @@ I'm a member of the [`T-compiler-contributors`] and have [more than 150 merged P
 [`T-compiler-contributors`]: https://www.rust-lang.org/governance/teams/compiler#Compiler%20team%20contributors
 [more than 150 merged PRs]: https://github.com/rust-lang/rust/pulls?q=is%3Apr+author%3AWaffleLapkin
 [`rust-lang/rust`]: https://github.com/rust-lang/rust
-[`teloxide`]: https://github.com/teloxide
+[`teloxide`]: https://github.com/teloxide/teloxide
 
 I also like taking photographs, mostly of plants and sunsets.
 
