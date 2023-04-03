@@ -39,10 +39,17 @@
         <loc>https://ihatereality.space/about/</loc>
     </url>
     <url>
+        <loc>https://ihatereality.space/devlog-00/</loc>
+        <lastmod>2023-04-02</lastmod>
+    </url>
+    <url>
         <loc>https://ihatereality.space/tags/</loc>
     </url>
     <url>
         <loc>https://ihatereality.space/tags/csharp/</loc>
+    </url>
+    <url>
+        <loc>https://ihatereality.space/tags/devlog/</loc>
     </url>
     <url>
         <loc>https://ihatereality.space/tags/go/</loc>
