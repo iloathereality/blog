@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Waffle Devlog 1</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+    <meta name="author" content="Maybe Waffle">
+
+    <meta name="theme-color" content="#EE72F1">
+
+    
+    
+    <meta name="title" content="Waffle Devlog 1">
+    <meta name="description" content="Is this week already over? That fast? In this economy? Anyway-">
+    <meta name="image" content="https://ihatereality.space/you_cant_escape_from_reality_450x450.png">
+
+    
+        <meta name="keywords" itemprop="tags" content="devlog">
+    
+
+    <!-- Facebook Meta Tags -->
+    <meta property="og:url" content="https://ihatereality.space/devlog-01/">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Waffle Devlog 1">
+    <meta property="og:description" content="Is this week already over? That fast? In this economy? Anyway-">
+    <meta property="og:image" content="https://ihatereality.space/you_cant_escape_from_reality_450x450.png">
+    <meta property="og:locale" content="en">
+
+    
+        <meta property="article:published_time" content="2023-04-07">
+    
+
+    
+        
+            <meta property="article:tag" content="devlog">
+        
+    
+
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary">
+    <meta property="twitter:domain" content="ihatereality.space">
+    <meta property="twitter:url" content="https://ihatereality.space/devlog-01/">
+    <meta name="twitter:title" content="Waffle Devlog 1">
+    <meta name="twitter:description" content="Is this week already over? That fast? In this economy? Anyway-">
+    <meta name="twitter:image" content="https://ihatereality.space/you_cant_escape_from_reality_450x450.png">
+    <meta name="twitter:creator" content="maybewaffle">
+
+
+
+    
+    <link rel="stylesheet" href="https://ihatereality.space/style.css">
+    <link rel="stylesheet" href="https://ihatereality.space/color/pink.css">
+
+    <link rel="stylesheet" href="https://ihatereality.space/font-hack.css">
+
+
+    
+        <link rel="alternate" type="application/rss+xml" title="RSS" href="https://ihatereality.space/rss.xml">
+    
+        <link rel="shortcut icon" type="image&#x2F;png" href="/you_cant_escape_from_reality_128x128.png">
+    
+    </head>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://ihatereality.space" style="text-decoration: none;">
+                    <div class="logo">
+                            I hate reality
+                        </div>
+                </a>
+            </div>
+        </div>
+
+        <nav class="menu">
+            <ul class="menu__inner">
+                <li><a href="https://ihatereality.space/about">about</a></li>
+            
+                <li><a href="https://github.com/iloathereality/blog" target="_blank" rel="noopener noreferrer">source</a></li>
+            </ul>
+        </nav>
+    
+    </header>
+    
+
+    <div class="content">
+        
+    <div class="post">
+        
+    <h1 class="post-title"><a href="https://ihatereality.space/devlog-01/">Waffle Devlog 1</a></h1>
+    
+        <div class="post-meta-inline">
+            
+    <span class="post-date">
+            2023-04-07
+        
+    </span>
+
+            
+    <span class="post-read-time">
+        :: 6 min read
+    </span>
+
+
+            <!-- TODO: rethink how tags look -->
+            <br>
+            
+        <span class="post-tags-inline"><a class="post-tag" href="https://ihatereality.space/tags/devlog/">#devlog</a></span>
+    
+        </div>
+    
+
+
+        
+        <div class="post-content">
+            <p>Is this week already over? That fast? In this economy?
+Anyway, things I’ve done this week (2023-04-03—2023-04-07).
+This is mostly a log for <em>myself</em> so that I remember that I did things™,
+but you may be interested in reading it too, for whatever reason.</p>
+<span id="continue-reading"></span><h1 id="yeet-owningref">Yeet <code>OwningRef</code><a class="zola-anchor" href="#yeet-owningref" aria-label="Anchor link for: yeet-owningref">⌗</a></h1>
+<p>Originally I wanted to cleanup documentation of <code>OwningRef</code> inside <code>rustc_data_structures</code> (filling <a href="https://github.com/rust-lang/rust/pull/109948">#109948</a>).
+But later I was informed that <code>OwningRef</code> is actually unsound and is even used unsoundly in the compiler…
+So I tried fixing that instead.</p>
+ 
+
+
+  
+
+  
+    
+  
+
+
+<div class="callout">
+  <img 
+    class="callout-icon"
+    src="/twemoji/assets/svg/1f438.svg"
+    alt="🐸"
+  />
+  <div class="callout-body">
+    <p>What even <em>is</em> <code>OwningRef</code>?</p>
+
+  </div>
+</div>
+<p><code>OwningRef</code> is the “solution” to the problem of returning data borrowed from the current function:</p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">f</span><span>() -&gt; (Vec&lt;</span><span style="color:#b48ead;">u8</span><span>&gt;, &amp;&#39;??? [</span><span style="color:#b48ead;">u8</span><span>]) {
+</span><span>    </span><span style="color:#b48ead;">let</span><span> vec = vec![</span><span style="color:#d08770;">0</span><span>, </span><span style="color:#d08770;">1</span><span>, </span><span style="color:#d08770;">2</span><span>, </span><span style="color:#d08770;">3</span><span>, </span><span style="color:#d08770;">4</span><span>];
+</span><span>    (vec, &amp;vec[</span><span style="color:#d08770;">1</span><span>..][..</span><span style="color:#d08770;">3</span><span>]) 
+</span><span>    </span><span style="color:#65737e;">//    ^-- error: cannot return value referencing local variable `vec`
+</span><span>}
+</span></code></pre>
+<p>With owning ref you can do something like this:</p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">a</span><span>() -&gt; OwningRef&lt;Vec&lt;</span><span style="color:#b48ead;">u8</span><span>&gt;, [</span><span style="color:#b48ead;">u8</span><span>]&gt; {
+</span><span>    </span><span style="color:#b48ead;">let</span><span> vec = vec![</span><span style="color:#d08770;">0</span><span>, </span><span style="color:#d08770;">1</span><span>, </span><span style="color:#d08770;">2</span><span>, </span><span style="color:#d08770;">3</span><span>, </span><span style="color:#d08770;">4</span><span>];
+</span><span>    </span><span style="color:#b48ead;">let</span><span> or = OwningRef::new(vec);
+</span><span>    </span><span style="color:#b48ead;">let</span><span> or = or.</span><span style="color:#96b5b4;">map</span><span>(|</span><span style="color:#bf616a;">v</span><span>| &amp;v[</span><span style="color:#d08770;">1</span><span>..</span><span style="color:#d08770;">3</span><span>]);
+</span><span>    or
+</span><span>}
+</span></code></pre>
+<p>Under the hood <code>OwningRef&lt;Owner, View&gt;</code> asserts that <code>Owner</code>’s <code>Deref</code> implementation is “stable”
+(meaning it returns a reference with the same address if the owner value does not change)
+and stores a pointer alongside with the owner (basically the same <code>Vec&lt;u8&gt;, &amp;'??? [u8]</code> tuple). 
+Given that <code>OwningRef</code> doesn’t allow you to access the owner, it looks all good — without access to the owner,
+you can’t invalidate the pointer, so it’s fine to use it.</p>
+<p>But there is a nuance… In some cases you <em>can</em> invalidate the pointer without touching the owner.</p>
+ 
+
+
+  
+
+  
+    
+  
+
+
+<div class="callout">
+  <img 
+    class="callout-icon"
+    src="/twemoji/assets/svg/1f438.svg"
+    alt="🐸"
+  />
+  <div class="callout-body">
+    <p>How? This sounds weird…</p>
+
+  </div>
+</div>
+<p>Well… Under the current understanding of Rust semantics, <code>Box</code> is a <strong>unique</strong> owning pointer, which means that it can’t be aliased. Moving the <code>Box</code> asserts this invariant, <a href="https://play.rust-lang.org/?version=stable&amp;mode=debug&amp;edition=2021&amp;gist=50ba5fb85fbc7f7033665247f8b44087">invalidating the pointer</a>:</p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">let</span><span> owner = Box::new(</span><span style="color:#d08770;">1</span><span>);
+</span><span style="color:#b48ead;">let</span><span> ptr: </span><span style="color:#b48ead;">*const u32 </span><span>= &amp;*owner;
+</span><span>
+</span><span style="color:#65737e;">// move of `owner` (similarly to a move inside `OwningRef::new`)
+</span><span style="color:#65737e;">// this invalidates `ptr`
+</span><span style="color:#b48ead;">let</span><span> owning = (owner, ptr);
+</span><span>
+</span><span style="color:#65737e;">// Observe the pointer being invalid (miri reports UB)
+</span><span style="color:#b48ead;">unsafe </span><span>{ dbg!(*owning.</span><span style="color:#d08770;">1</span><span>) };
+</span></code></pre>
+<p>So, while <code>Box</code> has a stable <code>Deref</code>, it turns out that this is not sufficient for <code>OwningRef</code> soundness.
+Moreover it turns out that all rustc’s uses of <code>OwningRef</code> use <code>Box</code> (to erase the owner type).</p>
+<p>There are a few possible solutions,
+but in the end I decided to implement a different specialized abstraction instead of trying to fix <code>OwningRef</code>.</p>
+<p>To fix the box issue, I box the owner <em>again</em> first, so that the box I’m getting the pointer from, doesn’t move and <a href="https://play.rust-lang.org/?version=stable&amp;mode=debug&amp;edition=2021&amp;gist=a399f56dd98a2ce36a241b631c274d42">doesn’t invalidate the pointer</a>:</p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">let</span><span> owner = Box::new(</span><span style="color:#d08770;">1</span><span>);
+</span><span>
+</span><span style="color:#b48ead;">let</span><span> boxed: Box&lt;Box&lt;</span><span style="color:#b48ead;">u32</span><span>&gt;&gt; = Box::new(owner);
+</span><span>
+</span><span style="color:#b48ead;">let</span><span> ptr: </span><span style="color:#b48ead;">*const u32 </span><span>= &amp;**boxed;
+</span><span>
+</span><span style="color:#65737e;">// move of `boxed` doesn&#39;t move the owner,
+</span><span style="color:#65737e;">// so it doesn&#39;t invalidate the pointer
+</span><span style="color:#b48ead;">let</span><span> owning = (boxed, ptr);
+</span><span>
+</span><span style="color:#65737e;">// Observe the pointer being valid (miri does not report UB)
+</span><span style="color:#b48ead;">unsafe </span><span>{ dbg!(*owning.</span><span style="color:#d08770;">1</span><span>) };
+</span></code></pre>
+<p>This design doesn’t even require stable <code>Deref</code>!
+By using HRTB bound for the function that gets the reference from the owner,
+we can pretend that we are giving it a reference that lives as long as the <code>OwnedSlice</code>:</p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">pub fn </span><span style="color:#8fa1b3;">slice_owned</span><span>&lt;O, F&gt;(</span><span style="color:#bf616a;">owner</span><span>: O, </span><span style="color:#bf616a;">slicer</span><span>: F) -&gt; OwnedSlice
+</span><span style="color:#b48ead;">where
+</span><span>    </span><span style="color:#65737e;">// This is the magic bound,
+</span><span>    </span><span style="color:#65737e;">// this function must be valid for all lifetimes,
+</span><span>    </span><span style="color:#65737e;">// so it can only return borrows from the argument,
+</span><span>    </span><span style="color:#65737e;">// or &#39;static data (which is also fine)
+</span><span>    F: </span><span style="color:#b48ead;">for</span><span>&lt;</span><span style="color:#b48ead;">&#39;a</span><span>&gt; FnOnce(&amp;</span><span style="color:#b48ead;">&#39;a</span><span> O) -&gt; &amp;</span><span style="color:#b48ead;">&#39;a</span><span> [</span><span style="color:#b48ead;">u8</span><span>],
+</span><span>
+</span><span>    </span><span style="color:#65737e;">// `OwnedSlice` has `Box&lt;dyn Send + Sync&gt;` internally
+</span><span>    </span><span style="color:#65737e;">// to erase types and stay thread-safe
+</span><span>    O: Send + Sync + </span><span style="color:#b48ead;">&#39;static</span><span>,
+</span></code></pre>
+<p>This is perfectly valid, unless we access the owner somehow. The result can be seen in this PR: <a href="https://github.com/rust-lang/rust/pull/109971">#109971</a>.</p>
+<h1 id="sync-in-reference-docs"><code>Sync</code> in <code>reference</code> docs<a class="zola-anchor" href="#sync-in-reference-docs" aria-label="Anchor link for: sync-in-reference-docs">⌗</a></h1>
+<p>Turns out we forgot to document that references implement <code>Sync</code> if their pointee implements <code>Sync</code>. <a href="https://github.com/rust-lang/rust/pull/110060">Oops</a>.</p>
+<h1 id="reviews">Reviews<a class="zola-anchor" href="#reviews" aria-label="Anchor link for: reviews">⌗</a></h1>
+<p>Pull requests I’ve reviewed in this week:</p>
+<ul>
+<li><a href="https://github.com/rust-lang/rust/pull/109843">rust/109843</a> — Improve <code>transmute</code> codegen</li>
+<li><a href="https://github.com/rust-lang/rust/pull/109819">rust/109819</a> — Use <code>&amp;IndexSlice</code> in place of <code>&amp;IndexVec</code> (similarly to normal slices/vecs)</li>
+<li><a href="https://github.com/rust-lang/rust/pull/109913">rust/109913</a> — Document <code>IndexVec::from_elem</code></li>
+<li><a href="https://github.com/rust-lang/rust/pull/110013">rust/110013</a> — Label <code>non_exhaustive</code> attribute on privacy errors from non-local items
+<ul>
+<li>A funny thing happened here, actually. Mark started a perf run (even though this PR only edits error path, so it can’t change perf…), I then approved with   <code>r=me</code> and Estedan did <code>@bors r=WaffleLapkin</code>, forgetting about a bug in bors… Which makes it so PR approved while a try build is building (which is required for perf run) is insta-merged, without running tests. Good think compiler-errors noticed this and un-approved PR in time, before the insta-merge :’)</li>
+</ul>
+</li>
+<li><a href="https://github.com/rust-lang/rust/pull/110021">rust/110021</a> — Fixes for ICEs (Internal Compiler Errors) introduced by the first PR in this list</li>
+<li><a href="https://github.com/rust-lang/rfcs/pull/3407">rust-lang/rfcs/3407</a> — RFC that proposes introducing explicit tail calls to Rust (I’m a big fun of tail calls…), I’ve written some feedback</li>
+</ul>
+<h1 id="stream">Stream<a class="zola-anchor" href="#stream" aria-label="Anchor link for: stream">⌗</a></h1>
+<p>I did another stream on Wednesday.
+This time it went fine and I was able to finish (well, almost finish) the work from the previous stream,
+resulting in a small commit for <a href="https://github.com/rust-lang/rust/pull/109782">#109782</a> and  almost finishing the PR that adds suggestion to use closure argument instead of capturing.</p>
+ 
+
+
+  
+
+  
+    
+  
+
+
+<div class="callout">
+  <img 
+    class="callout-icon"
+    src="/twemoji/assets/svg/1f438.svg"
+    alt="🐸"
+  />
+  <div class="callout-body">
+    <p>Suggestion to do what?</p>
+
+  </div>
+</div>
+<p>Basically there is a common pattern, where you have a method, that takes a <code>&amp;mut self</code> and then passes it to a closure argument:</p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">struct </span><span>S;
+</span><span>
+</span><span style="color:#b48ead;">impl </span><span>S {
+</span><span>    </span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">call</span><span>(&amp;</span><span style="color:#b48ead;">mut </span><span style="color:#bf616a;">self</span><span>, </span><span style="color:#bf616a;">f</span><span>: impl FnOnce(&amp;</span><span style="color:#bf616a;">mut Self</span><span>)) {
+</span><span>        </span><span style="color:#65737e;">// change state or something ... 
+</span><span>        </span><span style="color:#96b5b4;">f</span><span>(</span><span style="color:#bf616a;">self</span><span>);
+</span><span>        </span><span style="color:#65737e;">// change state or something ... 
+</span><span>    }
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">get</span><span>(&amp;</span><span style="color:#bf616a;">self</span><span>) {}
+</span><span>}
+</span></code></pre>
+<p>It is then very easy to accidentally use the old variable, instead of the argument passed to the closure:</p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span>    </span><span style="color:#b48ead;">let mut</span><span> v = S;
+</span><span>    v.</span><span style="color:#96b5b4;">call</span><span>(|</span><span style="color:#bf616a;">this</span><span>: &amp;</span><span style="color:#b48ead;">mut</span><span> S| v.</span><span style="color:#96b5b4;">get</span><span>());
+</span><span style="color:#65737e;">//  ^-- error: cannot borrow `v` as mutable
+</span><span style="color:#65737e;">//             because it is also borrowed as immutable
+</span></code></pre>
+<p>I was trying to add a suggestion to change <code>v.get()</code> to <code>this.get()</code>, fixing the error.</p>
+ 
+
+
+  
+
+  
+    
+  
+
+
+<div class="callout">
+  <img 
+    class="callout-icon"
+    src="/twemoji/assets/svg/1f438.svg"
+    alt="🐸"
+  />
+  <div class="callout-body">
+    <p>Huh, okay</p>
+
+  </div>
+</div>
+<p>I ended up cleaning the code off-stream (and almost deleting everything while rebasing, oops (thanks to <code>git reflog</code> for restoring everything back…)) a little and opened <a href="https://github.com/rust-lang/rust/pull/110061">#110061</a>.</p>
+<h1 id="summary">Summary<a class="zola-anchor" href="#summary" aria-label="Anchor link for: summary">⌗</a></h1>
+<p>Overall I’m feeling a lot better this week!
+I had a lot of fun with removing <code>OwningRef</code> from the compiler (the resulting code is very cute, imo,,,) and looking closely at the tail call proposal.
+“See” you next week!</p>
+
+        </div>
+
+        
+        <div class="pagination">
+            <div class="pagination__title">
+                <span class="pagination__title-h">Thanks for reading! Read other posts?</span>
+                <hr />
+            </div>
+            <div class="pagination__buttons">
+                
+                    <span class="button next">
+                        <a href="https://ihatereality.space/devlog-00/">
+                            <span class="button__text">Waffle Devlog 0</span>&nbsp;
+                            <span class="button__icon">→</span>
+                        </a>
+                    </span>
+                </div>
+        </div>
+    
+    </div>
+
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright copyright--user"><div class="copyright"><span>© 2021 Maybe Waffle</span><span class="copyright-theme"><span class="copyright-theme-sep">:: </span>Theme is based on <a href="https://github.com/pawroman/zola-theme-terminimal/">Terminimal</a></span><span class="copyright-theme-sep">:: </span><a href="/rss.xml">rss</a></div></div>
+            </div>
+    </footer>
+    
+
+</div>
+
+<!-- Tracking via https://www.goatcounter.com/ -->
+<script data-goatcounter="https://ihr.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+
+</html>

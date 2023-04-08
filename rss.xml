@@ -7,7 +7,18 @@
         <generator>Zola</generator>
         <language>en</language>
         <atom:link href="https://ihatereality.space/rss.xml" rel="self" type="application/rss+xml"/>
-        <lastBuildDate>Sun, 02 Apr 2023 00:00:00 +0000</lastBuildDate>
+        <lastBuildDate>Fri, 07 Apr 2023 00:00:00 +0000</lastBuildDate>
+        <item>
+            <title>Waffle Devlog 1</title>
+            <pubDate>Fri, 07 Apr 2023 00:00:00 +0000</pubDate>
+            <link>https://ihatereality.space/devlog-01/</link>
+            <guid>https://ihatereality.space/devlog-01/</guid>
+            <description>&lt;p&gt;Is this week already over? That fast? In this economy?
+Anyway, things I’ve done this week (2023-04-03—2023-04-07).
+This is mostly a log for &lt;em&gt;myself&lt;&#x2F;em&gt; so that I remember that I did things™,
+but you may be interested in reading it too, for whatever reason.&lt;&#x2F;p&gt;
+</description>
+        </item>
         <item>
             <title>Waffle Devlog 0</title>
             <pubDate>Sun, 02 Apr 2023 00:00:00 +0000</pubDate>
