@@ -133,7 +133,7 @@ Pull requests I've reviewed in this week:
 - [rust/109819] — Use `&IndexSlice` in place of `&IndexVec` (similarly to normal slices/vecs)
 - [rust/109913] — Document `IndexVec::from_elem`
 - [rust/110013] — Label `non_exhaustive` attribute on privacy errors from non-local items
-    - A funny thing happened here, actually. Mark started a perf run (even though this PR only edits error path, so it can't change perf...), I then approved with   `r=me` and Estedan did `@bors r=WaffleLapkin`, forgetting about a bug in bors... Which makes it so PR approved while a try build is building (which is required for perf run) is insta-merged, without running tests. Good think compiler-errors noticed this and un-approved PR in time, before the insta-merge :')
+    - A funny thing happened here, actually. Mark started a perf run (even though this PR only edits error path, so it can't change perf...), I then approved with   `r=me` and Estedan did `@bors r=WaffleLapkin`, forgetting about a bug in bors... Which makes it so PR approved while a try build is building (which is required for perf run) is insta-merged, without running tests. Good thing compiler-errors noticed this and un-approved PR in time, before the insta-merge :')
 - [rust/110021] — Fixes for ICEs (Internal Compiler Errors) introduced by the first PR in this list
 - [rust-lang/rfcs/3407] — RFC that proposes introducing explicit tail calls to Rust (I'm a big fun of tail calls...), I've written some feedback
 
