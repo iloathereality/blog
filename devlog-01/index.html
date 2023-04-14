@@ -246,7 +246,7 @@ we can pretend that we are giving it a reference that lives as long as the <code
 <li><a href="https://github.com/rust-lang/rust/pull/109913">rust/109913</a> — Document <code>IndexVec::from_elem</code></li>
 <li><a href="https://github.com/rust-lang/rust/pull/110013">rust/110013</a> — Label <code>non_exhaustive</code> attribute on privacy errors from non-local items
 <ul>
-<li>A funny thing happened here, actually. Mark started a perf run (even though this PR only edits error path, so it can’t change perf…), I then approved with   <code>r=me</code> and Estedan did <code>@bors r=WaffleLapkin</code>, forgetting about a bug in bors… Which makes it so PR approved while a try build is building (which is required for perf run) is insta-merged, without running tests. Good think compiler-errors noticed this and un-approved PR in time, before the insta-merge :’)</li>
+<li>A funny thing happened here, actually. Mark started a perf run (even though this PR only edits error path, so it can’t change perf…), I then approved with   <code>r=me</code> and Estedan did <code>@bors r=WaffleLapkin</code>, forgetting about a bug in bors… Which makes it so PR approved while a try build is building (which is required for perf run) is insta-merged, without running tests. Good thing compiler-errors noticed this and un-approved PR in time, before the insta-merge :’)</li>
 </ul>
 </li>
 <li><a href="https://github.com/rust-lang/rust/pull/110021">rust/110021</a> — Fixes for ICEs (Internal Compiler Errors) introduced by the first PR in this list</li>
@@ -333,6 +333,13 @@ I had a lot of fun with removing <code>OwningRef</code> from the compiler (the r
                 <hr />
             </div>
             <div class="pagination__buttons">
+                    <span class="button previous">
+                        <a href="https://ihatereality.space/devlog-02/">
+                            <span class="button__icon">←</span>&nbsp;
+                            <span class="button__text">Waffle Devlog 2</span>
+                        </a>
+                    </span>
+                
                 
                     <span class="button next">
                         <a href="https://ihatereality.space/devlog-00/">
