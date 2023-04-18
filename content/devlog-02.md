@@ -32,7 +32,7 @@ In my opinion the resulting code is quite nice and cute, I like it.
 Along the way I also discovered a missed optimization case in LLVM ([llvm/62093])
 and tried to fix it on the rust side using scottmcm's suggestion
 ([rust/110318], although it looks like this is doing more harm than good, this PR is likely to be closed).
-I also learned a lot about tagged pointers and some stuff about tools to around LLVM.
+I also learned a lot about tagged pointers and some stuff about tools around LLVM.
 
 Overall, proud of this work!
 
