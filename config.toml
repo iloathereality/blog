@@ -17,7 +17,7 @@ taxonomies = [
 ]
 
 generate_feed = true
-feed_filename = "rss.xml"
+feed_filename = "atom.xml"
 
 [markdown]
 # Whether to do syntax highlighting
@@ -34,7 +34,7 @@ logo_text = "nothingd3v"
 author = "Nikita Nothing"
 
 # TODO: make footer less weird
-copyright_html = "<div class=\"copyright\"><span>© 2023 Maybe Waffle | NothingD3v</span><span class=\"copyright-theme\"><span class=\"copyright-theme-sep\">:: </span>Theme is based on <a href=\"https://github.com/pawroman/zola-theme-terminimal/\">Terminimal</a></span><span class=\"copyright-theme-sep\">:: </span><a href=\"/rss.xml\">rss</a></div>"
+copyright_html = "<div class=\"copyright\"><span>© 2023 Maybe Waffle | NothingD3v</span><span class=\"copyright-theme\"><span class=\"copyright-theme-sep\">:: </span>Theme is based on <a href=\"https://github.com/pawroman/zola-theme-terminimal/\">Terminimal</a></span><span class=\"copyright-theme-sep\">:: </span><a href=\"/atom.xml\">RSS</a></div>"
 
 # One of: blue, green, orange, pink, red.
 # Defaults to blue. 
