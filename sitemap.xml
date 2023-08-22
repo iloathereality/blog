@@ -1,87 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-        <loc>https://ihatereality.space/</loc>
+        <loc>https://blog.ihatereality.space/</loc>
     </url>
     <url>
-        <loc>https://ihatereality.space/01-why-null-sucks/</loc>
+        <loc>https://blog.ihatereality.space/01-why-null-sucks/</loc>
         <lastmod>2022-07-08</lastmod>
     </url>
     <url>
-        <loc>https://ihatereality.space/02-you-would-not-use-filter-map/</loc>
+        <loc>https://blog.ihatereality.space/02-you-would-not-use-filter-map/</loc>
         <lastmod>2021-09-21</lastmod>
     </url>
     <url>
-        <loc>https://ihatereality.space/03-a-place-to-pause/</loc>
+        <loc>https://blog.ihatereality.space/03-a-place-to-pause/</loc>
         <lastmod>2021-10-12</lastmod>
     </url>
     <url>
-        <loc>https://ihatereality.space/04-what-mutref-to-slice-ref-means/</loc>
+        <loc>https://blog.ihatereality.space/04-what-mutref-to-slice-ref-means/</loc>
         <lastmod>2021-11-02</lastmod>
     </url>
     <url>
-        <loc>https://ihatereality.space/05-if-else-chains-considered-harmful/</loc>
+        <loc>https://blog.ihatereality.space/05-if-else-chains-considered-harmful/</loc>
         <lastmod>2022-01-24</lastmod>
     </url>
     <url>
-        <loc>https://ihatereality.space/06-comments-are-weak/</loc>
+        <loc>https://blog.ihatereality.space/06-comments-are-weak/</loc>
         <lastmod>2022-01-30</lastmod>
     </url>
     <url>
-        <loc>https://ihatereality.space/07-why-we-can-not-have-nice-things-min-max/</loc>
+        <loc>https://blog.ihatereality.space/07-why-we-can-not-have-nice-things-min-max/</loc>
         <lastmod>2022-06-24</lastmod>
     </url>
     <url>
-        <loc>https://ihatereality.space/08-abusing-rust-traits-to-write-silly-things/</loc>
+        <loc>https://blog.ihatereality.space/08-abusing-rust-traits-to-write-silly-things/</loc>
         <lastmod>2022-06-29</lastmod>
     </url>
     <url>
-        <loc>https://ihatereality.space/about/</loc>
+        <loc>https://blog.ihatereality.space/about/</loc>
     </url>
     <url>
-        <loc>https://ihatereality.space/devlog-00/</loc>
+        <loc>https://blog.ihatereality.space/devlog-00/</loc>
         <lastmod>2023-04-02</lastmod>
     </url>
     <url>
-        <loc>https://ihatereality.space/devlog-01/</loc>
+        <loc>https://blog.ihatereality.space/devlog-01/</loc>
         <lastmod>2023-04-07</lastmod>
     </url>
     <url>
-        <loc>https://ihatereality.space/devlog-02/</loc>
+        <loc>https://blog.ihatereality.space/devlog-02/</loc>
         <lastmod>2023-04-14</lastmod>
     </url>
     <url>
-        <loc>https://ihatereality.space/devlog-03/</loc>
+        <loc>https://blog.ihatereality.space/devlog-03/</loc>
         <lastmod>2023-04-21</lastmod>
     </url>
     <url>
-        <loc>https://ihatereality.space/tags/</loc>
+        <loc>https://blog.ihatereality.space/tags/</loc>
     </url>
     <url>
-        <loc>https://ihatereality.space/tags/csharp/</loc>
+        <loc>https://blog.ihatereality.space/tags/csharp/</loc>
     </url>
     <url>
-        <loc>https://ihatereality.space/tags/devlog/</loc>
+        <loc>https://blog.ihatereality.space/tags/devlog/</loc>
     </url>
     <url>
-        <loc>https://ihatereality.space/tags/go/</loc>
+        <loc>https://blog.ihatereality.space/tags/go/</loc>
     </url>
     <url>
-        <loc>https://ihatereality.space/tags/haskell/</loc>
+        <loc>https://blog.ihatereality.space/tags/haskell/</loc>
     </url>
     <url>
-        <loc>https://ihatereality.space/tags/java/</loc>
+        <loc>https://blog.ihatereality.space/tags/java/</loc>
     </url>
     <url>
-        <loc>https://ihatereality.space/tags/kotlin/</loc>
+        <loc>https://blog.ihatereality.space/tags/kotlin/</loc>
     </url>
     <url>
-        <loc>https://ihatereality.space/tags/rust/</loc>
+        <loc>https://blog.ihatereality.space/tags/rust/</loc>
     </url>
     <url>
-        <loc>https://ihatereality.space/tags/scala/</loc>
+        <loc>https://blog.ihatereality.space/tags/scala/</loc>
     </url>
     <url>
-        <loc>https://ihatereality.space/tags/swift/</loc>
+        <loc>https://blog.ihatereality.space/tags/swift/</loc>
     </url>
 </urlset>

@@ -15,18 +15,18 @@
     
     <meta name="title" content="Waffle Devlog 3">
     <meta name="description" content="This week was something else! There is a lot I&#x27;ve done this week (2023-04-17—2023-04-21).">
-    <meta name="image" content="https://ihatereality.space/you_cant_escape_from_reality_450x450.png">
+    <meta name="image" content="https://blog.ihatereality.space/you_cant_escape_from_reality_450x450.png">
 
     
         <meta name="keywords" itemprop="tags" content="devlog">
     
 
     <!-- Facebook Meta Tags -->
-    <meta property="og:url" content="https://ihatereality.space/devlog-03/">
+    <meta property="og:url" content="https://blog.ihatereality.space/devlog-03/">
     <meta property="og:type" content="article">
     <meta property="og:title" content="Waffle Devlog 3">
     <meta property="og:description" content="This week was something else! There is a lot I&#x27;ve done this week (2023-04-17—2023-04-21).">
-    <meta property="og:image" content="https://ihatereality.space/you_cant_escape_from_reality_450x450.png">
+    <meta property="og:image" content="https://blog.ihatereality.space/you_cant_escape_from_reality_450x450.png">
     <meta property="og:locale" content="en">
 
     
@@ -41,24 +41,24 @@
 
     <!-- Twitter Meta Tags -->
     <meta name="twitter:card" content="summary">
-    <meta property="twitter:domain" content="ihatereality.space">
-    <meta property="twitter:url" content="https://ihatereality.space/devlog-03/">
+    <meta property="twitter:domain" content="blog.ihatereality.space">
+    <meta property="twitter:url" content="https://blog.ihatereality.space/devlog-03/">
     <meta name="twitter:title" content="Waffle Devlog 3">
     <meta name="twitter:description" content="This week was something else! There is a lot I&#x27;ve done this week (2023-04-17—2023-04-21).">
-    <meta name="twitter:image" content="https://ihatereality.space/you_cant_escape_from_reality_450x450.png">
+    <meta name="twitter:image" content="https://blog.ihatereality.space/you_cant_escape_from_reality_450x450.png">
     <meta name="twitter:creator" content="maybewaffle">
 
 
 
     
-    <link rel="stylesheet" href="https://ihatereality.space/style.css">
-    <link rel="stylesheet" href="https://ihatereality.space/color/pink.css">
+    <link rel="stylesheet" href="https://blog.ihatereality.space/style.css">
+    <link rel="stylesheet" href="https://blog.ihatereality.space/color/pink.css">
 
-    <link rel="stylesheet" href="https://ihatereality.space/font-hack.css">
+    <link rel="stylesheet" href="https://blog.ihatereality.space/font-hack.css">
 
 
     
-        <link rel="alternate" type="application/rss+xml" title="RSS" href="https://ihatereality.space/rss.xml">
+        <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.ihatereality.space/rss.xml">
     
         <link rel="shortcut icon" type="image&#x2F;png" href="/you_cant_escape_from_reality_128x128.png">
     
@@ -71,7 +71,7 @@
         <div class="header__inner">
             <div class="header__logo">
                     
-                <a href="https://ihatereality.space" style="text-decoration: none;">
+                <a href="https://blog.ihatereality.space" style="text-decoration: none;">
                     <div class="logo">
                             I hate reality
                         </div>
@@ -81,7 +81,7 @@
 
         <nav class="menu">
             <ul class="menu__inner">
-                <li><a href="https://ihatereality.space/about">about</a></li>
+                <li><a href="https://blog.ihatereality.space/about">about</a></li>
             
                 <li><a href="https://github.com/iloathereality/blog" target="_blank" rel="noopener noreferrer">source</a></li>
             </ul>
@@ -94,7 +94,7 @@
         
     <div class="post">
         
-    <h1 class="post-title"><a href="https://ihatereality.space/devlog-03/">Waffle Devlog 3</a></h1>
+    <h1 class="post-title"><a href="https://blog.ihatereality.space/devlog-03/">Waffle Devlog 3</a></h1>
     
         <div class="post-meta-inline">
             
@@ -112,7 +112,7 @@
             <!-- TODO: rethink how tags look -->
             <br>
             
-        <span class="post-tags-inline"><a class="post-tag" href="https://ihatereality.space/tags/devlog/">#devlog</a></span>
+        <span class="post-tags-inline"><a class="post-tag" href="https://blog.ihatereality.space/tags/devlog/">#devlog</a></span>
     
         </div>
     
@@ -210,9 +210,9 @@ Later I also followed it by <a href="https://github.com/rust-lang/rust/pull/1105
 </span></code></pre>
 <p>The reason for this lint’s existence is that <code>unsafe fn</code> mainly conveys that it’s unsafe to call <em>that</em> function, but by default it also allows to use other <code>unsafe</code> functions inside it, without <code>unsafe</code> blocks. This might be a little foot-gun, at it places more code in <code>unsafe</code> context than necessary, potentially leading to missed safety requirements. With the lint and <code>unsafe {}</code> inside <code>unsafe</code> functions everything is more explicit and it’s less easy to make mistakes, which is very important for <code>unsafe</code> code.</p>
 <h1 id="closure-suggestions-finally-merged">Closure suggestions finally merged!<a class="zola-anchor" href="#closure-suggestions-finally-merged" aria-label="Anchor link for: closure-suggestions-finally-merged">⌗</a></h1>
-<p>The pull request I’ve been working on on <a href="https://ihatereality.space/devlog-01/#stream">streams</a> has been finally <a href="https://github.com/rust-lang/rust/pull/110061">merged</a>, yay!</p>
+<p>The pull request I’ve been working on on <a href="https://blog.ihatereality.space/devlog-01/#stream">streams</a> has been finally <a href="https://github.com/rust-lang/rust/pull/110061">merged</a>, yay!</p>
 <h1 id="add-impl-tag-macro-to-implement-tag-for-tagged-pointer-easily">Add <code>impl_tag!</code> macro to implement <code>Tag</code> for tagged pointer easily<a class="zola-anchor" href="#add-impl-tag-macro-to-implement-tag-for-tagged-pointer-easily" aria-label="Anchor link for: add-impl-tag-macro-to-implement-tag-for-tagged-pointer-easily">⌗</a></h1>
-<p>As the title suggests, this is a <a href="https://github.com/rust-lang/rust/pull/110615">PR</a> that continues my <a href="https://ihatereality.space/devlog-02/#tagged-pointer-rewrite">work</a> on tagged pointers in rustc, by adding a macro to implement the <code>Tag</code> trait. As a reminder this is basically how <code>Tag</code> looks:</p>
+<p>As the title suggests, this is a <a href="https://github.com/rust-lang/rust/pull/110615">PR</a> that continues my <a href="https://blog.ihatereality.space/devlog-02/#tagged-pointer-rewrite">work</a> on tagged pointers in rustc, by adding a macro to implement the <code>Tag</code> trait. As a reminder this is basically how <code>Tag</code> looks:</p>
 <pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">unsafe trait </span><span>Tag {
 </span><span>    </span><span style="color:#65737e;">/// The number of bits required
 </span><span>    </span><span style="color:#b48ead;">const </span><span style="color:#d08770;">BITS</span><span>: </span><span style="color:#b48ead;">u32</span><span>;
@@ -278,7 +278,7 @@ Later I also followed it by <a href="https://github.com/rust-lang/rust/pull/1105
 <li><a href="https://github.com/rust-lang/rust/issues/110457">110457</a> — Incremental recompilation MIR ICE</li>
 </ul>
 <h1 id="stream">Stream<a class="zola-anchor" href="#stream" aria-label="Anchor link for: stream">⌗</a></h1>
-<p>This week I did not make the programming stream, and I probably won’t make them in the near future, following my <a href="https://ihatereality.space/devlog-02/#stream">concerns</a> from the previous devlog</p>
+<p>This week I did not make the programming stream, and I probably won’t make them in the near future, following my <a href="https://blog.ihatereality.space/devlog-02/#stream">concerns</a> from the previous devlog</p>
 <h1 id="summary">Summary<a class="zola-anchor" href="#summary" aria-label="Anchor link for: summary">⌗</a></h1>
 <p>It feels like I did <strong>a lot</strong> this week, it feels great!!
 Hopefully I won’t lose <em>all</em> that momentum next week, heh.
@@ -295,7 +295,7 @@ See you next time 0/</p>
             <div class="pagination__buttons">
                 
                     <span class="button next">
-                        <a href="https://ihatereality.space/devlog-02/">
+                        <a href="https://blog.ihatereality.space/devlog-02/">
                             <span class="button__text">Waffle Devlog 2</span>&nbsp;
                             <span class="button__icon">→</span>
                         </a>
