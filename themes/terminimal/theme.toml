@@ -13,7 +13,7 @@ homepage = "https://pawroman.gitlab.io/"
 
 # The original theme this one's been forked off.
 [original]
-author =  "Radosław Kozieł"
+author = "Radosław Kozieł"
 homepage = "https://radoslawkoziel.pl/"
 repo = "https://github.com/panr/hugo-theme-terminal"
 
@@ -44,5 +44,5 @@ post_view_navigation_prompt = "Thanks for reading! Read other posts?"
 # Defaults to false.
 use_full_hack_font = false
 
-domain = "ihatereality.space"
+domain = "blog.ihatereality.space"
 twitter_creator_username = "maybewaffle"

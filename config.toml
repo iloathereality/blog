@@ -1,5 +1,5 @@
 # The URL the site will be built for
-base_url = "https://ihatereality.space"
+base_url = "https://blog.ihatereality.space"
 title = "I hate reality"
 
 # Whether to automatically compile all Sass files in the sass directory
@@ -12,9 +12,7 @@ default_language = "en"
 
 theme = "terminimal"
 
-taxonomies = [
-    {name = "tags"},
-]
+taxonomies = [{ name = "tags" }]
 
 generate_feed = true
 feed_filename = "rss.xml"
@@ -49,13 +47,13 @@ background_color = "pink"
 menu_items = [
     # $BASE_URL is going to be substituted by base_url from configuration
     #{name = "blog", url = "$BASE_URL"},
-    
+
     # # May be desired in future
     #{name = "archive", url = "$BASE_URL/archive"},
     #{name = "tags", url = "$BASE_URL/tags"},
 
-    {name = "about", url = "$BASE_URL/about"},
-    {name = "source", url = "https://github.com/iloathereality/blog", newtab = true},
+    { name = "about", url = "$BASE_URL/about" },
+    { name = "source", url = "https://github.com/iloathereality/blog", newtab = true },
 ]
 
 # Whether to show links to earlier and later posts
