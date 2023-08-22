@@ -104,11 +104,11 @@ The reason for this lint's existence is that `unsafe fn` mainly conveys that it'
 
 # Closure suggestions finally merged!
 
-The pull request I've been working on on [streams](https://ihatereality.space/devlog-01/#stream) has been finally [merged](https://github.com/rust-lang/rust/pull/110061), yay!
+The pull request I've been working on on [streams](https://blog.ihatereality.space/devlog-01/#stream) has been finally [merged](https://github.com/rust-lang/rust/pull/110061), yay!
 
 # Add `impl_tag!` macro to implement `Tag` for tagged pointer easily
 
-As the title suggests, this is a [PR](https://github.com/rust-lang/rust/pull/110615) that continues my [work](https://ihatereality.space/devlog-02/#tagged-pointer-rewrite) on tagged pointers in rustc, by adding a macro to implement the `Tag` trait. As a reminder this is basically how `Tag` looks:
+As the title suggests, this is a [PR](https://github.com/rust-lang/rust/pull/110615) that continues my [work](https://blog.ihatereality.space/devlog-02/#tagged-pointer-rewrite) on tagged pointers in rustc, by adding a macro to implement the `Tag` trait. As a reminder this is basically how `Tag` looks:
 ```rust
 unsafe trait Tag {
     /// The number of bits required
@@ -169,7 +169,7 @@ When a regression is found in the rust compiler it is helpful to run a bisection
 
 # Stream
 
-This week I did not make the programming stream, and I probably won't make them in the near future, following my [concerns](https://ihatereality.space/devlog-02/#stream) from the previous devlog
+This week I did not make the programming stream, and I probably won't make them in the near future, following my [concerns](https://blog.ihatereality.space/devlog-02/#stream) from the previous devlog
 
 # Summary
 

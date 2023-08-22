@@ -50,7 +50,7 @@ But some `rustc` uses become nicer with the ability to clone/re-slice an `OwnedS
 so in [rust/110145] I try to support that by storing `owner: Arc<dyn Send + Sync>` instead.
 The PR still needs some documentation fixes and minor adjustments, but is mostly done.
 
-[yeeting owning ref]: https://ihatereality.space/devlog-01/#yeet-owningref
+[yeeting owning ref]: https://blog.ihatereality.space/devlog-01/#yeet-owningref
 [rust/110145]: https://github.com/rust-lang/rust/pull/110145
 
 # Small Stuff
