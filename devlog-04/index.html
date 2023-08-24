@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Waffle Devlog 4</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+    <meta name="author" content="Maybe Waffle">
+
+    <meta name="theme-color" content="#EE72F1">
+
+    
+    
+    <meta name="title" content="Waffle Devlog 4">
+    <meta name="description" content="...">
+    <meta name="image" content="https://blog.ihatereality.space/you_cant_escape_from_reality_450x450.png">
+
+    
+        <meta name="keywords" itemprop="tags" content="devlog">
+    
+
+    <!-- Facebook Meta Tags -->
+    <meta property="og:url" content="https://blog.ihatereality.space/devlog-04/">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Waffle Devlog 4">
+    <meta property="og:description" content="...">
+    <meta property="og:image" content="https://blog.ihatereality.space/you_cant_escape_from_reality_450x450.png">
+    <meta property="og:locale" content="en">
+
+    
+        <meta property="article:published_time" content="2023-08-24">
+    
+
+    
+        
+            <meta property="article:tag" content="devlog">
+        
+    
+
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary">
+    <meta property="twitter:domain" content="blog.ihatereality.space">
+    <meta property="twitter:url" content="https://blog.ihatereality.space/devlog-04/">
+    <meta name="twitter:title" content="Waffle Devlog 4">
+    <meta name="twitter:description" content="...">
+    <meta name="twitter:image" content="https://blog.ihatereality.space/you_cant_escape_from_reality_450x450.png">
+    <meta name="twitter:creator" content="maybewaffle">
+
+
+
+    
+    <link rel="stylesheet" href="https://blog.ihatereality.space/style.css">
+    <link rel="stylesheet" href="https://blog.ihatereality.space/color/pink.css">
+
+    <link rel="stylesheet" href="https://blog.ihatereality.space/font-hack.css">
+
+
+    
+        <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.ihatereality.space/rss.xml">
+    
+        <link rel="shortcut icon" type="image&#x2F;png" href="/you_cant_escape_from_reality_128x128.png">
+    
+    </head>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://blog.ihatereality.space" style="text-decoration: none;">
+                    <div class="logo">
+                            I hate reality
+                        </div>
+                </a>
+            </div>
+        </div>
+
+        <nav class="menu">
+            <ul class="menu__inner">
+                <li><a href="https://blog.ihatereality.space/about">about</a></li>
+            
+                <li><a href="https://github.com/iloathereality/blog" target="_blank" rel="noopener noreferrer">source</a></li>
+            </ul>
+        </nav>
+    
+    </header>
+    
+
+    <div class="content">
+        
+    <div class="post">
+        
+    <h1 class="post-title"><a href="https://blog.ihatereality.space/devlog-04/">Waffle Devlog 4</a></h1>
+    
+        <div class="post-meta-inline">
+            
+    <span class="post-date">
+            2023-08-24
+        
+    </span>
+
+            
+    <span class="post-read-time">
+        :: 6 min read
+    </span>
+
+
+            <!-- TODO: rethink how tags look -->
+            <br>
+            
+        <span class="post-tags-inline"><a class="post-tag" href="https://blog.ihatereality.space/tags/devlog/">#devlog</a></span>
+    
+        </div>
+    
+
+
+        
+        <div class="post-content">
+            <p>The devlog is back, now as a <del>bi-weekly</del> hopefully regular thing. This is a devlog for 2023-07-17—2023-08-06. This is mostly a log for <em>myself</em> so that I remember that I did things, but you may be interested in reading it too, for whatever reason.</p>
+<span id="continue-reading"></span><h1 id="refactor-vtable-encoding-and-optimize-it-for-the-case-of-multiple-marker-traits">Refactor vtable encoding and optimize it for the case of multiple marker traits<a class="zola-anchor" href="#refactor-vtable-encoding-and-optimize-it-for-the-case-of-multiple-marker-traits" aria-label="Anchor link for: refactor-vtable-encoding-and-optimize-it-for-the-case-of-multiple-marker-traits">⌗</a></h1>
+ 
+
+
+  
+
+  
+    
+  
+
+
+<div class="callout">
+  <img 
+    class="callout-icon"
+    src="/twemoji/assets/svg/1f438.svg"
+    alt="🐸"
+  />
+  <div class="callout-body">
+    <p>Sooo, originally there was meant to be an explanation for <a href="https://github.com/rust-lang/rust/pull/113856">this</a> pull request. However, explaining the PR requires quite a lot of knowledge about trait objects/vtables, which not that many people have. The explanation including trait objects/vtables basics was taking too much time to write, so it’ll have to wait for another day. When the article about vtables will be ready (soon™), a link will be added here.</p>
+
+  </div>
+</div>
+<p>The TL;DR is: the layout of vtables was suboptimal in some specific, yet relatively common, cases. I refactored the surrounding code and optimized the layout, rainbows and unicorns.</p>
+<p>In a similar vain I’m also not sure I can properly explain <a href="https://github.com/rust-lang/rust/issues/114007">#114007</a>, but TL;DR is that Rust vtables currently include methods that can’t be called. I have a fix (<a href="https://github.com/rust-lang/rust/pull/114260">#114260</a>), but it turns out to be non-trivial for <em>reasons</em>.</p>
+<h1 id="rust-foundation-fellowship">Rust Foundation Fellowship<a class="zola-anchor" href="#rust-foundation-fellowship" aria-label="Anchor link for: rust-foundation-fellowship">⌗</a></h1>
+<p>This year I again received Fellowship grant from Rust Foundation, you can read more in their blog post: <a href="https://foundation.rust-lang.org/news/announcing-the-rust-foundation-s-2023-fellows/">Announcing the Rust Foundation’s 2023 Fellows</a>.</p>
+<p>It’s a shame Rust Foundation did not have enough funding to pay fellowships for even the number of people who had them last year. I know a lot of people working hard on Rust, who deserve a grant more than anyone else.</p>
+<h1 id="explicit-tail-callstm-experiment-update">Explicit Tail Calls™ experiment update<a class="zola-anchor" href="#explicit-tail-callstm-experiment-update" aria-label="Anchor link for: explicit-tail-callstm-experiment-update">⌗</a></h1>
+<p>I didn’t do much on tail calls in this time frame, but a lot has happened in between devlogs (I couldn’t make myself write them :( ), so this deserves a mention.</p>
+<p>There is a <code>T-lang</code> approved <strong>experiment</strong> at implementing Explicit Tail Calls™ in Rust, based on draft Rust RFC <a href="https://github.com/rust-lang/rfcs/pull/3407">#3407</a>. The experiment is lead by myself, by which I mean “I’m implementing explicit tail calls in rust lol”.</p>
+<p>The tracking issue for the experiment is <a href="https://github.com/rust-lang/rust/issues/112788">#112788</a>, you can find all the PRs opened so far there. Current status/roadmap is:</p>
+<ul>
+<li>Parse explicit tail call expressions — <strong>done</strong></li>
+<li>Expose llvm’s <code>setTailCallKind</code> function to rustc — <strong>done</strong></li>
+<li>Add tail calls to HIR (high-level intermediate representation) — <strong>done</strong></li>
+<li>Add tail calls to THIR (typed high-level intermediate representation) — <strong>done</strong></li>
+<li>Write documentation for <code>become</code> keyword — <em>PR opened</em></li>
+<li>Support tail calls in MIR (middle-level intermediate representation) — <em>PR opened</em>
+<ul>
+<li>This is the level that, in a way, describes semantics, as such this is the first step that is actually “useful”, but at the same time it’s the first step that is actually hard</li>
+<li>CTFE and MIRI work on MIR, so this PR should allow using tail calls in <code>const</code> functions and when using MIRI</li>
+<li>There is quite a bit of work I need to do here — reviewers have found quite a few things I need to change</li>
+</ul>
+</li>
+<li>Check tail calls — most changes are done, but a PR is not opened yet
+<ul>
+<li>This will add checks like “signatures of caller and callee must match exactly”, and similar ones that allow us to <em>guarantee</em> tail calls without loosing something else</li>
+</ul>
+</li>
+<li>Properly tell LLVM about tail calls — most changes are done, but this is blocked on MIR support</li>
+</ul>
+<h1 id="other-stuff">Other stuff<a class="zola-anchor" href="#other-stuff" aria-label="Anchor link for: other-stuff">⌗</a></h1>
+<ul>
+<li><a href="https://github.com/rust-lang/rust/pull/113832">rust-lang/rust/113832</a> — Add <code>#[track_caller]</code> to lint related diagnostic functions</li>
+<li><a href="https://github.com/teloxide/teloxide/pull/906">teloxide/teloxide/906</a> — Make <code>mentioned_users</code> somewhat less terrible
+<ul>
+<li>This refactors code so that it uses <code>Either&lt;Either&lt;I0, I1&gt;, Either&lt;I2, I3&gt;&gt;</code> instead of <code>Either&lt;I0, Either&lt;I1, Either&lt;I2, I3&gt;</code></li>
+<li>Interestingly this likely does not matter (or is even a pessimization), as <code>rustc</code> can squash all enums’ discriminants into the same either way (<a href="https://play.rust-lang.org/?version=nightly&amp;mode=debug&amp;edition=2021&amp;gist=bdeaf31f41cbe026340099ac773a61c7">play</a>)</li>
+</ul>
+</li>
+<li><a href="https://github.com/teloxide/teloxide/pull/905/files">teloxide/teloxide/905</a> — Assorted user/chat id additions</li>
+<li><a href="https://github.com/rust-lang/rust/pull/114258">rust-lang/rust/114258</a> — Simplify <code>Span::can_be_used_for_suggestions</code> a little tiny bit</li>
+<li><a href="https://github.com/rust-lang/rust/pull/112655">rust-lang/rust/112655</a> — Mark <code>map_or</code> as <code>#[must_use]</code></li>
+</ul>
+<h1 id="reviews">Reviews<a class="zola-anchor" href="#reviews" aria-label="Anchor link for: reviews">⌗</a></h1>
+<ul>
+<li><a href="https://github.com/rust-lang/rust/pull/112953">rust-lang/rust/112953</a> — Support interpolated block for <code>try</code> and <code>async</code></li>
+<li><a href="https://github.com/rust-lang/rust/pull/113993">rust-lang/rust/113993</a> — Optimize format usage (specifically this removes the reference <code>&amp;format!(..)</code> for cases where we convert to <code>String</code> later anyway)</li>
+<li><a href="https://github.com/rust-lang/rust/pull/114052">rust-lang/rust/114052</a> — Suggest <code>{Option,Result}::as_ref()</code> instead of <code>cloned()</code> in some cases
+<ul>
+<li>This diagnostic improvement got reverted in <a href="https://github.com/rust-lang/rust/pull/114931">114931</a> because it made invalid suggestions :(</li>
+</ul>
+</li>
+<li><a href="https://github.com/rust-lang/rust/pull/114150">rust-lang/rust/114150</a> — Refactor + improve diagnostics for <code>&amp;mut T</code>/<code>T</code> mismatch inside <code>Option</code>/<code>Result</code>
+<ul>
+<li>Interestingly this was a followup to the previous PR, but did not get reverted</li>
+</ul>
+</li>
+<li><a href="https://github.com/rust-lang/rust/pull/114066">rust-lang/rust/114066</a>, <a href="https://github.com/rust-lang/rust/pull/114068">rust-lang/rust/114068</a>, <a href="https://github.com/rust-lang/rust/pull/114074">rust-lang/rust/114074</a>, <a href="https://github.com/rust-lang/rust/pull/114075">rust-lang/rust/114075</a> — a few PRs that use newer <code>format!(&quot;{x}&quot;)</code> syntax instead of the older <code>format!(&quot;{}&quot;, x)</code> (this was automated using <code>clippy</code>)</li>
+<li><a href="https://github.com/rust-lang/rust/pull/114123">rust-lang/rust/114123</a> — Turns out opaque types can have hidden types registered during mir validation</li>
+<li><a href="https://github.com/rust-lang/rust/pull/114152">rust-lang/rust/114152</a> — [rustc][data_structures] Simplify binary_search_slice
+<ul>
+<li>(rustc hand-rolls its own binary search impl to guarantee position in case there are multiple elements with the same value)</li>
+</ul>
+</li>
+<li><a href="https://github.com/rust-lang/rust/pull/114201">rust-lang/rust/114201</a> — Allow explicit <code>#[repr(Rust)]</code>
+<ul>
+<li><code>#[repr(Rust)]</code> is often used in documentation/blog post/discussions/etc to name the default unspecified layout of types</li>
+<li><em>However</em>, you currently can’t explicitly write <code>#[repr(Rust)]</code>, only omit <code>repr</code> and use the default</li>
+<li>This PR fixes that! Thanks, Centri :3</li>
+</ul>
+</li>
+<li><a href="https://github.com/teloxide/teloxide/pull/864">teloxide/teloxide/864</a> — Telegram struct serializing similar to original (skip empty/defaults)</li>
+<li><a href="https://github.com/teloxide/teloxide/pull/915">teloxide/teloxide/915</a> (and its previous versions…) — Chat member update example</li>
+<li><a href="https://github.com/rust-lang/rust/pull/114256">rust-lang/rust/114256</a> — Fix invalid suggestion for mismatched types in closure arguments</li>
+</ul>
+<h1 id="summary">Summary<a class="zola-anchor" href="#summary" aria-label="Anchor link for: summary">⌗</a></h1>
+<p>I haven’t done much in this period (note that this devlog describes more than a week), still adopting to working on a real work™ and contributing to open source in free time/a set part of the work time. Additionally I’m having some issues in real life™ and troubles with the brain™, so yeah… A lot of stuff happening, which makes it harder to spend time on Rust. Hopefully with some changes to my routine, sleep schedule &amp; so on, I’ll be able to do more stuff, spending less energy, idk.</p>
+<p>Aaaaanyway, till next devlog, bye</p>
+
+        </div>
+
+        
+        <div class="pagination">
+            <div class="pagination__title">
+                <span class="pagination__title-h">Thanks for reading! Read other posts?</span>
+                <hr />
+            </div>
+            <div class="pagination__buttons">
+                
+                    <span class="button next">
+                        <a href="https://blog.ihatereality.space/devlog-03/">
+                            <span class="button__text">Waffle Devlog 3</span>&nbsp;
+                            <span class="button__icon">→</span>
+                        </a>
+                    </span>
+                </div>
+        </div>
+    
+    </div>
+
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright copyright--user"><div class="copyright"><span>© 2021 Maybe Waffle</span><span class="copyright-theme"><span class="copyright-theme-sep">:: </span>Theme is based on <a href="https://github.com/pawroman/zola-theme-terminimal/">Terminimal</a></span><span class="copyright-theme-sep">:: </span><a href="/rss.xml">rss</a></div></div>
+            </div>
+    </footer>
+    
+
+</div>
+
+<!-- Tracking via https://www.goatcounter.com/ -->
+<script data-goatcounter="https://ihr.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+
+</html>
