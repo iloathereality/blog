@@ -7,7 +7,15 @@
         <generator>Zola</generator>
         <language>en</language>
         <atom:link href="https://blog.ihatereality.space/rss.xml" rel="self" type="application/rss+xml"/>
-        <lastBuildDate>Mon, 20 Nov 2023 00:00:00 +0000</lastBuildDate>
+        <lastBuildDate>Tue, 21 Nov 2023 00:00:00 +0000</lastBuildDate>
+        <item>
+            <title>Waffle Devlog 6</title>
+            <pubDate>Tue, 21 Nov 2023 00:00:00 +0000</pubDate>
+            <link>https://blog.ihatereality.space/devlog-06/</link>
+            <guid>https://blog.ihatereality.space/devlog-06/</guid>
+            <description>&lt;p&gt;This is a devlog for 2023-09-01—2023-09-30, or, in other words, the month of September. This is mostly a log for &lt;em&gt;myself&lt;&#x2F;em&gt; so that I remember that I did things, but you may be interested in reading it too, for whatever reason.&lt;&#x2F;p&gt;
+</description>
+        </item>
         <item>
             <title>Waffle Devlog 5</title>
             <pubDate>Mon, 20 Nov 2023 00:00:00 +0000</pubDate>
