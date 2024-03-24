@@ -40,6 +40,10 @@
     <meta name="twitter:creator" content="{{config.extra.twitter_creator_username}}">
 {% endblock social_metatags %}
 
+{% block menu %}
+    {{ menu_macros::menu(config=config, current_path=current_path, show_show_devlog_checkbox=false) }}
+{% endblock menu %}
+
 {% block content %}
     <div class="post">
         {{ post_macros::header(page=page) }}

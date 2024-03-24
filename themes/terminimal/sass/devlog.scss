@@ -1,0 +1,29 @@
+// Make a button that looks like [show devlogs] (when unpressed) or [hide devlogs] (when pressed)
+// and does what it says. (also it's `opacity: .5` so that it's not too bright)
+input[type=checkbox]#show-devlog {
+    display: none;
+}
+
+input[type=checkbox]#show-devlog+label {
+    color: var(--color);
+    opacity: .5;
+}
+
+input[type=checkbox]#show-devlog+label::before {
+    content: "[show devlogs]";
+}
+
+input[type=checkbox]#show-devlog:checked+label::before {
+    content: "[hide devlogs]";
+}
+
+// Hide all devlog entries by default
+div.on-list.devlog {
+    display: none;
+}
+
+// Show devlog entries if the checkbox in the header is checked
+header:has(#show-devlog:checked)+div.content div.on-list.devlog {
+    // This should be changed to `list-item` once the post list is a list
+    display: block;
+}
