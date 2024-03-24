@@ -1,4 +1,4 @@
-{% macro menu(config, current_path) %}
+{% macro menu(config, current_path, show_show_devlog_checkbox) %}
     {%- if config.extra.menu_items %}
         {%- set menu_items = config.extra.menu_items -%}
 
@@ -36,6 +36,13 @@
                     {%- endif -%}
                 </li>
             {% endfor -%}
+
+            {%- if show_show_devlog_checkbox %}
+                <li>
+                    <input type="checkbox" id="show-devlog" name="show-devlog" />
+                    <label for="show-devlog"><!-- text is added by css --></label>
+                </li>
+            {% endif -%}
             </ul>
         </nav>
     {% endif -%}

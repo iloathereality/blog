@@ -72,7 +72,9 @@
             </div>
         </div>
 
-        {{ menu_macros::menu(config=config, current_path=current_path) }}
+        {% block menu %}
+            {{ menu_macros::menu(config=config, current_path=current_path, show_show_devlog_checkbox=true) }}
+        {% endblock menu %}
     </header>
     {% endblock header %}
 
@@ -86,10 +88,17 @@
             {% endif -%}
 
             {%- for page in show_pages %}
-                <div class="post on-list">
-                    {{ post_macros::header(page=page) }}
-                    {{ post_macros::content(page=page, summary=true) }}
-                </div>
+                {%- if page.taxonomies.tags is containing("devlog") %}
+                    <div class="post on-list devlog">
+                        {{ post_macros::header(page=page) }}
+                        {{ post_macros::content(page=page, summary=true) }}
+                    </div>
+                {% else %}
+                    <div class="post on-list">
+                        {{ post_macros::header(page=page) }}
+                        {{ post_macros::content(page=page, summary=true) }}
+                    </div>
+                {% endif -%}
             {% endfor -%}
             <div class="pagination">
                 <div class="pagination__buttons">
