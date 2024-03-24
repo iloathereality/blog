@@ -1,0 +1,1 @@
+input#show-devlog[type=checkbox]{display:none}input#show-devlog[type=checkbox]+label{color:var(--color);opacity:.5}input#show-devlog[type=checkbox]+label::before{content:"[show devlogs]"}input#show-devlog[type=checkbox]:checked+label::before{content:"[hide devlogs]"}div.on-list.devlog{display:none}header:has(#show-devlog:checked)+div.content div.on-list.devlog{display:block}
