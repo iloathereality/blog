@@ -201,7 +201,7 @@
 </span><span>    U: IntoIterator,
 </span></code></pre>
 <p>This function is equivalent to <code>map</code> combined with <a href="https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.flatten"><code>flatten</code></a> (which, in turn, is equivalent to <code>flat_map(id)</code>, they are interchangeable). </p>
-<p>At first glance, it may seem like <code>filter_map</code> and <code>flat_map</code> are different: the first expects a function that returns <code>Option</code> while the other expects a function that returns something that can be turned into <code>Iterator</code>. But then, if you think about it, <code>Option</code> may be seen as a collection with 0 or 1 elements, and <a href="https://doc.rust-lang.org/std/option/enum.Option.html#method.take"><code>take</code></a> is its <a href="+https://doc.rust-lang.org/std/iter/trait.Iterator.html#tymethod.next"><code>next</code></a> function (if you know how monads work, this might have been obvious). Moreover, <code>Option</code> actually <a href="https://doc.rust-lang.org/std/option/enum.Option.html#impl-IntoIterator">implements <code>IntoIterator</code></a>! So… you can replace any call to <code>filter_map</code> with a call to <code>flat_map</code> and everything will continue to work just fine :flower:</p>
+<p>At first glance, it may seem like <code>filter_map</code> and <code>flat_map</code> are different: the first expects a function that returns <code>Option</code> while the other expects a function that returns something that can be turned into <code>Iterator</code>. But then, if you think about it, <code>Option</code> may be seen as a collection with 0 or 1 elements, and <a href="https://doc.rust-lang.org/std/option/enum.Option.html#method.take"><code>take</code></a> is its <a href="https://blog.ihatereality.space/02-you-would-not-use-filter-map/+https://doc.rust-lang.org/std/iter/trait.Iterator.html#tymethod.next"><code>next</code></a> function (if you know how monads work, this might have been obvious). Moreover, <code>Option</code> actually <a href="https://doc.rust-lang.org/std/option/enum.Option.html#impl-IntoIterator">implements <code>IntoIterator</code></a>! So… you can replace any call to <code>filter_map</code> with a call to <code>flat_map</code> and everything will continue to work just fine :flower:</p>
 <p>We can’t just remove <code>filter_map</code> because backwards compatibility sucks. But I don’t think I’ll use it ever again.</p>
 <h1 id="some-more-takeovers-from-option-intoiterator">Some more takeovers from <code>Option: IntoIterator</code><a class="zola-anchor" href="#some-more-takeovers-from-option-intoiterator" aria-label="Anchor link for: some-more-takeovers-from-option-intoiterator">⌗</a></h1>
 <p><a href="https://doc.rust-lang.org/std/iter/fn.once.html"><code>iter::once(x)</code></a> is actually equivalent to <code>Some(x)</code> in cases where <code>IntoIterator</code> is expected. It is even <a href="https://github.com/rust-lang/rust/blob/db1fb85cff63ad5fffe435e17128f99f9e1d970c/library/core/src/iter/sources/once.rs#L65">implemented using the option’s <code>IntoIter</code></a>. You probably shouldn’t use <code>Some(x)</code> like this, but you could.</p>
@@ -263,29 +263,6 @@
         </div>
 
         
-        <div class="pagination">
-            <div class="pagination__title">
-                <span class="pagination__title-h">Thanks for reading! Read other posts?</span>
-                <hr />
-            </div>
-            <div class="pagination__buttons">
-                    <span class="button previous">
-                        <a href="https://blog.ihatereality.space/03-a-place-to-pause/">
-                            <span class="button__icon">←</span>&nbsp;
-                            <span class="button__text">Everybody needs a place (and time) to pause</span>
-                        </a>
-                    </span>
-                
-                
-                    <span class="button next">
-                        <a href="https://blog.ihatereality.space/01-why-null-sucks/">
-                            <span class="button__text">Why null sucks, even if it&#x27;s checked</span>&nbsp;
-                            <span class="button__icon">→</span>
-                        </a>
-                    </span>
-                </div>
-        </div>
-    
     </div>
 
     </div>
